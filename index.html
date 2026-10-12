@@ -121,7 +121,7 @@ button.genout small { display: block; font-weight: 400; font-size: 12px; opacity
 button.genout:hover { filter: brightness(1.08); }
 .ico { width: 14px; height: 14px; vertical-align: -2px; flex: none; }
 .stop { display: flex; align-items: center; justify-content: center; gap: 1px; background: #fff; border: 1.5px solid #111827; border-radius: 9px; font: 600 10px/1 var(--font-data); color: #111827; box-shadow: 0 1px 3px rgba(0,0,0,.5); white-space: nowrap; }
-.stop.rest { background: #fde68a; } .stop.break { background: #e0f2fe; } .stop.wait { background: #ddd6fe; } .stop.shelter { background: #fecaca; }
+.stop.rest, .stop.full { background: #fde68a; } .stop.break { background: #e0f2fe; } .stop.wait, .stop.tide { background: #ddd6fe; } .stop.shelter { background: #fecaca; }
 .stop .ico { width: 12px; height: 12px; }
 .stop .dur { font-style: normal; font-weight: 500; margin-left: 3px; padding-left: 3px; border-left: 1px solid rgba(17,24,39,.35); }
 #stops-tbl { font-size: 11.5px; } #stops-tbl th { font-size: 9.5px; } #stops-tbl td { padding: 3px 4px 3px 0; }
@@ -175,10 +175,6 @@ progress { width: 100%; height: 8px; accent-color: var(--accent); }
 
     <section aria-labelledby="h-plan">
       <h2 id="h-plan">Plan</h2>
-      <div class="seg" role="group" aria-label="Which side of Vashon Island" id="route-seg">
-        <button type="button" data-route="colvos"><span>West of Vashon</span><small>Colvos Passage</small></button>
-        <button type="button" data-route="east"><span>East of Vashon</span><small>East Passage</small></button>
-      </div>
       <div class="row">
         <label for="sd">Start<input id="sd" type="date" min="2027-05-24" max="2027-06-01" value="2027-05-28"></label>
         <label for="st">Gun<input id="st" type="time" value="19:00"></label>
@@ -208,7 +204,18 @@ progress { width: 100%; height: 8px; accent-color: var(--accent); }
       </div>
       <label class="check" for="drift" title="On a break on the water the boat drifts with the stream. Untick if you hold position."><input id="drift" type="checkbox" checked> Drift with the stream on breaks on the water</label>
       <div class="row">
-        <label for="restEvery" title="A long rest ashore (sleep, food) after this many hours of paddling. 0 = none.">Long rest after (h paddling)<input id="restEvery" type="number" min="0" max="30" step="0.5" value="0"></label>
+      </div>
+      <label for="blakeH" title="The first full stop, at the state park campground on Blake Island, off the north end of Colvos Passage. At least 3 hours.">Full stop at Blake Island: <b class="clock" id="blakeH-out"></b>
+        <input id="blakeH" type="range" min="3" max="10" step="0.25" value="3"></label>
+      <div class="layers">
+        <label class="check" for="fayOn" title="If the stream is against you when you reach Fay Bainbridge Park, go ashore until it turns"><input id="fayOn" type="checkbox" checked> Wait out a foul tide at Fay Bainbridge</label>
+        <label class="check" for="pnpOn" title="If the stream is against you when you reach Point No Point, go ashore until it turns"><input id="pnpOn" type="checkbox" checked> and at Point No Point</label>
+      </div>
+      <div class="row">
+        <label for="tideKn" title="Wait at Fay Bainbridge or Point No Point when the stream over the next 4 nm is against you by more than this; leave when it has eased to half of it, or after 6 hours">Foul tide worth waiting out (kn)<input id="tideKn" type="number" min="0.1" max="4" step="0.1" value="0.5"></label>
+      </div>
+      <div class="row">
+        <label for="restEvery" title="Another long rest ashore (sleep, food) after this many hours of paddling, counted from Blake Island. 0 = none.">Next long rest after (h paddling)<input id="restEvery" type="number" min="0" max="30" step="0.5" value="0"></label>
         <label for="restH">Long rest (h)<input id="restH" type="number" min="0.5" max="12" step="0.5" value="2"></label>
       </div>
       <div class="row">
@@ -365,10 +372,10 @@ const hm = (h) => { const m = Math.round(h * 60); return `${Math.floor(m / 60)} 
 const sgn = (v, d = 1) => (v >= 0 ? "+" : "−") + Math.abs(v).toFixed(d);
 
 let ROUTE, STATIONS = [], PRED = { stations: {} }, map, CH = {}, routeLines = {}, stnMarkers = {}, boatMarker, P = null, playTimer = null;
-const KEEP = ["route", "sd", "st", "delay", "mode", "target", "speed", "brkEvery", "brkMin", "ashoreMin", "drift", "restEvery", "restH", "headKn", "sitesOn", "landOn", "nightPct", "fade", "crew", "kg", "shellX"];
-const state = { route: "colvos", sd: "2027-05-28", st: "19:00", delay: 0, mode: "target", target: 18, speed: 3.5, brkEvery: 2, brkMin: 10, ashoreMin: 20, drift: true, restEvery: 0, restH: 2, headKn: 0, sitesOn: true, landOn: true, nightPct: 100, fade: 0, crew: 1, kg: 80, shellX: 3, t: null, selected: null };
-try { const s = JSON.parse(localStorage.getItem("s48-27v2") || "{}"); KEEP.forEach((k) => { if (k in s) state[k] = s[k]; }); } catch (e) {}
-function save() { try { localStorage.setItem("s48-27v2", JSON.stringify(Object.fromEntries(KEEP.map((k) => [k, state[k]])))); } catch (e) {} }
+const KEEP = ["sd", "st", "delay", "mode", "target", "speed", "brkEvery", "brkMin", "ashoreMin", "drift", "blakeH", "fayOn", "pnpOn", "tideKn", "restEvery", "restH", "headKn", "sitesOn", "landOn", "nightPct", "fade", "crew", "kg", "shellX"];
+const state = { route: "colvos", sd: "2027-05-28", st: "19:00", delay: 0, mode: "target", target: 18, speed: 3.5, brkEvery: 2, brkMin: 10, ashoreMin: 20, drift: true, blakeH: 3, fayOn: true, pnpOn: true, tideKn: 0.5, restEvery: 0, restH: 2, headKn: 0, sitesOn: true, landOn: true, nightPct: 100, fade: 0, crew: 1, kg: 80, shellX: 3, t: null, selected: null };
+try { const s = JSON.parse(localStorage.getItem("s48-27v5") || "{}"); KEEP.forEach((k) => { if (k in s) state[k] = s[k]; }); } catch (e) {}
+function save() { try { localStorage.setItem("s48-27v5", JSON.stringify(Object.fromEntries(KEEP.map((k) => [k, state[k]])))); } catch (e) {} }
 const startT = () => Date.parse(`${state.sd}T${state.st}:00-07:00`) + state.delay * MIN;
 const gunT = () => Date.parse(`${state.sd}T${state.st}:00-07:00`);
 
@@ -545,10 +552,17 @@ function simulate(key, v0, opt = {}) {
   const ch = CH[key], t0 = startT(), still = !!opt.still, W = opt.wind || null, E = opt.env || {};
   const night = state.nightPct / 100, fade = state.fade / 100, brkEvery = state.brkEvery * H, brkLen = state.brkMin * MIN;
   const restEvery = state.restEvery * H, restLen = state.restH * H, headKn = state.headKn;
+  // Planned stops at fixed places: the full stop at Blake Island (at least 3 hours), then Fay Bainbridge Park and Point No Point,
+  // where the crew goes ashore only if the tide is foul. The way in and out is the extra distance of bending the line to the
+  // landing over 3 nm either side, not straight in and back.
+  const fixed = (key) => { const m = ROUTE.marks.find((x) => x.key === key); if (!m) return null; const pr = project(ch, [m.lat, m.lon]);
+    return { kind: "planned", ll: [m.lat, m.lon], along: pr.along, off: pr.d, detourNm: 2 * (Math.hypot(3, pr.d) - 3), teams: 0, name: m.name }; };
+  const plannedStops = [["blake", true], ["fay", state.fayOn], ["pnp", state.pnpOn]].filter(([, on]) => on).map(([k]) => ({ key: k, site: fixed(k) })).filter((x) => x.site);
+  const tideKn = state.tideKn, aheadStream = (p, tt) => { let a = 0; for (let d = 0; d <= 4; d += 1) a += streamAt(key, Math.min(ch.total, p + d), tt); return a / 5; };
   let pos = 0, t = t0, paddled = 0, sinceBrk = 0, sinceRest = 0, darkH = 0, gain = 0, kc = 0, stop = null, pending = null;
   const stops = [], track = [[t, 0, v0, still ? 0 : streamAt(key, 0, t), 0]], end = t0 + 60 * H;
   const begin = (kind, site, o) => {
-    const onWater = !site, detour = site ? (2 * site.off + Math.max(0, pos - site.along)) / v0 : 0;
+    const onWater = !site, detour = site ? ((site.detourNm ?? 2 * site.off) + Math.max(0, pos - site.along)) / v0 : 0;
     if (site && site.along < pos) pos = site.along;   // paddled back to it
     stop = { kind, site, onWater, t, pos, detourH: detour, cond: o.cond || null, until: t + detour * H + (o.len || 0), minUntil: t + detour * H + (o.min || 0), why: o.why || "" };
     paddled += detour * H; kc += detour * kcalH(v0);
@@ -560,6 +574,7 @@ function simulate(key, v0, opt = {}) {
       let done = t >= stop.until;
       if (stop.cond === "wind") done = t >= stop.minUntil && (!w || w.kn < E.resumeKn);
       else if (stop.cond === "foul") done = t >= stop.minUntil && (s > -headKn / 2 || t - stop.t > 6 * H);
+      else if (stop.cond === "tide") done = t >= stop.minUntil && (aheadStream(pos, t) > -tideKn / 2 || t - stop.t > 6 * H);
       if (done) { stop.until = t; stop = null; }
       else {
         const d = stop.onWater && state.drift ? s : 0;
@@ -576,6 +591,14 @@ function simulate(key, v0, opt = {}) {
       const site = pickSite(key, pos, 0.5, 0.3);
       if (site && site.along <= pos + 0.05) { begin("wait", site, { cond: "foul", min: 20 * MIN, why: `stream ${sgn(s)} kn` }); continue; }
     }
+    const nextP = plannedStops[0];
+    if (nextP && pos >= nextP.site.along) {
+      plannedStops.shift();
+      if (nextP.key === "blake") { sinceBrk = 0; sinceRest = 0; pending = null; begin("full", nextP.site, { len: Math.max(3, state.blakeH) * H, why: "planned full stop" }); continue; }
+      const a = still ? 0 : aheadStream(pos, t);
+      if (a < -tideKn) { sinceBrk = 0; pending = null; begin("tide", nextP.site, { cond: "tide", min: 30 * MIN, why: `stream ${sgn(a)} kn over the next 4 nm` }); continue; }
+    }
+    if (nextP && nextP.key === "blake" && nextP.site.along - pos < v0 * 1) { sinceBrk = Math.min(sinceBrk, brkEvery - STEP); sinceRest = Math.min(sinceRest, restEvery - STEP); }   // no break in the hour before Blake
     if (pending && pos >= pending.site.along - 1e-6) { begin(pending.kind, pending.site, pending); pending = null; continue; }
     if (!pending && restEvery > 0 && sinceRest >= restEvery) {
       sinceRest = 0; sinceBrk = 0;
@@ -639,8 +662,7 @@ function plan() {
   if (state.mode === "target") v = solveFor(state.route, state.target).v;
   if (v == null) return { impossible: true };
   const R = simulate(state.route, v), still = simulate(state.route, v, { still: true });
-  const other = state.route === "colvos" ? "east" : "colvos", O = simulate(other, v);
-  return { R, still, O, other, v };
+  return { R, still, v };
 }
 function nearestStation(along, kind = "current", maxNm = Infinity) {
   let best = null;
@@ -656,14 +678,12 @@ function stationState(st, t) {
 }
 function markAlong(m, key = state.route) { const ch = CH[key]; return m.key === "start" ? 0 : m.key === "finish" ? ch.total : project(ch, [m.lat, m.lon]).along; }
 function render() {
-  $("route-seg").querySelectorAll("button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.route === state.route)));
   $("mode-seg").querySelectorAll("button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.mode === state.mode)));
   $("target-l").hidden = state.mode !== "target"; $("speed-l").hidden = state.mode !== "speed";
-  $("target-out").textContent = hm(state.target); $("speed-out").textContent = `${(+state.speed).toFixed(2)} kn`;
-  Object.entries(routeLines).forEach(([k, l]) => l.setStyle(k === state.route ? { weight: 4, opacity: 1, dashArray: null } : { weight: 2.5, opacity: 0.6, dashArray: "6 6" }));
+  $("target-out").textContent = hm(state.target); $("blakeH-out").textContent = hm(state.blakeH); $("speed-out").textContent = `${(+state.speed).toFixed(2)} kn`;
   P = plan();
   if (P.impossible) { $("tiles").innerHTML = ""; $("res-note").innerHTML = `<span class="warn">No speed under 12 kn makes that finish.</span>`; return; }
-  const { R, still, O, v } = P, el = R.fin ? (R.fin - gunT()) / H : null;
+  const { R, still, v } = P, el = R.fin ? (R.fin - gunT()) / H : null;
   const lost = R.fin && still.fin ? (R.fin - still.fin) / MIN : null, avgSog = R.fin ? R.total / ((R.fin - R.t0) / H) : null, cut = gunT() + LIMIT_H * H;
   const ashoreH = R.stops.filter((x) => !x.onWater).reduce((a, x) => a + (x.until - x.t) / H, 0);
   const restKc = restKcalH() * (((R.fin || R.track[R.track.length - 1][0]) - R.t0) / H);
@@ -676,13 +696,13 @@ function render() {
     ["Paddling", hm(R.paddledH), `${hm(R.darkH)} in the dark`],
     ["Stops", `${R.stops.length}`, `${hm(ashoreH)} ashore`],
     ["Calories each", kcal(R.kcal + restKc), `${kcal(R.kcal)} paddling, ${Math.round(paddlerW(v))} W at ${v.toFixed(1)} kn`],
-    [P.other === "east" ? "East of Vashon" : "West of Vashon", O.fin ? fmtDT.format(O.fin) : "–", O.fin && R.fin ? `${O.fin > R.fin ? "+" : "−"}${hm(Math.abs(O.fin - R.fin) / H)} at the same speed` : ""],
+    ...(() => { const b = R.stops.find((x) => x.kind === "full"); return b ? [["Blake Island", `${fmtT.format(b.t + b.detourH * H)} to ${fmtT.format(b.until)}`, `${hm((b.until - b.t) / H - b.detourH)} ashore, ${Math.round(b.detourH * 60)} min in and out`]] : []; })(),
     ["Cutoff margin", R.fin ? hm((cut - R.fin) / H) : "–", "to the bell, 48 h after the gun", R.fin && R.fin > cut ? "bad" : ""],
   ];
   $("tiles").innerHTML = tiles.map(([a, b, c, k]) => `<div class="tile ${k || ""}"><span>${a}</span><b>${b}</b><small>${c}</small></div>`).join("");
   const ll0 = pointAt(CH[state.route], 0), ev = sunEvents(ll0, R.t0 - 4 * H, R.t0 + 40 * H), m = moonLit(R.t0 + 6 * H);
   const ss = ev.find((e) => e.set), sr = ev.find((e) => !e.set && (!ss || e.t > ss.t));
-  $("res-note").innerHTML = `${state.mode === "target" ? `To finish in ${hm(state.target)} you need <b>${v.toFixed(2)} kn</b> through the water` : `At <b>${v.toFixed(2)} kn</b> through the water you finish in <b>${el ? hm(el) : "–"}</b>`} on the ${state.route === "colvos" ? "Colvos Passage" : "East Passage"} line. Sunset ${ss ? fmtT.format(ss.t) : "–"}, sunrise ${sr ? fmtT.format(sr.t) : "–"}; moon ${Math.round(m.lit * 100)}% lit, ${m.waxing ? "waxing" : "waning"}.`;
+  $("res-note").innerHTML = `${state.mode === "target" ? `To finish in ${hm(state.target)} you need <b>${v.toFixed(2)} kn</b> through the water` : `At <b>${v.toFixed(2)} kn</b> through the water you finish in <b>${el ? hm(el) : "–"}</b>`} through Colvos Passage. Sunset ${ss ? fmtT.format(ss.t) : "–"}, sunrise ${sr ? fmtT.format(sr.t) : "–"}; moon ${Math.round(m.lit * 100)}% lit, ${m.waxing ? "waxing" : "waning"}.`;
   $("kcal-note").textContent = `Each paddler: about ${Math.round(paddlerW(v))} W at ${v.toFixed(2)} kn, ${kcal(kcalH(v))} kcal an hour paddling plus ${kcal(restKcalH())} resting. Plan on ${kcal((R.kcal + restKc) * 0.6)} to ${kcal(R.kcal + restKc)} kcal of food and drink each over the race: few eat all they burn.`;
   renderMarks(); renderStops(); renderLog(); renderHeat(); renderCurve(); renderPast(); drawPlanLayers(); syncTime(); renderPics();
 }
@@ -696,12 +716,13 @@ function renderMarks() {
   }).join("") + "</tbody>";
 }
 const ICON = {
+  get full() { return this.rest; }, get tide() { return this.wait; },
   rest: '<svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2 1 14h14z" fill="#b45309" stroke="#111827" stroke-width="1.2" stroke-linejoin="round"/><path d="M8 7l-2.6 7h5.2z" fill="#fde68a" stroke="#111827" stroke-width="1"/></svg>',
   break: '<svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 6h9v4.5a3.5 3.5 0 0 1-3.5 3.5h-2a3.5 3.5 0 0 1-3.5-3.5z" fill="#7c2d12" stroke="#111827" stroke-width="1.1"/><path d="M11.5 7.2h1.2a1.8 1.8 0 0 1 0 3.6h-1.4" fill="none" stroke="#111827" stroke-width="1.1"/></svg>',
   wait: '<svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6.2" fill="#ede9fe" stroke="#111827" stroke-width="1.2"/><path d="M8 4.5V8l2.5 1.6" fill="none" stroke="#111827" stroke-width="1.3" stroke-linecap="round"/></svg>',
   shelter: '<svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 5c3 0 5-1 7-1s3 1 5 1M2 9c3 0 5-1 7-1s3 1 5 1M2 13c3 0 5-1 7-1s3 1 5 1" fill="none" stroke="#b91c1c" stroke-width="1.6" stroke-linecap="round"/></svg>',
 };
-const STOP_NAME = { break: "Break", rest: "Long rest", wait: "Wait for the current", shelter: "Shelter from wind" };
+const STOP_NAME = { break: "Break", full: "Full stop", tide: "Wait for the tide", rest: "Long rest", wait: "Wait for the current", shelter: "Shelter from wind" };
 const shortDur = (h) => { const m = Math.round(h * 60); return m < 60 ? `${m}m` : `${Math.floor(m / 60)}h${m % 60 ? String(m % 60).padStart(2, "0") : ""}`; };
 function stopWhere(x) { return x.site ? `${x.site.name}, ${x.site.off.toFixed(2)} nm off` : `on the water ${placeAt(x.pos).replace(/^at /, "near ")}`; }
 function renderStops() {
@@ -768,19 +789,18 @@ function renderHeat() {
 }
 function renderCurve() {
   const svg = $("curve"), hrs = []; for (let h = 12; h <= 30; h += 1.5) hrs.push(h);
-  const pts = { colvos: [], east: [] };
-  for (const k of ["colvos", "east"]) for (const h of hrs) { const s = solveFor(k, h); if (s.v) pts[k].push([h, s.v]); }
-  const all = [...pts.colvos, ...pts.east].map((p) => p[1]); if (!all.length) { svg.innerHTML = ""; return; }
+  const pts = { colvos: [] };
+  for (const k of ["colvos"]) for (const h of hrs) { const s = solveFor(k, h); if (s.v) pts[k].push([h, s.v]); }
+  const all = pts.colvos.map((p) => p[1]); if (!all.length) { svg.innerHTML = ""; return; }
   const vmin = Math.floor(Math.min(...all) * 2) / 2, vmax = Math.ceil(Math.max(...all) * 2) / 2;
   const L = 38, T = 10, Wd = 350, Hd = 180, X = (h) => L + ((h - 12) / 18) * Wd, Y = (v) => T + (1 - (v - vmin) / ((vmax - vmin) || 1)) * Hd;
   let s = "";
   for (let v = vmin; v <= vmax + 1e-9; v += 0.5) s += `<line x1="${L}" x2="${L + Wd}" y1="${Y(v)}" y2="${Y(v)}" stroke="var(--rule)"/><text x="${L - 4}" y="${Y(v) + 3}" text-anchor="end">${v.toFixed(1)}</text>`;
   for (let h = 12; h <= 30; h += 3) s += `<text x="${X(h)}" y="${T + Hd + 14}" text-anchor="middle">${h} h</text>`;
   const path = (p) => p.map((q, i) => `${i ? "L" : "M"}${X(q[0]).toFixed(1)},${Y(q[1]).toFixed(1)}`).join("");
-  s += `<path d="${path(pts.east)}" fill="none" stroke="var(--muted)" stroke-width="2" stroke-dasharray="5 4"/>`;
   s += `<path d="${path(pts.colvos)}" fill="none" stroke="var(--accent)" stroke-width="2.5"/>`;
   if (P && P.R.fin) { const h = (P.R.fin - startT()) / H; if (h >= 12 && h <= 30) s += `<circle cx="${X(h)}" cy="${Y(P.v)}" r="5" fill="#facc15" stroke="#0f172a" stroke-width="1.5"/>`; }
-  s += `<text x="${L + Wd}" y="${T + 12}" text-anchor="end" style="fill:var(--accent)">— West (Colvos)</text><text x="${L + Wd}" y="${T + 26}" text-anchor="end">- - East Passage</text><text x="${L + Wd}" y="${T + 40}" text-anchor="end">kn through the water</text>`;
+  s += `<text x="${L + Wd}" y="${T + 12}" text-anchor="end">kn through the water</text>`;
   svg.innerHTML = s;
 }
 
@@ -1006,17 +1026,17 @@ function renderPast() {
   const cls = $("past-class").value, mine = P && P.R && P.R.fin ? (P.R.fin - gunT()) / H : null;
   const lines = ys.map((y) => {
     const r = RESULTS[y], fin = r.teams.filter((t) => t.elapsed_h && (!cls || t.cls === cls)).sort((a, b) => a.elapsed_h - b.elapsed_h), all = r.teams.filter((t) => !cls || t.cls === cls).length;
-    const ahead = fin.filter((t) => t.elapsed_h < mine).length, col = fin.filter((t) => t.side === "colvos").length, eas = fin.filter((t) => t.side === "east").length;
-    return `<tr><td>${y}</td><td class="n">${fin.length} of ${all}</td><td class="n">${mine && fin.length ? `${ahead + 1}` : "–"}</td><td class="n">${fin.length ? hm(fin[0].elapsed_h) : "–"}</td><td class="n">${fin.length ? hm(fin[Math.floor(fin.length / 2)].elapsed_h) : "–"}</td><td class="n">${r.tracks ? `${col} / ${eas}` : "no tracks"}</td></tr>`;
+    const ahead = fin.filter((t) => t.elapsed_h < mine).length;
+    return `<tr><td>${y}</td><td class="n">${fin.length} of ${all}</td><td class="n">${mine && fin.length ? `${ahead + 1}` : "–"}</td><td class="n">${fin.length ? hm(fin[0].elapsed_h) : "–"}</td><td class="n">${fin.length ? hm(fin[Math.floor(fin.length / 2)].elapsed_h) : "–"}</td></tr>`;
   });
   $("past-hint").innerHTML = `Official results 2018 to 2026 (no race in 2020) and YB tracks from 2024. Your ${mine ? hm(mine) : "–"} finish against each year's finishers${cls ? ` (${esc(cls)})` : ""}:`;
-  $("past-sum").innerHTML = `<thead><tr><th>Year</th><th class="n">Finished</th><th class="n">You'd place</th><th class="n">First</th><th class="n">Median</th><th class="n">West / East</th></tr></thead><tbody>${lines.join("")}</tbody>`;
+  $("past-sum").innerHTML = `<thead><tr><th>Year</th><th class="n">Finished</th><th class="n">You'd place</th><th class="n">First</th><th class="n">Median</th></tr></thead><tbody>${lines.join("")}</tbody>`;
   const r = RESULTS[pastYear];
   $("past-years").querySelectorAll("button").forEach((b) => b.setAttribute("aria-pressed", String(+b.dataset.y === pastYear)));
   const teams = r.teams.filter((t) => !cls || t.cls === cls), fin = teams.filter((t) => t.elapsed_h).sort((a, b) => a.elapsed_h - b.elapsed_h), dnf = teams.filter((t) => !t.elapsed_h);
   const near = (t) => mine && t.elapsed_h && Math.abs(t.elapsed_h - mine) <= 1;
   const list = fin.concat(dnf);
-  $("past-list").innerHTML = list.map((t, i) => `<div class="past-row${near(t) ? " near" : ""}" data-i="${i}"><span class="t">${t.elapsed_h ? hm(t.elapsed_h) : "DNF"}</span><span>${esc(t.name || "")}<br><span class="c">${esc([t.cls, t.boat, t.side === "colvos" ? "west of Vashon" : t.side === "east" ? "east of Vashon" : "", t.track ? "track" : ""].filter(Boolean).join(" · "))}</span></span></div>`).join("");
+  $("past-list").innerHTML = list.map((t, i) => `<div class="past-row${near(t) ? " near" : ""}" data-i="${i}"><span class="t">${t.elapsed_h ? hm(t.elapsed_h) : "DNF"}</span><span>${esc(t.name || "")}<br><span class="c">${esc([t.cls, t.boat, t.track ? "track" : ""].filter(Boolean).join(" · "))}</span></span></div>`).join("");
   $("past-list").querySelectorAll(".past-row").forEach((row) => row.addEventListener("click", () => {
     const t = list[+row.dataset.i];
     if (pastLayer) { map.removeLayer(pastLayer); pastLayer = null; }
@@ -1036,7 +1056,7 @@ function printSheets() {
   const w = window.open("", "_blank"); if (!w) { alert("Allow pop-ups for this page to open the sheets."); return; }
   const { R, v } = P, key = state.route, ch = CH[key], kn = (x) => sgn(x);
   const el = R.fin ? (R.fin - gunT()) / H : null;
-  const planLine = `Plan: ${state.route === "colvos" ? "west of Vashon (Colvos Passage)" : "east of Vashon (East Passage)"} · gun ${fmt.format(gunT())} · ${v.toFixed(2)} kn through the water · finish ${R.fin ? fmt.format(R.fin) : "–"}${el ? ` (${hm(el)})` : ""} · breaks ${state.brkMin} min every ${state.brkEvery} h`;
+  const planLine = `Plan: Colvos Passage · gun ${fmt.format(gunT())} · ${v.toFixed(2)} kn through the water · finish ${R.fin ? fmt.format(R.fin) : "–"}${el ? ` (${hm(el)})` : ""} · breaks ${state.brkMin} min every ${state.brkEvery} h`;
   // legs: between the checkpoints and waypoints on this course (the Colvos south entrance joins the Owen Beach leg)
   const marks = ROUTE.marks.filter((m) => (!m.route || m.route === key) && m.key !== "colvos-s").map((m) => ({ m, a: markAlong(m) })).sort((a, b) => a.a - b.a);
   const sites = sitesFor(key, 1.5), pages = [], strips = [];
@@ -1246,7 +1266,7 @@ function showPage() {
   $("app").hidden = storms; $("storm-page").hidden = !storms;
   if (storms) {
     smLoadHist();
-    $("sm-plan").textContent = P && !P.impossible ? `Your plan: ${state.route === "colvos" ? "west of Vashon" : "east of Vashon"}, ${P.v.toFixed(2)} kn through the water, ${P.R.fin ? `finishing in ${hm((P.R.fin - gunT()) / H)}` : "not finishing"} with no wind. Each scenario runs the same plan with wind on the course: a headwind slows you, a tailwind helps, and over the shelter strength the crew goes ashore at the nearest landing and waits it out.` : "";
+    $("sm-plan").textContent = P && !P.impossible ? `Your plan: ${P.v.toFixed(2)} kn through the water, ${P.R.fin ? `finishing in ${hm((P.R.fin - gunT()) / H)}` : "not finishing"} with no wind. Each scenario runs the same plan with wind on the course: a headwind slows you, a tailwind helps, and over the shelter strength the crew goes ashore at the nearest landing and waits it out.` : "";
     if (SM.map) setTimeout(() => SM.map.invalidateSize(), 50);
   } else if (map) setTimeout(() => map.invalidateSize(), 50);
 }
@@ -1254,10 +1274,11 @@ function showPage() {
 // ---------- wiring
 let rt;
 function changed() { save(); clearTimeout(rt); rt = setTimeout(render, 40); }
-const NUM = ["delay", "target", "speed", "brkEvery", "brkMin", "ashoreMin", "restEvery", "restH", "headKn", "nightPct", "fade", "crew", "kg", "shellX"];
+const NUM = ["delay", "target", "speed", "brkEvery", "brkMin", "ashoreMin", "blakeH", "tideKn", "restEvery", "restH", "headKn", "nightPct", "fade", "crew", "kg", "shellX"];
 function syncInputs() {
   ["sd", "st", ...NUM].forEach((k) => { $(k).value = state[k]; });
   ["drift", "sitesOn", "landOn"].forEach((k) => { $(k).checked = state[k]; });
+  ["fayOn", "pnpOn"].forEach((k) => { $(k).checked = state[k]; });
 }
 async function main() {
   initMap(); syncInputs(); smInit();
@@ -1266,11 +1287,12 @@ async function main() {
   if (!route) { $("res-note").innerHTML = '<span class="warn">Could not load data/route.json. Serve the folder over HTTP (python3 -m http.server) rather than opening the file directly.</span>'; return; }
   ROUTE = route; STATIONS = (st && st.stations) || []; PRED = pr || { stations: {} };
   STOPSITES = (stops && stops.sites) || []; LANDINGS = (land && land.landings) || [];
+  // Colvos Passage is mandatory: only the west-of-Vashon line is planned
+  ROUTE.legs = ROUTE.legs.filter((l) => l.key === "colvos"); ROUTE.marks = ROUTE.marks.filter((m) => !m.route || m.route === "colvos"); state.route = "colvos";
   ROUTE.legs.forEach((l) => { CH[l.key] = chain(l.points); });
   const nc = STATIONS.filter((s) => s.kind === "current").length;
   $("data-status").textContent = `${pr ? `${nc} NOAA current stations and ${STATIONS.length - nc} tide stations, ${st.window[0]} to ${st.window[1]}` : "No predictions loaded: the plan is in still water"}; ${STOPSITES.length} past stop sites; ${LANDINGS.length} mapped landings.`;
   drawStatic(); drawSites();
-  $("route-seg").addEventListener("click", (e) => { const b = e.target.closest("button"); if (b) { state.route = b.dataset.route; changed(); } });
   $("mode-seg").addEventListener("click", (e) => {
     const b = e.target.closest("button"); if (!b) return;
     if (b.dataset.mode === "speed" && P && P.v) state.speed = Math.round(P.v * 20) / 20;
@@ -1278,8 +1300,9 @@ async function main() {
     state.mode = b.dataset.mode; syncInputs(); changed();
   });
   for (const k of ["sd", "st"]) $(k).addEventListener("change", (e) => { state[k] = e.target.value; state.t = null; changed(); });
-  for (const k of NUM) $(k).addEventListener("input", (e) => { const v = parseFloat(e.target.value); if (!isNaN(v)) { state[k] = v; if (k === "target") $("target-out").textContent = hm(v); if (k === "speed") $("speed-out").textContent = `${v.toFixed(2)} kn`; changed(); } });
+  for (const k of NUM) $(k).addEventListener("input", (e) => { const v = parseFloat(e.target.value); if (!isNaN(v)) { state[k] = v; if (k === "target") $("target-out").textContent = hm(v); if (k === "blakeH") $("blakeH-out").textContent = hm(v); if (k === "speed") $("speed-out").textContent = `${v.toFixed(2)} kn`; changed(); } });
   $("drift").addEventListener("change", (e) => { state.drift = e.target.checked; changed(); });
+  for (const k of ["fayOn", "pnpOn"]) $(k).addEventListener("change", (e) => { state[k] = e.target.checked; changed(); });
   for (const k of ["sitesOn", "landOn"]) $(k).addEventListener("change", (e) => { state[k] = e.target.checked; drawSites(); changed(); });
   $("time").addEventListener("input", (e) => setTime(+e.target.value));
   $("print").addEventListener("click", printSheets);
