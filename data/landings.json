@@ -1,0 +1,1200 @@
+{
+"source": "OpenStreetMap contributors (ODbL); imagery Esri World Imagery",
+"near_nm": 1.5,
+"generated": "2026-10-12T23:21Z",
+"landings": [
+{
+"lat": 47.24896,
+"lon": -122.43369,
+"kind": "beach",
+"name": "",
+"osm": "way/1473518971",
+"legs": {
+"colvos": {
+"along": 0.0,
+"offset": 0.58
+},
+"east": {
+"along": 0.0,
+"offset": 0.58
+}
+},
+"n": 1
+},
+{
+"lat": 47.24478,
+"lon": -122.43288,
+"kind": "beach",
+"name": "Foss Landing Marine",
+"osm": "way/1473518972",
+"legs": {
+"colvos": {
+"along": 0.0,
+"offset": 0.84
+},
+"east": {
+"along": 0.0,
+"offset": 0.84
+}
+},
+"also": [
+"marina"
+],
+"n": 2
+},
+{
+"lat": 47.25549,
+"lon": -122.43237,
+"kind": "marina",
+"name": "Tacoma Sea Scout Base",
+"osm": "node/339956361",
+"legs": {
+"colvos": {
+"along": 0.0,
+"offset": 0.24
+},
+"east": {
+"along": 0.0,
+"offset": 0.24
+}
+},
+"n": 3
+},
+{
+"lat": 47.28596,
+"lon": -122.40769,
+"kind": "beach",
+"name": "",
+"osm": "relation/8534277",
+"legs": {
+"colvos": {
+"along": 1.06,
+"offset": 1.42
+},
+"east": {
+"along": 1.06,
+"offset": 1.42
+}
+},
+"n": 4
+},
+{
+"lat": 47.2748,
+"lon": -122.45925,
+"kind": "beach",
+"name": "",
+"osm": "way/1037425187",
+"legs": {
+"colvos": {
+"along": 1.56,
+"offset": 0.62
+},
+"east": {
+"along": 1.56,
+"offset": 0.62
+}
+},
+"n": 5
+},
+{
+"lat": 47.27789,
+"lon": -122.47172,
+"kind": "shingle",
+"name": "",
+"osm": "way/1352478528",
+"legs": {
+"colvos": {
+"along": 2.07,
+"offset": 0.85
+},
+"east": {
+"along": 2.07,
+"offset": 0.85
+}
+},
+"n": 6
+},
+{
+"lat": 47.30494,
+"lon": -122.44403,
+"kind": "slipway",
+"name": "",
+"osm": "way/556172010",
+"legs": {
+"colvos": {
+"along": 2.38,
+"offset": 1.1
+},
+"east": {
+"along": 2.38,
+"offset": 1.1
+}
+},
+"n": 7
+},
+{
+"lat": 47.30543,
+"lon": -122.5134,
+"kind": "slipway",
+"name": "Breakwater Marina",
+"osm": "node/4080920301",
+"legs": {
+"colvos": {
+"along": 5.14,
+"offset": 0.62
+},
+"east": {
+"along": 5.14,
+"offset": 0.62
+}
+},
+"also": [
+"marina",
+"small craft"
+],
+"n": 8
+},
+{
+"lat": 47.30753,
+"lon": -122.51713,
+"kind": "small craft",
+"name": "Gas Dock",
+"osm": "way/414285097",
+"legs": {
+"colvos": {
+"along": 5.25,
+"offset": 0.49
+},
+"east": {
+"along": 5.25,
+"offset": 0.49
+}
+},
+"n": 9
+},
+{
+"lat": 47.31223,
+"lon": -122.52618,
+"kind": "beach",
+"name": "Owen Beach",
+"osm": "way/414285101",
+"legs": {
+"colvos": {
+"along": 5.57,
+"offset": 0.18
+},
+"east": {
+"along": 5.57,
+"offset": 0.18
+}
+},
+"n": 10
+},
+{
+"lat": 47.29184,
+"lon": -122.5287,
+"kind": "beach",
+"name": "Salmon Beach",
+"osm": "way/832975955",
+"legs": {
+"colvos": {
+"along": 5.78,
+"offset": 1.39
+},
+"east": {
+"along": 5.78,
+"offset": 1.39
+}
+},
+"n": 11
+},
+{
+"lat": 47.3501,
+"lon": -122.55595,
+"kind": "campsite",
+"name": "Cascadia Marine Trail Campsite - Sunrise Beach Park",
+"osm": "node/13623905342",
+"legs": {
+"colvos": {
+"along": 8.08,
+"offset": 0.66
+}
+},
+"also": [
+"beach"
+],
+"n": 12
+},
+{
+"lat": 47.35552,
+"lon": -122.55347,
+"kind": "beach",
+"name": "",
+"osm": "way/414318860",
+"legs": {
+"colvos": {
+"along": 8.39,
+"offset": 0.56
+}
+},
+"also": [
+"slipway"
+],
+"n": 13
+},
+{
+"lat": 47.34351,
+"lon": -122.45987,
+"kind": "beach",
+"name": "Northilla Beach",
+"osm": "relation/20036315",
+"legs": {
+"east": {
+"along": 9.18,
+"offset": 0.51
+}
+},
+"n": 14
+},
+{
+"lat": 47.31283,
+"lon": -122.43205,
+"kind": "beach",
+"name": "",
+"osm": "way/30613963",
+"legs": {
+"east": {
+"along": 9.93,
+"offset": 1.38
+}
+},
+"n": 15
+},
+{
+"lat": 47.31736,
+"lon": -122.42611,
+"kind": "beach",
+"name": "",
+"osm": "way/30614022",
+"legs": {
+"east": {
+"along": 9.93,
+"offset": 1.22
+}
+},
+"n": 16
+},
+{
+"lat": 47.32207,
+"lon": -122.40979,
+"kind": "beach",
+"name": "Dash Point State Park Beach",
+"osm": "way/39994891",
+"legs": {
+"east": {
+"along": 10.23,
+"offset": 1.44
+}
+},
+"n": 17
+},
+{
+"lat": 47.39446,
+"lon": -122.56748,
+"kind": "slipway",
+"name": "",
+"osm": "node/110802761",
+"legs": {
+"colvos": {
+"along": 10.93,
+"offset": 1.22
+}
+},
+"n": 18
+},
+{
+"lat": 47.4058,
+"lon": -122.5216,
+"kind": "campsite",
+"name": "Lisabuela Campground",
+"osm": "node/3656047804",
+"legs": {
+"colvos": {
+"along": 11.64,
+"offset": 0.56
+}
+},
+"n": 19
+},
+{
+"lat": 47.40993,
+"lon": -122.54823,
+"kind": "slipway",
+"name": "",
+"osm": "node/9201609878",
+"legs": {
+"colvos": {
+"along": 11.74,
+"offset": 0.55
+}
+},
+"n": 20
+},
+{
+"lat": 47.42163,
+"lon": -122.54217,
+"kind": "slipway",
+"name": "Ollala Boat Launch",
+"osm": "way/1448061800",
+"legs": {
+"colvos": {
+"along": 12.36,
+"offset": 0.6
+}
+},
+"n": 21
+},
+{
+"lat": 47.37856,
+"lon": -122.40552,
+"kind": "campsite",
+"name": "Maury Island Campground",
+"osm": "relation/11794172",
+"legs": {
+"east": {
+"along": 12.75,
+"offset": 0.84
+}
+},
+"also": [
+"beach",
+"slipway"
+],
+"n": 22
+},
+{
+"lat": 47.38401,
+"lon": -122.38663,
+"kind": "beach",
+"name": "",
+"osm": "way/1524460376",
+"legs": {
+"east": {
+"along": 13.56,
+"offset": 0.53
+}
+},
+"n": 23
+},
+{
+"lat": 47.438,
+"lon": -122.53494,
+"kind": "beach",
+"name": "Anderson Point Park Beach",
+"osm": "way/443870786",
+"legs": {
+"colvos": {
+"along": 13.62,
+"offset": 0.44
+}
+},
+"n": 24
+},
+{
+"lat": 47.38957,
+"lon": -122.37659,
+"kind": "campsite",
+"name": "Cascadia Marine Trail Campsite - Point Robinson",
+"osm": "node/6462485891",
+"legs": {
+"east": {
+"along": 14.47,
+"offset": 0.32
+}
+},
+"also": [
+"beach",
+"slipway"
+],
+"n": 25
+},
+{
+"lat": 47.45329,
+"lon": -122.49049,
+"kind": "campsite",
+"name": "AYH Ranch Campground",
+"osm": "way/1482687696",
+"legs": {
+"colvos": {
+"along": 14.77,
+"offset": 1.31
+}
+},
+"n": 26
+},
+{
+"lat": 47.42281,
+"lon": -122.43177,
+"kind": "beach",
+"name": "KVI Beach",
+"osm": "relation/13312841",
+"legs": {
+"east": {
+"along": 17.87,
+"offset": 1.36
+}
+},
+"n": 27
+},
+{
+"lat": 47.51683,
+"lon": -122.51639,
+"kind": "slipway",
+"name": "",
+"osm": "node/1083031122",
+"legs": {
+"colvos": {
+"along": 17.95,
+"offset": 1.12
+}
+},
+"n": 28
+},
+{
+"lat": 47.49709,
+"lon": -122.45973,
+"kind": "campsite",
+"name": "Cascadia Marine Trail Campsite - Wingehaven",
+"osm": "node/9752616613",
+"legs": {
+"colvos": {
+"along": 18.42,
+"offset": 1.32
+}
+},
+"n": 29
+},
+{
+"lat": 47.50895,
+"lon": -122.46526,
+"kind": "beach",
+"name": "North End Boat Ramp",
+"osm": "way/614268684",
+"legs": {
+"colvos": {
+"along": 18.42,
+"offset": 0.85
+}
+},
+"also": [
+"slipway"
+],
+"n": 30
+},
+{
+"lat": 47.53748,
+"lon": -122.49327,
+"kind": "beach",
+"name": "",
+"osm": "relation/7428119",
+"legs": {
+"colvos": {
+"along": 19.44,
+"offset": 1.1
+}
+},
+"n": 31
+},
+{
+"lat": 47.54069,
+"lon": -122.48215,
+"kind": "campsite",
+"name": "Blake Island Marine State Park Campground",
+"osm": "relation/11797102",
+"legs": {
+"colvos": {
+"along": 20.55,
+"offset": 0.65
+}
+},
+"also": [
+"slipway"
+],
+"n": 32
+},
+{
+"lat": 47.50085,
+"lon": -122.3836,
+"kind": "slipway",
+"name": "",
+"osm": "node/8981032163",
+"legs": {
+"east": {
+"along": 20.75,
+"offset": 1.43
+}
+},
+"n": 33
+},
+{
+"lat": 47.50576,
+"lon": -122.38959,
+"kind": "beach",
+"name": "",
+"osm": "way/339594050",
+"legs": {
+"east": {
+"along": 21.81,
+"offset": 1.28
+}
+},
+"also": [
+"slipway"
+],
+"n": 34
+},
+{
+"lat": 47.5025,
+"lon": -122.38692,
+"kind": "slipway",
+"name": "",
+"osm": "node/8981032166",
+"legs": {
+"east": {
+"along": 21.81,
+"offset": 1.35
+}
+},
+"n": 35
+},
+{
+"lat": 47.51112,
+"lon": -122.39443,
+"kind": "slipway",
+"name": "",
+"osm": "node/8981054817",
+"legs": {
+"east": {
+"along": 22.13,
+"offset": 1.19
+}
+},
+"n": 36
+},
+{
+"lat": 47.51526,
+"lon": -122.3965,
+"kind": "beach",
+"name": "Southwest 98th Street End",
+"osm": "way/339594048",
+"legs": {
+"east": {
+"along": 22.34,
+"offset": 1.19
+}
+},
+"n": 37
+},
+{
+"lat": 47.52016,
+"lon": -122.39522,
+"kind": "beach",
+"name": "Southwest Brace Point Drive Street End",
+"osm": "way/339595021",
+"legs": {
+"east": {
+"along": 22.65,
+"offset": 1.33
+}
+},
+"also": [
+"slipway"
+],
+"n": 38
+},
+{
+"lat": 47.52342,
+"lon": -122.39407,
+"kind": "beach",
+"name": "",
+"osm": "way/738088095",
+"legs": {
+"east": {
+"along": 22.86,
+"offset": 1.43
+}
+},
+"n": 39
+},
+{
+"lat": 47.52803,
+"lon": -122.39802,
+"kind": "beach",
+"name": "",
+"osm": "way/893265547",
+"legs": {
+"east": {
+"along": 23.07,
+"offset": 1.37
+}
+},
+"n": 40
+},
+{
+"lat": 47.60205,
+"lon": -122.49917,
+"kind": "slipway",
+"name": "",
+"osm": "node/12781977036",
+"legs": {
+"colvos": {
+"along": 24.2,
+"offset": 1.2
+},
+"east": {
+"along": 28.42,
+"offset": 1.2
+}
+},
+"n": 41
+},
+{
+"lat": 47.57363,
+"lon": -122.41646,
+"kind": "beach",
+"name": "",
+"osm": "way/881303548",
+"legs": {
+"east": {
+"along": 26.57,
+"offset": 1.44
+}
+},
+"n": 42
+},
+{
+"lat": 47.57574,
+"lon": -122.42033,
+"kind": "beach",
+"name": "",
+"osm": "way/881303552",
+"legs": {
+"east": {
+"along": 26.68,
+"offset": 1.28
+}
+},
+"also": [
+"shingle"
+],
+"n": 43
+},
+{
+"lat": 47.57802,
+"lon": -122.41568,
+"kind": "beach",
+"name": "",
+"osm": "way/881303546",
+"legs": {
+"east": {
+"along": 26.78,
+"offset": 1.47
+}
+},
+"n": 44
+},
+{
+"lat": 47.65715,
+"lon": -122.42794,
+"kind": "beach",
+"name": "South Beach",
+"osm": "relation/9128885",
+"legs": {
+"colvos": {
+"along": 27.74,
+"offset": 1.42
+},
+"east": {
+"along": 31.96,
+"offset": 1.42
+}
+},
+"n": 45
+},
+{
+"lat": 47.66252,
+"lon": -122.43317,
+"kind": "beach",
+"name": "North Beach",
+"osm": "relation/9128884",
+"legs": {
+"colvos": {
+"along": 28.05,
+"offset": 1.21
+},
+"east": {
+"along": 32.26,
+"offset": 1.21
+}
+},
+"n": 46
+},
+{
+"lat": 47.79829,
+"lon": -122.49383,
+"kind": "beach",
+"name": "",
+"osm": "way/920998543",
+"legs": {
+"colvos": {
+"along": 36.3,
+"offset": 1.48
+},
+"east": {
+"along": 40.51,
+"offset": 1.48
+}
+},
+"n": 47
+},
+{
+"lat": 47.91285,
+"lon": -122.53555,
+"kind": "beach",
+"name": "",
+"osm": "way/1089543002",
+"legs": {
+"colvos": {
+"along": 44.82,
+"offset": 0.26
+},
+"east": {
+"along": 49.03,
+"offset": 0.26
+}
+},
+"n": 48
+},
+{
+"lat": 47.91108,
+"lon": -122.55839,
+"kind": "slipway",
+"name": "",
+"osm": "node/1024304845",
+"legs": {
+"colvos": {
+"along": 45.53,
+"offset": 1.1
+},
+"east": {
+"along": 49.74,
+"offset": 1.1
+}
+},
+"n": 49
+},
+{
+"lat": 47.92106,
+"lon": -122.60081,
+"kind": "beach",
+"name": "Foulweather Bluff Beach",
+"osm": "way/1264389785",
+"legs": {
+"colvos": {
+"along": 48.73,
+"offset": 1.46
+},
+"east": {
+"along": 52.94,
+"offset": 1.46
+}
+},
+"n": 50
+},
+{
+"lat": 48.00922,
+"lon": -122.69023,
+"kind": "campsite",
+"name": "Cascade Marine Trail Campsite - Kinney Point",
+"osm": "node/6463034917",
+"legs": {
+"colvos": {
+"along": 54.57,
+"offset": 0.71
+},
+"east": {
+"along": 58.78,
+"offset": 0.71
+}
+},
+"also": [
+"slipway"
+],
+"n": 51
+},
+{
+"lat": 48.02305,
+"lon": -122.72945,
+"kind": "campsite",
+"name": "Cascadia Marine Trail Campsite - Oak Bay",
+"osm": "node/13513369163",
+"legs": {
+"colvos": {
+"along": 56.08,
+"offset": 0.16
+},
+"east": {
+"along": 60.29,
+"offset": 0.16
+}
+},
+"also": [
+"slipway"
+],
+"n": 52
+},
+{
+"lat": 48.02407,
+"lon": -122.73332,
+"kind": "campsite",
+"name": "Upper Oak Bay Campground",
+"osm": "way/1472846312",
+"legs": {
+"colvos": {
+"along": 56.18,
+"offset": 0.24
+},
+"east": {
+"along": 60.4,
+"offset": 0.24
+}
+},
+"n": 53
+},
+{
+"lat": 48.03166,
+"lon": -122.73007,
+"kind": "beach",
+"name": "Portage Beach",
+"osm": "way/1264436190",
+"legs": {
+"colvos": {
+"along": 56.49,
+"offset": 0.16
+},
+"east": {
+"along": 60.7,
+"offset": 0.16
+}
+},
+"n": 54
+},
+{
+"lat": 48.03348,
+"lon": -122.75212,
+"kind": "slipway",
+"name": "",
+"osm": "node/2552029692",
+"legs": {
+"colvos": {
+"along": 57.11,
+"offset": 0.44
+},
+"east": {
+"along": 61.32,
+"offset": 0.44
+}
+},
+"n": 55
+},
+{
+"lat": 48.05775,
+"lon": -122.76897,
+"kind": "beach",
+"name": "Kuhn Spit",
+"osm": "relation/20154457",
+"legs": {
+"colvos": {
+"along": 58.44,
+"offset": 0.56
+},
+"east": {
+"along": 62.65,
+"offset": 0.56
+}
+},
+"n": 56
+},
+{
+"lat": 48.07462,
+"lon": -122.7901,
+"kind": "campsite",
+"name": "Fort Townsend Historical State Park Campground",
+"osm": "relation/19298988",
+"legs": {
+"colvos": {
+"along": 59.62,
+"offset": 1.17
+},
+"east": {
+"along": 63.83,
+"offset": 1.17
+}
+},
+"n": 57
+},
+{
+"lat": 48.09846,
+"lon": -122.79114,
+"kind": "beach",
+"name": "",
+"osm": "way/1363665015",
+"legs": {
+"colvos": {
+"along": 60.68,
+"offset": 1.25
+},
+"east": {
+"along": 64.89,
+"offset": 1.25
+}
+},
+"n": 58
+},
+{
+"lat": 48.10092,
+"lon": -122.78732,
+"kind": "beach",
+"name": "",
+"osm": "way/1363669968",
+"legs": {
+"colvos": {
+"along": 60.68,
+"offset": 1.16
+},
+"east": {
+"along": 64.89,
+"offset": 1.16
+}
+},
+"n": 59
+},
+{
+"lat": 48.10482,
+"lon": -122.78167,
+"kind": "beach",
+"name": "",
+"osm": "way/1363677832",
+"legs": {
+"colvos": {
+"along": 60.68,
+"offset": 1.09
+},
+"east": {
+"along": 64.89,
+"offset": 1.09
+}
+},
+"n": 60
+},
+{
+"lat": 48.09634,
+"lon": -122.71912,
+"kind": "campsite",
+"name": "Cascadia Marine Trail Campsite -  Fort Flagler State Park",
+"osm": "node/7707466497",
+"legs": {
+"colvos": {
+"along": 61.33,
+"offset": 1.26
+},
+"east": {
+"along": 65.55,
+"offset": 1.26
+}
+},
+"also": [
+"slipway"
+],
+"n": 61
+},
+{
+"lat": 48.09083,
+"lon": -122.71575,
+"kind": "campsite",
+"name": "Fort Flagler Upper Campground",
+"osm": "way/825443957",
+"legs": {
+"colvos": {
+"along": 61.33,
+"offset": 1.5
+},
+"east": {
+"along": 65.55,
+"offset": 1.5
+}
+},
+"n": 62
+},
+{
+"lat": 48.0947,
+"lon": -122.72384,
+"kind": "beach",
+"name": "Fort Flagler Boat Launch",
+"osm": "way/337464867",
+"legs": {
+"colvos": {
+"along": 61.33,
+"offset": 1.11
+},
+"east": {
+"along": 65.55,
+"offset": 1.11
+}
+},
+"also": [
+"slipway"
+],
+"n": 63
+},
+{
+"lat": 48.09245,
+"lon": -122.72192,
+"kind": "slipway",
+"name": "Fort Flagler Boat Launch",
+"osm": "node/4218407788",
+"legs": {
+"colvos": {
+"along": 61.33,
+"offset": 1.23
+},
+"east": {
+"along": 65.55,
+"offset": 1.23
+}
+},
+"n": 64
+},
+{
+"lat": 48.10762,
+"lon": -122.77478,
+"kind": "slipway",
+"name": "Port Townsend Boat Haven",
+"osm": "node/12128145339",
+"legs": {
+"colvos": {
+"along": 61.75,
+"offset": 0.97
+},
+"east": {
+"along": 65.96,
+"offset": 0.97
+}
+},
+"also": [
+"marina"
+],
+"n": 65
+},
+{
+"lat": 48.13508,
+"lon": -122.76223,
+"kind": "campsite",
+"name": "Cascadia Marine Trail Campsite - Fort Worden",
+"osm": "node/6465904364",
+"legs": {
+"colvos": {
+"along": 62.16,
+"offset": 1.3
+},
+"east": {
+"along": 66.38,
+"offset": 1.3
+}
+},
+"also": [
+"slipway"
+],
+"n": 66
+},
+{
+"lat": 48.11437,
+"lon": -122.75513,
+"kind": "beach",
+"name": "",
+"osm": "way/54926796",
+"legs": {
+"colvos": {
+"along": 62.16,
+"offset": 0.16
+},
+"east": {
+"along": 66.38,
+"offset": 0.16
+}
+},
+"also": [
+"slipway"
+],
+"n": 67
+},
+{
+"lat": 48.12719,
+"lon": -122.75679,
+"kind": "beach",
+"name": "",
+"osm": "way/332072148",
+"legs": {
+"colvos": {
+"along": 62.16,
+"offset": 0.78
+},
+"east": {
+"along": 66.38,
+"offset": 0.78
+}
+},
+"n": 68
+},
+{
+"lat": 48.11555,
+"lon": -122.75168,
+"kind": "beach",
+"name": "Point Hudson Marina",
+"osm": "way/949847426",
+"legs": {
+"colvos": {
+"along": 62.16,
+"offset": 0.05
+},
+"east": {
+"along": 66.38,
+"offset": 0.05
+}
+},
+"also": [
+"marina",
+"small craft"
+],
+"n": 69
+},
+{
+"lat": 48.12185,
+"lon": -122.75439,
+"kind": "beach",
+"name": "",
+"osm": "way/1036996409",
+"legs": {
+"colvos": {
+"along": 62.16,
+"offset": 0.44
+},
+"east": {
+"along": 66.38,
+"offset": 0.44
+}
+},
+"n": 70
+}
+]
+}
