@@ -1,0 +1,53 @@
+{
+ "window_days": 42,
+ "years": [
+  1976,
+  2025
+ ],
+ "areas": [
+  {
+   "name": "Tacoma to Colvos Passage",
+   "scale": 1.58,
+   "hours_15": 0.0581,
+   "hours_sca": 0.0024,
+   "hours_15_south": 0.0572,
+   "hours_15_north": 0.0009,
+   "days_15": 9.1,
+   "days_sca": 0.9,
+   "days_gale": 0.0
+  },
+  {
+   "name": "Vashon to Kingston",
+   "scale": 1.73,
+   "hours_15": 0.0738,
+   "hours_sca": 0.0107,
+   "hours_15_south": 0.0678,
+   "hours_15_north": 0.006,
+   "days_15": 9.6,
+   "days_sca": 2.2,
+   "days_gale": 0.0
+  },
+  {
+   "name": "Kingston to Foulweather Bluff (Point No Point)",
+   "scale": 1.73,
+   "hours_15": 0.0738,
+   "hours_sca": 0.0107,
+   "hours_15_south": 0.0678,
+   "hours_15_north": 0.006,
+   "days_15": 9.6,
+   "days_sca": 2.2,
+   "days_gale": 0.0
+  },
+  {
+   "name": "Admiralty Inlet to Port Townsend",
+   "scale": 1.87,
+   "hours_15": 0.0495,
+   "hours_sca": 0.0138,
+   "hours_15_south": 0.0438,
+   "hours_15_north": 0.0057,
+   "days_15": 6.9,
+   "days_sca": 2.2,
+   "days_gale": 0.0
+  }
+ ]
+}
