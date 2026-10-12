@@ -110,13 +110,21 @@ def parse(year, text):
     return None
 
 
+def repeat_of(r, index):
+    """The year whose sheet this is a copy of (the 2026 recap page also links the 2025 sheet, whose dates carry no year)."""
+    names = {t["team"].lower() for t in r["teams"]}
+    return next((y for y, v in index.items() if {t["team"].lower() for t in v["teams"]} == names), None)
+
+
 def reparse():
     """Rebuild index.json from the CSVs already in data/results (no network)."""
     index = {}
     for f in sorted(OUT.glob("*.csv")):
         year = int(f.stem.split("-")[0])
         r = parse(year, f.read_text())
-        if r and year not in index:
+        if r and repeat_of(r, index):
+            log(f"{f.name}: same teams as {repeat_of(r, index)}, skipped")
+        elif r and year not in index:
             index[year] = {"file": f.name, **r}
             log(f"{f.name}: {len(r['teams'])} teams, {sum(1 for t in r['teams'] if t['elapsed_h'])} timed, start {r['start']}")
     (OUT / "index.json").write_text(json.dumps({"source": "seventy48.com race recaps (published Google Sheets)", "years": index}, indent=0))
@@ -142,7 +150,9 @@ def main():
             (OUT / name).write_text(text)
             r = parse(year, text)
             log(f"  {name}: {'%d teams, %d with a time, start %s' % (len(r['teams']), sum(1 for t in r['teams'] if t['elapsed_h']), r['start']) if r else 'not this year or unreadable'}")
-            if r and year not in index:
+            if r and repeat_of(r, index):
+                log(f"  same teams as {repeat_of(r, index)}, skipped")
+            elif r and year not in index:
                 index[year] = {"file": name, "sheet": base + "/pubhtml", **r}
     (OUT / "index.json").write_text(json.dumps({"source": "seventy48.com race recaps (published Google Sheets)", "years": index}, indent=0))
     for y in MAPROGRESS:
