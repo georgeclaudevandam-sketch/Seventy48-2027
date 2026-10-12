@@ -1,0 +1,718 @@
+{
+"source": "seventy48.com race recaps (published Google Sheets)",
+"years": {
+"2018": {
+"file": "2018.csv",
+"sheet": "https://docs.google.com/spreadsheets/d/e/2PACX-1vSTPAgLIRmNvwF-rZj3x5aMnUzxXIfGDUk4SM-0DHEHPpsg_36kp4LSp3OpfJjHwzkYfeP5R8j9_jIG/pubhtml",
+"teams": [
+{
+"team": "Epic",
+"class": "",
+"boat": "kayak",
+"elapsed_h": null,
+"raw": "6/12/2018 3:09 AM"
+},
+{
+"team": "6 by 600",
+"class": "",
+"boat": "outrigger",
+"elapsed_h": null,
+"raw": "6/12/2018 3:28 AM"
+},
+{
+"team": "Way Two Close",
+"class": "",
+"boat": "rowboat",
+"elapsed_h": null,
+"raw": "6/12/2018 4:20 AM"
+},
+{
+"team": "Go Mamas GO!!!",
+"class": "",
+"boat": "kayak",
+"elapsed_h": null,
+"raw": "6/12/2018 4:37 AM"
+},
+{
+"team": "Stick Boys",
+"class": "",
+"boat": "kayak",
+"elapsed_h": null,
+"raw": "6/12/2018 4:40 AM"
+},
+{
+"team": "Wave Forager",
+"class": "",
+"boat": "rowboat",
+"elapsed_h": null,
+"raw": "6/12/2018 4:57 AM"
+},
+{
+"team": "Sound Rowers",
+"class": "",
+"boat": "rowboat",
+"elapsed_h": null,
+"raw": "6/12/2018 5:11 AM"
+},
+{
+"team": "Night Owl",
+"class": "",
+"boat": "kayak",
+"elapsed_h": null,
+"raw": "6/12/2018 6:50 AM"
+},
+{
+"team": "Kikaha O Ke Kai-Mahina",
+"class": "",
+"boat": "outrigger",
+"elapsed_h": null,
+"raw": "6/12/2018 7:11 AM"
+},
+{
+"team": "Oaracle",
+"class": "",
+"boat": "rowboat",
+"elapsed_h": null,
+"raw": "6/12/2018 7:28 AM"
+},
+{
+"team": "No Dream",
+"class": "",
+"boat": "rowboat",
+"elapsed_h": null,
+"raw": "6/12/2018 7:39 AM"
+},
+{
+"team": "Minke on Port",
+"class": "",
+"boat": "kayak",
+"elapsed_h": null,
+"raw": "6/12/2018 7:45 AM"
+},
+{
+"team": "Rabbit",
+"class": "",
+"boat": "rowboat",
+"elapsed_h": null,
+"raw": "6/12/2018 7:59 AM"
+},
+{
+"team": "Old Enough to Know Better",
+"class": "",
+"boat": "kayak",
+"elapsed_h": null,
+"raw": "6/12/2018 8:02 AM"
+},
+{
+"team": "Bearded Boat Bros",
+"class": "",
+"boat": "kayak",
+"elapsed_h": null,
+"raw": "6/12/2018 8:07 AM"
+},
+{
+"team": "Heart of Gold",
+"class": "",
+"boat": "SUP",
+"elapsed_h": null,
+"raw": "6/12/2018 8:15 AM"
+},
+{
+"team": "KayakPhD",
+"class": "",
+"boat": "kayak",
+"elapsed_h": null,
+"raw": "6/12/2018 8:34 AM"
+},
+{
+"team": "Ahti-stache",
+"class": "",
+"boat": "outrigger",
+"elapsed_h": null,
+"raw": "6/12/2018 8:39 AM"
+},
+{
+"team": "SEVENTYFOUR38",
+"class": "",
+"boat": "kayak",
+"elapsed_h": null,
+"raw": "6/12/2018 8:45 AM"
+},
+{
+"team": "Performance Anxiety",
+"class": "",
+"boat": "rowboat",
+"elapsed_h": null,
+"raw": "6/12/2018 9:27 AM"
+},
+{
+"team": "Old Anacortes Winning and Celebrating Society",
+"class": "",
+"boat": "rowboat",
+"elapsed_h": null,
+"raw": "6/12/2018 9:37 AM"
+},
+{
+"team": "Sea Arms",
+"class": "",
+"boat": "kayak",
+"elapsed_h": null,
+"raw": "6/12/2018 9:40 AM"
+},
+{
+"team": "Daring Adventure",
+"class": "",
+"boat": "rowboat",
+"elapsed_h": null,
+"raw": "6/12/2018 9:57 AM"
+},
+{
+"team": "Half Way to Cina",
+"class": "",
+"boat": "SUP",
+"elapsed_h": null,
+"raw": "6/12/2018 9:57 AM"
+},
+{
+"team": "Stroker Ace",
+"class": "",
+"boat": "rowboat",
+"elapsed_h": null,
+"raw": "6/12/2018 10:14 AM"
+},
+{
+"team": "Whitehall",
+"class": "",
+"boat": "rowboat",
+"elapsed_h": null,
+"raw": "6/12/2018 10:19 AM"
+},
+{
+"team": "Sup N Irish",
+"class": "",
+"boat": "SUP",
+"elapsed_h": null,
+"raw": "6/12/2018 10:28 AM"
+},
+{
+"team": "Old Man and the C",
+"class": "",
+"boat": "rowboat",
+"elapsed_h": null,
+"raw": "6/12/2018 10:32 AM"
+},
+{
+"team": "General Jet Stream",
+"class": "",
+"boat": "SUP",
+"elapsed_h": null,
+"raw": "6/12/2018 11:30 AM"
+},
+{
+"team": "Stella By Starlight",
+"class": "",
+"boat": "outrigger",
+"elapsed_h": null,
+"raw": "6/12/2018 11:59 AM"
+},
+{
+"team": "Zissou",
+"class": "",
+"boat": "outrigger",
+"elapsed_h": null,
+"raw": "6/12/2018 11:59 AM"
+},
+{
+"team": "Sea Runners",
+"class": "",
+"boat": "rowboat",
+"elapsed_h": null,
+"raw": "6/12/2018 12:10 PM"
+},
+{
+"team": "Kitigan",
+"class": "",
+"boat": "SUP",
+"elapsed_h": null,
+"raw": "6/12/2018 12:21 PM"
+},
+{
+"team": "Splinter SUP",
+"class": "",
+"boat": "SUP",
+"elapsed_h": null,
+"raw": "6/12/2018 12:35 PM"
+},
+{
+"team": "Solo Kraig",
+"class": "",
+"boat": "rowboat",
+"elapsed_h": null,
+"raw": "6/12/2018 12:52 PM"
+},
+{
+"team": "SWIB",
+"class": "",
+"boat": "kayak",
+"elapsed_h": null,
+"raw": "6/12/2018 12:57 PM"
+},
+{
+"team": "Livin' n' Thrivin'",
+"class": "",
+"boat": "SUP",
+"elapsed_h": null,
+"raw": "6/12/2018 12:58 PM"
+},
+{
+"team": "Comradery",
+"class": "",
+"boat": "outrigger",
+"elapsed_h": null,
+"raw": "6/12/2018 1:04 PM"
+},
+{
+"team": "Sea Monkeys",
+"class": "",
+"boat": "SUP",
+"elapsed_h": null,
+"raw": "6/12/2018 1:13 PM"
+},
+{
+"team": "Good Story",
+"class": "",
+"boat": "SUP",
+"elapsed_h": null,
+"raw": "6/12/2018 1:17 PM"
+},
+{
+"team": "Valhalla",
+"class": "",
+"boat": "rowboat",
+"elapsed_h": null,
+"raw": "6/12/2018 1:29 PM"
+},
+{
+"team": "Schutzler",
+"class": "",
+"boat": "SUP",
+"elapsed_h": null,
+"raw": "6/12/2018 1:37 PM"
+},
+{
+"team": "Excellent Adventure",
+"class": "",
+"boat": "outrigger",
+"elapsed_h": null,
+"raw": "6/12/2018 2:35 PM"
+},
+{
+"team": "Arm & Leg",
+"class": "",
+"boat": "kayak",
+"elapsed_h": null,
+"raw": "6/12/2018 2:39 PM"
+},
+{
+"team": "Tinman",
+"class": "",
+"boat": "rowboat",
+"elapsed_h": null,
+"raw": "6/12/2018 2:59 PM"
+},
+{
+"team": "KOLEA",
+"class": "",
+"boat": "outrigger",
+"elapsed_h": null,
+"raw": "6/12/2018 3:13 PM"
+},
+{
+"team": "Salish Stars",
+"class": "",
+"boat": "rowboat",
+"elapsed_h": null,
+"raw": "6/12/2018 3:16 PM"
+},
+{
+"team": "Donovan at Dumas Bay",
+"class": "",
+"boat": "kayak",
+"elapsed_h": null,
+"raw": "6/12/2018 4:24 PM"
+},
+{
+"team": "Riff Raft",
+"class": "",
+"boat": "rowboat",
+"elapsed_h": null,
+"raw": "6/12/2018 5:03 AM"
+},
+{
+"team": "GlobeRiders Paddlers",
+"class": "",
+"boat": "kayak",
+"elapsed_h": null,
+"raw": "6/12/2018 5:32 AM"
+},
+{
+"team": "Mama Said",
+"class": "",
+"boat": "SUP",
+"elapsed_h": null,
+"raw": "6/12/2018 5:58 PM"
+},
+{
+"team": "Dreads Away",
+"class": "",
+"boat": "SUP",
+"elapsed_h": null,
+"raw": "6/12/2018 5:58 PM"
+},
+{
+"team": "Mobilis In Mobili",
+"class": "",
+"boat": "kayak",
+"elapsed_h": null,
+"raw": "6/12/2018 6:22 PM"
+},
+{
+"team": "Furious George",
+"class": "",
+"boat": "rowboat",
+"elapsed_h": null,
+"raw": "6/12/2018 6:57 PM"
+},
+{
+"team": "Saul T. Scrapper",
+"class": "",
+"boat": "kayak",
+"elapsed_h": null,
+"raw": "6/12/2018 7:17 PM"
+},
+{
+"team": "Honu",
+"class": "",
+"boat": "rowboat",
+"elapsed_h": null,
+"raw": "6/12/2018 8:04 PM"
+},
+{
+"team": "Flipper",
+"class": "",
+"boat": "rowboat",
+"elapsed_h": null,
+"raw": "6/12/2018 8:05 PM"
+},
+{
+"team": "Like a G6",
+"class": "",
+"boat": "kayak",
+"elapsed_h": null,
+"raw": "6/12/2018 8:20 PM"
+},
+{
+"team": "SBP2",
+"class": "",
+"boat": "SUP",
+"elapsed_h": null,
+"raw": "6/12/2018 8:28 PM"
+},
+{
+"team": "Berger. No Fries.",
+"class": "",
+"boat": "rowboat",
+"elapsed_h": null,
+"raw": "6/12/2018 8:36 PM"
+},
+{
+"team": "Gorgonian Girl",
+"class": "",
+"boat": "kayak",
+"elapsed_h": null,
+"raw": "6/12/2018 8:38 PM"
+},
+{
+"team": "Madam Mollusk",
+"class": "",
+"boat": "kayak",
+"elapsed_h": null,
+"raw": "6/12/2018 8:38 PM"
+},
+{
+"team": "PNW Saga",
+"class": "",
+"boat": "SUP",
+"elapsed_h": null,
+"raw": "6/12/2018 8:41 PM"
+},
+{
+"team": "8OARS",
+"class": "",
+"boat": "rowboat",
+"elapsed_h": null,
+"raw": "6/12/2018 8:46 PM"
+},
+{
+"team": "Fat Chance",
+"class": "",
+"boat": "kayak",
+"elapsed_h": null,
+"raw": "6/12/2018 8:49 PM"
+},
+{
+"team": "1 of 8",
+"class": "",
+"boat": "rowboat",
+"elapsed_h": null,
+"raw": "6/12/2018 8:54 PM"
+},
+{
+"team": "Water Dragon",
+"class": "",
+"boat": "SUP",
+"elapsed_h": null,
+"raw": "6/12/2018 8:54 PM"
+},
+{
+"team": "Aisle of Cornell",
+"class": "",
+"boat": "SUP",
+"elapsed_h": null,
+"raw": "6/12/2018 8:55 PM"
+},
+{
+"team": "Sundrop",
+"class": "",
+"boat": "rowboat",
+"elapsed_h": null,
+"raw": "6/12/2018 9:00 PM"
+},
+{
+"team": "Gold Boolean",
+"class": "",
+"boat": "kayak",
+"elapsed_h": null,
+"raw": "6/12/2018 9:10 PM"
+},
+{
+"team": "Bellingham Mama",
+"class": "",
+"boat": "kayak",
+"elapsed_h": null,
+"raw": "6/12/2018 9:12 PM"
+},
+{
+"team": "Muskrat",
+"class": "",
+"boat": "rowboat",
+"elapsed_h": null,
+"raw": "6/12/2018 9:20 PM"
+},
+{
+"team": "Super Dave",
+"class": "",
+"boat": "SUP",
+"elapsed_h": null,
+"raw": "6/12/2018 9:30 PM"
+},
+{
+"team": "Jellyfish Flow",
+"class": "",
+"boat": "outrigger",
+"elapsed_h": null,
+"raw": "6/12/2018 9:36 PM"
+},
+{
+"team": "Adventure Girl",
+"class": "",
+"boat": "outrigger",
+"elapsed_h": null,
+"raw": "6/12/2018 9:36 PM"
+},
+{
+"team": "Lub Me Tender",
+"class": "",
+"boat": "rowboat",
+"elapsed_h": null,
+"raw": "6/12/2018 9:46 PM"
+},
+{
+"team": "South Wind",
+"class": "",
+"boat": "outrigger",
+"elapsed_h": null,
+"raw": "6/12/2018 9:49 PM"
+},
+{
+"team": "Sea It Rise",
+"class": "",
+"boat": "kayak",
+"elapsed_h": null,
+"raw": "6/12/2018 10:00 PM"
+},
+{
+"team": "Wylie C",
+"class": "",
+"boat": "SUP",
+"elapsed_h": null,
+"raw": "6/12/2018 10:39 PM"
+},
+{
+"team": "Oosik",
+"class": "",
+"boat": "rowboat",
+"elapsed_h": null,
+"raw": "6/12/2018 10:43 PM"
+},
+{
+"team": "Overboard",
+"class": "",
+"boat": "kayak",
+"elapsed_h": null,
+"raw": "6/12/2018 10:48 PM"
+},
+{
+"team": "Hello Waterface",
+"class": "",
+"boat": "SUP",
+"elapsed_h": null,
+"raw": "6/12/2018 10:50 PM"
+},
+{
+"team": "Mutually Exclusive",
+"class": "",
+"boat": "kayak",
+"elapsed_h": null,
+"raw": "6/12/2018 10:51 PM"
+},
+{
+"team": "Tay Cray",
+"class": "",
+"boat": "SUP",
+"elapsed_h": null,
+"raw": "6/12/2018 11:04 PM"
+},
+{
+"team": "Hongvi-Smutny",
+"class": "",
+"boat": "rowboat",
+"elapsed_h": null,
+"raw": "6/12/2018 11:18 PM"
+},
+{
+"team": "Nord-on-Board",
+"class": "",
+"boat": "SUP",
+"elapsed_h": null,
+"raw": "6/13/2018 4:00 AM"
+},
+{
+"team": "Last American Man",
+"class": "",
+"boat": "rowboat",
+"elapsed_h": null,
+"raw": "6/13/2018 8:01 AM"
+},
+{
+"team": "Cape Decision Lighthouse",
+"class": "",
+"boat": "rowboat",
+"elapsed_h": null,
+"raw": "6/13/2018 8:21 AM"
+},
+{
+"team": "Mike's Kayak",
+"class": "",
+"boat": "kayak",
+"elapsed_h": null,
+"raw": "6/13/2018 8:23 AM"
+},
+{
+"team": "Hot Diggity",
+"class": "",
+"boat": "kayak",
+"elapsed_h": null,
+"raw": "6/13/2018 8:24 AM"
+},
+{
+"team": "47:59:00",
+"class": "",
+"boat": "kayak",
+"elapsed_h": null,
+"raw": "6/13/2018 8:44 AM"
+},
+{
+"team": "Type Two Fun",
+"class": "",
+"boat": "kayak",
+"elapsed_h": null,
+"raw": "6/13/2018 8:45 AM"
+},
+{
+"team": "Artful Sailor",
+"class": "",
+"boat": "rowboat",
+"elapsed_h": null,
+"raw": "6/13/2018 9:15 AM"
+},
+{
+"team": "Tired Dad",
+"class": "",
+"boat": "SUP",
+"elapsed_h": null,
+"raw": "6/13/2018 10:12 AM"
+},
+{
+"team": "Skelty",
+"class": "",
+"boat": "SUP",
+"elapsed_h": null,
+"raw": "6/13/2018 10:12 AM"
+},
+{
+"team": "No Regrets",
+"class": "",
+"boat": "rowboat",
+"elapsed_h": null,
+"raw": "6/13/2018 10:40 AM"
+},
+{
+"team": "AquaVan",
+"class": "",
+"boat": "rowboat",
+"elapsed_h": null,
+"raw": "6/13/2018 11:17 AM"
+},
+{
+"team": "HMGS NorthWater",
+"class": "",
+"boat": "kayak",
+"elapsed_h": null,
+"raw": "6/13/2018 1:56 PM"
+},
+{
+"team": "Good News: I Saw a Seal!",
+"class": "",
+"boat": "kayak",
+"elapsed_h": null,
+"raw": "6/13/2018 2:41 PM"
+},
+{
+"team": "Paddle On... Paddle On",
+"class": "",
+"boat": "kayak",
+"elapsed_h": null,
+"raw": "6/13/2018 2:41 PM"
+},
+{
+"team": "Rogue Kayaker",
+"class": "",
+"boat": "kayak",
+"elapsed_h": null,
+"raw": "6/13/2018 2:41 PM"
+}
+]
+}
+}
+}
