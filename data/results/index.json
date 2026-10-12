@@ -3,6 +3,7 @@
 "years": {
 "2018": {
 "file": "2018.csv",
+"sheet": "https://docs.google.com/spreadsheets/d/e/2PACX-1vSTPAgLIRmNvwF-rZj3x5aMnUzxXIfGDUk4SM-0DHEHPpsg_36kp4LSp3OpfJjHwzkYfeP5R8j9_jIG/pubhtml",
 "start": "2018-06-11T17:30",
 "teams": [
 {
@@ -716,6 +717,7 @@
 },
 "2019": {
 "file": "2019.csv",
+"sheet": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQIkZQq_COj_M1F1TKxJUR9WB7sVyfC3aDXqkovUZcikeR46eEHknp8Wtcnx8i4R3R6F2SfFCW4LAeb/pubhtml",
 "start": "2019-05-31T19:00",
 "teams": [
 {
@@ -1478,6 +1480,7 @@
 },
 "2021": {
 "file": "2021.csv",
+"sheet": "https://docs.google.com/spreadsheets/d/e/2PACX-1vT9TK3UpYELZzoxL_QXDhdPCqcRpEZY-vnwHPcLuCFzVLu4tCRj5kgxq5B5CH9KALCSiZap1uMt8BAL/pubhtml",
 "start": "2021-06-04T19:00",
 "teams": [
 {
@@ -2135,6 +2138,7 @@
 },
 "2022": {
 "file": "2022.csv",
+"sheet": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ4a6GyW-nNBWXwSSz7PTZ0lfmfOZEAdoQ5QOEktTqkyaU9btC8-NwPVWgNwG32zyn8aqHJtN7LMsP_/pubhtml",
 "start": "2022-06-10T19:00",
 "teams": [
 {
@@ -2953,6 +2957,7 @@
 },
 "2023": {
 "file": "2023.csv",
+"sheet": "https://docs.google.com/spreadsheets/d/e/2PACX-1vSJhoJ9B7lP6GouAhm_tqBbKRkg8m0WHis5oa3diJxaV6zTW0PszypXfHm5b8HHmdqXPhQq3zeAP92d/pubhtml",
 "start": "2023-06-02T19:00",
 "teams": [
 {
@@ -3449,6 +3454,7 @@
 },
 "2024": {
 "file": "2024.csv",
+"sheet": "https://docs.google.com/spreadsheets/d/e/2PACX-1vRDbhGotXx7_SVndT0E1EjN_ADdQB3F2cMPl8FwMqODQbjBOm4kkPgeIyNN3qWoWvE5IHlsg7FW9uEh/pubhtml",
 "start": "2024-05-31T19:00",
 "teams": [
 {
@@ -4379,6 +4385,7 @@
 },
 "2025": {
 "file": "2025.csv",
+"sheet": "https://docs.google.com/spreadsheets/d/e/2PACX-1vSNAjaJHeHMDa4xbsYl2bX1hoah6doQLCb_NfLMYQXcv-vdSPFNHwxVR1_xiGibpp4L5NXY1I1NKUBN/pubhtml",
 "start": "2025-06-06T19:00",
 "teams": [
 {
@@ -5113,6 +5120,7 @@
 },
 "2026": {
 "file": "2026-2.csv",
+"sheet": "https://docs.google.com/spreadsheets/d/e/2PACX-1vTR0CeiyVCQ5gxWZDiwLHGUH7ATd2Ftg-iQe-6m6co5IxiPrzDaoksZsHmNgcHNVZw9LRQYiVas73md/pubhtml",
 "start": "2026-05-29T19:00",
 "teams": [
 {
