@@ -121,7 +121,7 @@ button.genout small { display: block; font-weight: 400; font-size: 12px; opacity
 button.genout:hover { filter: brightness(1.08); }
 .ico { width: 14px; height: 14px; vertical-align: -2px; flex: none; }
 .stop { display: flex; align-items: center; justify-content: center; gap: 1px; background: #fff; border: 1.5px solid #111827; border-radius: 9px; font: 600 10px/1 var(--font-data); color: #111827; box-shadow: 0 1px 3px rgba(0,0,0,.5); white-space: nowrap; }
-.stop.rest, .stop.full { background: #fde68a; } .stop.break { background: #e0f2fe; } .stop.wait, .stop.tide { background: #ddd6fe; } .stop.shelter { background: #fecaca; }
+.stop.aid { background: #bbf7d0; } .stop.rest, .stop.full { background: #fde68a; } .stop.break { background: #e0f2fe; } .stop.wait, .stop.tide { background: #ddd6fe; } .stop.shelter { background: #fecaca; }
 .stop .ico { width: 12px; height: 12px; }
 .stop .dur { font-style: normal; font-weight: 500; margin-left: 3px; padding-left: 3px; border-left: 1px solid rgba(17,24,39,.35); }
 #stops-tbl { font-size: 11.5px; } #stops-tbl th { font-size: 9.5px; } #stops-tbl td { padding: 3px 4px 3px 0; }
@@ -211,6 +211,10 @@ progress { width: 100%; height: 8px; accent-color: var(--accent); }
       <div class="layers">
         <label class="check" for="fayOn" title="If the stream is against you when you reach Fay Bainbridge Park, go ashore until it turns"><input id="fayOn" type="checkbox" checked> Wait out a foul tide at Fay Bainbridge</label>
         <label class="check" for="pnpOn" title="If the stream is against you when you reach Point No Point, go ashore until it turns"><input id="pnpOn" type="checkbox" checked> and at Point No Point</label>
+      </div>
+      <div class="row">
+        <label class="check" for="fayAid" title="Volunteers at Fay Bainbridge Park have food and coffee. Stop there every time, and hold any break that falls due in the hour before it for the stop."><input id="fayAid" type="checkbox" checked> Stop at the Fay Bainbridge aid station</label>
+        <label for="aidMin">Aid stop (min)<input id="aidMin" type="number" min="5" max="120" step="5" value="20"></label>
       </div>
       <div class="row">
         <label for="tideKn" title="Wait at Fay Bainbridge or Point No Point when the stream over the next 4 nm is against you by more than this; leave when it has eased to half of it, or after 6 hours">Foul tide worth waiting out (kn)<input id="tideKn" type="number" min="0.1" max="4" step="0.1" value="0.5"></label>
@@ -381,10 +385,10 @@ const hm = (h) => { const m = Math.round(h * 60); return `${Math.floor(m / 60)} 
 const sgn = (v, d = 1) => (v >= 0 ? "+" : "−") + Math.abs(v).toFixed(d);
 
 let ROUTE, STATIONS = [], PRED = { stations: {} }, map, CH = {}, routeLines = {}, stnMarkers = {}, boatMarker, P = null, playTimer = null;
-const KEEP = ["sd", "st", "delay", "mode", "target", "speed", "brkEvery", "brkMin", "ashoreMin", "drift", "blakeH", "fayOn", "pnpOn", "tideKn", "restEvery", "restH", "headKn", "sitesOn", "landOn", "nightPct", "fade", "crew", "kg", "shellX", "hullFt", "tracksOn", "ferriesOn"];
-const state = { route: "colvos", sd: "2027-05-28", st: "19:00", delay: 0, mode: "target", target: 18, speed: 3.5, brkEvery: 2, brkMin: 10, ashoreMin: 20, drift: true, blakeH: 3, fayOn: true, pnpOn: true, tideKn: 0.5, restEvery: 0, restH: 2, headKn: 0, sitesOn: true, landOn: true, nightPct: 100, fade: 0, crew: 1, kg: 80, shellX: 3, hullFt: 20, tracksOn: true, ferriesOn: true, t: null, selected: null };
-try { const s = JSON.parse(localStorage.getItem("s48-27v6") || "{}"); KEEP.forEach((k) => { if (k in s) state[k] = s[k]; }); } catch (e) {}
-function save() { try { localStorage.setItem("s48-27v6", JSON.stringify(Object.fromEntries(KEEP.map((k) => [k, state[k]])))); } catch (e) {} }
+const KEEP = ["sd", "st", "delay", "mode", "target", "speed", "brkEvery", "brkMin", "ashoreMin", "drift", "blakeH", "fayOn", "pnpOn", "fayAid", "aidMin", "tideKn", "restEvery", "restH", "headKn", "sitesOn", "landOn", "nightPct", "fade", "crew", "kg", "shellX", "hullFt", "tracksOn", "ferriesOn"];
+const state = { route: "colvos", sd: "2027-05-28", st: "19:00", delay: 0, mode: "target", target: 18, speed: 3.5, brkEvery: 2, brkMin: 10, ashoreMin: 20, drift: true, blakeH: 3, fayOn: true, pnpOn: true, fayAid: true, aidMin: 20, tideKn: 0.5, restEvery: 0, restH: 2, headKn: 0, sitesOn: true, landOn: true, nightPct: 100, fade: 0, crew: 1, kg: 80, shellX: 3, hullFt: 20, tracksOn: true, ferriesOn: true, t: null, selected: null };
+try { const s = JSON.parse(localStorage.getItem("s48-27v7") || "{}"); KEEP.forEach((k) => { if (k in s) state[k] = s[k]; }); } catch (e) {}
+function save() { try { localStorage.setItem("s48-27v7", JSON.stringify(Object.fromEntries(KEEP.map((k) => [k, state[k]])))); } catch (e) {} }
 const startT = () => Date.parse(`${state.sd}T${state.st}:00-07:00`) + state.delay * MIN;
 const gunT = () => Date.parse(`${state.sd}T${state.st}:00-07:00`);
 
@@ -566,7 +570,7 @@ function simulate(key, v0, opt = {}) {
   // landing over 3 nm either side, not straight in and back.
   const fixed = (key) => { const m = ROUTE.marks.find((x) => x.key === key); if (!m) return null; const pr = project(ch, [m.lat, m.lon]);
     return { kind: "planned", ll: [m.lat, m.lon], along: pr.along, off: pr.d, detourNm: 2 * (Math.hypot(3, pr.d) - 3), teams: 0, name: m.name }; };
-  const plannedStops = [["blake", true], ["fay", state.fayOn], ["pnp", state.pnpOn]].filter(([, on]) => on).map(([k]) => ({ key: k, site: fixed(k) })).filter((x) => x.site);
+  const plannedStops = [["blake", true], ["fay", state.fayOn || state.fayAid], ["pnp", state.pnpOn]].filter(([, on]) => on).map(([k]) => ({ key: k, site: fixed(k) })).filter((x) => x.site);
   const tideKn = state.tideKn, aheadStream = (p, tt) => { let a = 0; for (let d = 0; d <= 4; d += 1) a += streamAt(key, Math.min(ch.total, p + d), tt); return a / 5; };
   let pos = 0, t = t0, paddled = 0, sinceBrk = 0, sinceRest = 0, darkH = 0, gain = 0, kc = 0, stop = null, pending = null;
   const stops = [], track = [[t, 0, v0, still ? 0 : streamAt(key, 0, t), 0]], end = t0 + 60 * H;
@@ -604,10 +608,12 @@ function simulate(key, v0, opt = {}) {
     if (nextP && pos >= nextP.site.along) {
       plannedStops.shift();
       if (nextP.key === "blake") { sinceBrk = 0; sinceRest = 0; pending = null; begin("full", nextP.site, { len: Math.max(0.5, state.blakeH) * H, why: "planned full stop" }); continue; }
-      const a = still ? 0 : aheadStream(pos, t);
-      if (a < -tideKn) { sinceBrk = 0; pending = null; begin("tide", nextP.site, { cond: "tide", min: 30 * MIN, why: `stream ${sgn(a)} kn over the next 4 nm` }); continue; }
+      const a = still ? 0 : aheadStream(pos, t), tideOn = nextP.key === "pnp" || state.fayOn, aid = nextP.key === "fay" && state.fayAid;
+      if (tideOn && a < -tideKn) { sinceBrk = 0; pending = null; begin("tide", nextP.site, { cond: "tide", min: aid ? Math.max(30, state.aidMin) * MIN : 30 * MIN, why: `stream ${sgn(a)} kn over the next 4 nm${aid ? "; food and coffee at the aid station" : ""}` }); continue; }
+      if (aid) { sinceBrk = 0; pending = null; begin("aid", nextP.site, { len: state.aidMin * MIN, why: "volunteers with food and coffee" }); continue; }
     }
-    if (nextP && nextP.key === "blake" && nextP.site.along - pos < v0 * 1) { sinceBrk = Math.min(sinceBrk, brkEvery - STEP); sinceRest = Math.min(sinceRest, restEvery - STEP); }   // no break in the hour before Blake
+    // no break in the hour before Blake or the Fay Bainbridge aid station: it is taken there
+    if (nextP && (nextP.key === "blake" || (nextP.key === "fay" && state.fayAid)) && nextP.site.along - pos < v0 * 1) { sinceBrk = Math.min(sinceBrk, brkEvery - STEP); sinceRest = Math.min(sinceRest, restEvery - STEP); }
     if (pending && pos >= pending.site.along - 1e-6) { begin(pending.kind, pending.site, pending); pending = null; continue; }
     if (!pending && restEvery > 0 && sinceRest >= restEvery) {
       sinceRest = 0; sinceBrk = 0;
@@ -735,13 +741,13 @@ function renderMarks() {
   }).join("") + "</tbody>";
 }
 const ICON = {
-  get full() { return this.rest; }, get tide() { return this.wait; },
+  get full() { return this.rest; }, get aid() { return this.break; }, get tide() { return this.wait; },
   rest: '<svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2 1 14h14z" fill="#b45309" stroke="#111827" stroke-width="1.2" stroke-linejoin="round"/><path d="M8 7l-2.6 7h5.2z" fill="#fde68a" stroke="#111827" stroke-width="1"/></svg>',
   break: '<svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 6h9v4.5a3.5 3.5 0 0 1-3.5 3.5h-2a3.5 3.5 0 0 1-3.5-3.5z" fill="#7c2d12" stroke="#111827" stroke-width="1.1"/><path d="M11.5 7.2h1.2a1.8 1.8 0 0 1 0 3.6h-1.4" fill="none" stroke="#111827" stroke-width="1.1"/></svg>',
   wait: '<svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6.2" fill="#ede9fe" stroke="#111827" stroke-width="1.2"/><path d="M8 4.5V8l2.5 1.6" fill="none" stroke="#111827" stroke-width="1.3" stroke-linecap="round"/></svg>',
   shelter: '<svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 5c3 0 5-1 7-1s3 1 5 1M2 9c3 0 5-1 7-1s3 1 5 1M2 13c3 0 5-1 7-1s3 1 5 1" fill="none" stroke="#b91c1c" stroke-width="1.6" stroke-linecap="round"/></svg>',
 };
-const STOP_NAME = { break: "Break", full: "Full stop", tide: "Wait for the tide", rest: "Long rest", wait: "Wait for the current", shelter: "Shelter from wind" };
+const STOP_NAME = { break: "Break", full: "Full stop", aid: "Aid station", tide: "Wait for the tide", rest: "Long rest", wait: "Wait for the current", shelter: "Shelter from wind" };
 const shortDur = (h) => { const m = Math.round(h * 60); return m < 60 ? `${m}m` : `${Math.floor(m / 60)}h${m % 60 ? String(m % 60).padStart(2, "0") : ""}`; };
 function stopWhere(x) { return x.site ? `${x.site.name}, ${x.site.off.toFixed(2)} nm off` : `on the water ${placeAt(x.pos).replace(/^at /, "near ")}`; }
 function renderStops() {
@@ -1359,11 +1365,11 @@ function showPage() {
 // ---------- wiring
 let rt;
 function changed() { save(); clearTimeout(rt); rt = setTimeout(render, 40); }
-const NUM = ["delay", "target", "speed", "brkEvery", "brkMin", "ashoreMin", "blakeH", "tideKn", "restEvery", "restH", "headKn", "nightPct", "fade", "crew", "kg", "shellX"];
+const NUM = ["delay", "target", "speed", "brkEvery", "brkMin", "ashoreMin", "blakeH", "aidMin", "tideKn", "restEvery", "restH", "headKn", "nightPct", "fade", "crew", "kg", "shellX"];
 function syncInputs() {
   ["sd", "st", ...NUM].forEach((k) => { $(k).value = state[k]; });
   ["drift", "sitesOn", "landOn"].forEach((k) => { $(k).checked = state[k]; });
-  ["fayOn", "pnpOn"].forEach((k) => { $(k).checked = state[k]; });
+  ["fayOn", "pnpOn", "fayAid"].forEach((k) => { $(k).checked = state[k]; });
   $("hullFt").value = $("hullFt-r").value = state.hullFt; $("tracksOn").checked = state.tracksOn; $("ferriesOn").checked = state.ferriesOn;
 }
 async function main() {
@@ -1398,7 +1404,7 @@ async function main() {
     const v = parseFloat(e.target.value); if (isNaN(v)) return;
     state.hullFt = v; $(id === "hullFt" ? "hullFt-r" : "hullFt").value = v; changed();
   }));
-  for (const k of ["fayOn", "pnpOn"]) $(k).addEventListener("change", (e) => { state[k] = e.target.checked; changed(); });
+  for (const k of ["fayOn", "pnpOn", "fayAid"]) $(k).addEventListener("change", (e) => { state[k] = e.target.checked; changed(); });
   for (const k of ["sitesOn", "landOn"]) $(k).addEventListener("change", (e) => { state[k] = e.target.checked; drawSites(); changed(); });
   $("time").addEventListener("input", (e) => setTime(+e.target.value));
   $("print").addEventListener("click", printSheets);
