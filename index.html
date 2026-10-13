@@ -573,6 +573,17 @@ const kcalH = (kn) => (paddlerW(kn) / MUSCLE_EFF) * 3600 / 4184;
 const restKcalH = () => (10 * state.kg + 6.25 * 180 - 5 * 40 + 5) * 1.2 / 24;
 const kcal = (k) => Math.round(k).toLocaleString("en-US");
 
+// ---------- bends ashore: the track leaves the course at a0, reaches the landing at a (distance along) and rejoins at a1,
+// shifted towards the landing by a cosine-squared weight (1 at the landing, 0 at either end)
+const llNm = (p, q) => Math.hypot((q[0] - p[0]) * 60, (q[1] - p[1]) * 60 * Math.cos(p[0] * Math.PI / 180));
+function bendPt(ch, b, p) {
+  const q = pointAt(ch, p), f = p < b.a ? (b.a - b.a0 > 1e-9 ? (b.a - p) / (b.a - b.a0) : 1) : (b.a1 - b.a > 1e-9 ? (p - b.a) / (b.a1 - b.a) : 1);
+  const w = Math.cos((Math.PI / 2) * Math.min(1, f)) ** 2;
+  return [q[0] + w * (b.ll[0] - b.c[0]), q[1] + w * (b.ll[1] - b.c[1])];
+}
+function bendPath(ch, b, n = 60) { const out = []; for (let k = 0; k <= n; k++) out.push(bendPt(ch, b, b.a0 + ((b.a1 - b.a0) * k) / n)); return out; }
+function bendExtra(ch, b) { const P = bendPath(ch, b); let d = 0; for (let k = 1; k < P.length; k++) d += llNm(P[k - 1], P[k]); return Math.max(0, d - (b.a1 - b.a0)); }
+
 // ---------- simulator: 1-minute steps. v0 = speed through the water at the start (knots).
 // opt.still: no stream. opt.wind(pos, t) -> { kn, from } for the storm page, with opt.env for the crew's wind settings.
 // Stops: breaks every brkEvery hours (on the water and drifting, or ashore if at least ashoreMin), a long rest after restEvery
@@ -590,12 +601,23 @@ function simulate(key, v0, opt = {}) {
     return { kind: "planned", ll: [m.lat, m.lon], along: pr.along, off: pr.d, lead, detourNm: bendNm(pr.d, lead), teams: 0, name: m.name }; };
   const plannedStops = [["blake", true], ["fay", state.fayOn || state.fayAid], ["pnp", state.pnpOn]].filter(([, on]) => on).map(([k]) => ({ key: k, site: fixed(k) })).filter((x) => x.site);
   const tideKn = state.tideKn, aheadStream = (p, tt) => { let a = 0; for (let d = 0; d <= 4; d += 1) a += streamAt(key, Math.min(ch.total, p + d), tt); return a / 5; };
-  let pos = 0, t = t0, paddled = 0, sinceBrk = 0, sinceRest = 0, darkH = 0, gain = 0, kc = 0, stop = null, pending = null;
-  const stops = [], track = [[t, 0, v0, still ? 0 : streamAt(key, 0, t), 0]], end = t0 + 60 * H;
+  let pos = 0, dist = 0, t = t0, paddled = 0, sinceBrk = 0, sinceRest = 0, darkH = 0, gain = 0, kc = 0, stop = null, pending = null;
+  const stops = [], track = [[t, 0, v0, still ? 0 : streamAt(key, 0, t), 0, 0]], end = t0 + 60 * H;
+  // Going ashore bends the track off the course to the landing and back onto it, over the landing's lead before it (or from
+  // where the stop was decided, if nearer) and after it. The boat paddles the bent path, so its extra miles cost time at your
+  // speed: `dist` is the distance actually covered, `pos` the progress along the course.
+  const bends = [];
+  const bendFor = (site) => { const b = { a0: Math.min(site.along, Math.max(pos, site.along - site.lead)), a: site.along, a1: Math.min(ch.total, site.along + site.lead), ll: site.ll, c: pointAt(ch, site.along) }; bends.push(b); return b; };
+  const stretchAt = (p) => { const b = bends.find((x) => p >= x.a0 && p < x.a1); if (!b) return 1; const e = 0.02; return Math.max(1, llNm(bendPt(ch, b, p), bendPt(ch, b, p + e)) / e); };
   const begin = (kind, site, o) => {
-    const onWater = !site, detour = site ? ((site.detourNm ?? 2 * site.off) + Math.max(0, pos - site.along)) / v0 : 0;
-    if (site && site.along < pos) pos = site.along;   // paddled back to it
-    stop = { kind, site, onWater, t, pos, detourH: detour, cond: o.cond || null, until: t + detour * H + (o.len || 0), minUntil: t + detour * H + (o.min || 0), why: o.why || "" };
+    const onWater = !site; let detour = 0, b = null;
+    if (site) {
+      b = o.bend || bendFor(site);
+      const inNm = b.a0 >= b.a - 1e-6 ? site.off + Math.max(0, pos - site.along) : 0;   // no bend in: straight in (or back) to it
+      detour = inNm / v0; dist += inNm;
+      if (site.along < pos - 0.2) pos = site.along;
+    }
+    stop = { kind, site, bend: b, onWater, t, pos, detourH: detour, cond: o.cond || null, until: t + detour * H + (o.len || 0), minUntil: t + detour * H + (o.min || 0), why: o.why || "" };
     paddled += detour * H; kc += detour * kcalH(v0);
     stops.push(stop);
   };
@@ -609,26 +631,32 @@ function simulate(key, v0, opt = {}) {
       if (done) { stop.until = t; stop = null; }
       else {
         const d = stop.onWater && state.drift ? s : 0;
-        pos = Math.max(0, Math.min(ch.total, pos + d * STEP / H)); gain += d * STEP / H;
-        t += STEP; track.push([t, pos, 0, s, stop.onWater ? 1 : 2]); continue;
+        pos = Math.max(0, Math.min(ch.total, pos + d * STEP / H)); gain += d * STEP / H; dist += d * STEP / H;
+        t += STEP; track.push([t, pos, 0, s, stop.onWater ? 1 : 2, dist]); continue;
       }
     }
     // what to do now, most pressing first
     if (w && w.kn >= E.shelterKn) {
-      const site = pickSite(key, pos, E.shelterNm, E.shelterNm, Math.max(SITE_MAX_NM, 1.5));
-      begin("shelter", site, { cond: "wind", min: 30 * MIN, why: `${Math.round(w.kn)} kn from ${Math.round(w.from)}°` }); pending = null; continue;
+      const site = pickSite(key, pos, E.shelterNm, E.shelterNm, Math.max(SITE_MAX_NM, 1.5)), o = { cond: "wind", min: 30 * MIN, why: `${Math.round(w.kn)} kn from ${Math.round(w.from)}°` };
+      if (!pending || pending.kind !== "shelter") {
+        if (pending && pending.bend) bends.splice(bends.indexOf(pending.bend), 1);   // the stop it was heading for is off
+        if (site && site.along > pos) { pending = { kind: "shelter", site, ...o, bend: bendFor(site) }; }   // paddle on to it
+        else { begin("shelter", site, o); pending = null; continue; }   // turn back to it (or sit it out on the water)
+      }
     }
     if (!still && headKn > 0 && s < -headKn && !pending) {
       const site = pickSite(key, pos, 0.5, 0);
-      if (site) { pending = { kind: "wait", site, cond: "foul", min: 20 * MIN, why: `stream ${sgn(s)} kn` }; continue; }
+      if (site) { pending = { kind: "wait", site, cond: "foul", min: 20 * MIN, why: `stream ${sgn(s)} kn`, bend: bendFor(site) }; continue; }
     }
     const nextP = plannedStops[0];
-    if (nextP && pos >= nextP.site.along) {
+    // a planned stop is decided where the bend in to it starts, so the boat heads in smoothly
+    if (nextP && !pending && pos >= nextP.site.along - nextP.site.lead) {
       plannedStops.shift();
-      if (nextP.key === "blake") { sinceBrk = 0; sinceRest = 0; pending = null; begin("full", nextP.site, { len: Math.max(0.5, state.blakeH) * H, why: "planned full stop" }); continue; }
-      const a = still ? 0 : aheadStream(pos, t), tideOn = nextP.key === "pnp" || state.fayOn, aid = nextP.key === "fay" && state.fayAid;
-      if (tideOn && a < -tideKn) { sinceBrk = 0; pending = null; begin("tide", nextP.site, { cond: "tide", min: aid ? Math.max(30, state.aidMin) * MIN : 30 * MIN, why: `stream ${sgn(a)} kn over the next 4 nm${aid ? "; food and coffee at the aid station" : ""}` }); continue; }
-      if (aid) { sinceBrk = 0; pending = null; begin("aid", nextP.site, { len: state.aidMin * MIN, why: "volunteers with food and coffee" }); continue; }
+      const site = nextP.site, go = (o) => { sinceBrk = 0; pending = { site, ...o, bend: bendFor(site) }; };
+      if (nextP.key === "blake") { sinceRest = 0; go({ kind: "full", len: Math.max(0.5, state.blakeH) * H, why: "planned full stop" }); continue; }
+      const a = still ? 0 : aheadStream(site.along, t + (site.along - pos) / v0 * H), tideOn = nextP.key === "pnp" || state.fayOn, aid = nextP.key === "fay" && state.fayAid;
+      if (tideOn && a < -tideKn) { go({ kind: "tide", cond: "tide", min: aid ? Math.max(30, state.aidMin) * MIN : 30 * MIN, why: `stream ${sgn(a)} kn over the next 4 nm${aid ? "; food and coffee at the aid station" : ""}` }); continue; }
+      if (aid) { go({ kind: "aid", len: state.aidMin * MIN, why: "volunteers with food and coffee" }); continue; }
     }
     // no break in the hour before Blake or the Fay Bainbridge aid station: it is taken there
     if (nextP && (nextP.key === "blake" || (nextP.key === "fay" && state.fayAid)) && nextP.site.along - pos < v0 * 1) { sinceBrk = Math.min(sinceBrk, brkEvery - STEP); sinceRest = Math.min(sinceRest, restEvery - STEP); }
@@ -636,28 +664,28 @@ function simulate(key, v0, opt = {}) {
     if (!pending && restEvery > 0 && sinceRest >= restEvery) {
       sinceRest = 0; sinceBrk = 0;
       const site = pickSite(key, pos, 3, 0);
-      if (site && site.along > pos) pending = { kind: "rest", site, len: restLen }; else { begin("rest", site, { len: restLen }); continue; }
+      if (site && site.along > pos) pending = { kind: "rest", site, len: restLen, bend: bendFor(site) }; else { begin("rest", site, { len: restLen }); continue; }
     } else if (!pending && brkEvery > 0 && brkLen > 0 && sinceBrk >= brkEvery) {
       sinceBrk = 0;
       if (state.brkMin >= state.ashoreMin) {
         // a short stop goes ashore for a bathroom break, at a place past teams stopped if there is one in reach
         const site = pickSite(key, pos, 2.5, 0, SITE_MAX_NM, true) || pickSite(key, pos, 1.5, 0);
-        if (site && site.along > pos) pending = { kind: "break", site, len: brkLen }; else { begin("break", site, { len: brkLen }); continue; }
+        if (site && site.along > pos) pending = { kind: "break", site, len: brkLen, bend: bendFor(site) }; else { begin("break", site, { len: brkLen }); continue; }
       } else { begin("break", null, { len: brkLen }); continue; }
     }
     // paddle
     let stw = v0 * (dark ? night : 1) * Math.max(0.3, 1 - fade * (paddled / (12 * H)));
     if (w) stw *= windFactor(w, headingAt(ch, pos), s, E);
     const sog = stw + s;
-    pos = Math.max(0, pos + sog * STEP / H); gain += s * STEP / H; paddled += STEP; sinceBrk += STEP; sinceRest += STEP; kc += kcalH(stw) / 60;
+    pos = Math.max(0, pos + sog * STEP / H / stretchAt(pos)); dist += sog * STEP / H; gain += s * STEP / H; paddled += STEP; sinceBrk += STEP; sinceRest += STEP; kc += kcalH(stw) / 60;
     if (dark) darkH += STEP / H;
     t += STEP;
-    track.push([t, Math.min(pos, ch.total), stw, s, 0]);
+    track.push([t, Math.min(pos, ch.total), stw, s, 0, dist]);
   }
   let fin = null;
-  if (pos >= ch.total) { const a = track[track.length - 2], over = pos - ch.total, sog = (pos - a[1]) || 1e-9; fin = t - Math.min(1, over / sog) * STEP; }
-  stops.forEach((x) => { if (x.until > t) x.until = t; });
-  return { key, v0, t0, fin, track, stops, paddledH: paddled / H, darkH, gain, total: ch.total, kcal: kc };
+  if (pos >= ch.total) { const a = track[track.length - 2], over = pos - ch.total, sog = (pos - a[1]) || 1e-9, f = Math.min(1, over / sog); fin = t - f * STEP; dist -= f * (dist - a[5]); track[track.length - 1][5] = dist; }
+  stops.forEach((x) => { if (x.until > t) x.until = t; if (x.bend) x.extraNm = bendExtra(ch, x.bend) + x.detourH * v0; });
+  return { key, v0, t0, fin, track, stops, paddledH: paddled / H, darkH, gain, total: dist, course: ch.total, kcal: kc };
 }
 // wind on the boat: the part along the course helps or hurts, and wind against a running stream stands the sea up
 function windFactor(w, hd, s, E) {
@@ -689,15 +717,18 @@ function boatLL(R, t) {
   const st = R.stops.find((x) => x.site && t >= x.t && t < x.until);
   return st ? st.site.ll : bentLL(R, posAt(R, t));
 }
-// a point on the course, bent towards the landing of a stop ashore within its lead (a smooth cosine-squared bump)
+// a point on the course, or on the bend to a landing where the boat leaves the course for a stop ashore
 function bentLL(R, pos) {
-  const ch = CH[R.key], p = pointAt(ch, pos);
-  let best = null;
-  for (const x of R.stops) { const s = x.site; if (!s || !s.lead) continue; const d = Math.abs(pos - s.along); if (d < s.lead && (!best || d < best.d)) best = { s, d }; }
-  if (!best) return p;
-  const { s, d } = best, c = pointAt(ch, s.along), w = Math.cos((Math.PI / 2) * d / s.lead) ** 2;
-  return [p[0] + w * (s.ll[0] - c[0]), p[1] + w * (s.ll[1] - c[1])];
+  const ch = CH[R.key]; let best = null;
+  for (const x of R.stops) { const b = x.bend; if (b && pos >= b.a0 && pos <= b.a1 && (!best || Math.abs(pos - b.a) < Math.abs(pos - best.a))) best = b; }
+  return best ? bendPt(ch, best, pos) : pointAt(ch, pos);
 }
+// distance actually covered (bends ashore included) at a time
+const distAt = (R, t) => {
+  const tr = R.track; if (t <= tr[0][0]) return 0; if (t >= tr[tr.length - 1][0]) return tr[tr.length - 1][5];
+  const i = Math.min(tr.length - 1, Math.max(1, Math.ceil((t - tr[0][0]) / STEP))), a = tr[i - 1], b = tr[i];
+  return a[5] + (b[5] - a[5]) * (t - a[0]) / ((b[0] - a[0]) || 1);
+};
 
 // ---------- plan and render
 // a displacement hull can't be driven much past 1.34 x sqrt(waterline length in ft) knots through the water
@@ -744,11 +775,11 @@ function render() {
     ["Finish", R.fin ? fmtDT.format(R.fin) : "–", R.fin ? `${hm(el)} from the gun` : "not inside 60 h", R.fin && R.fin > cut ? "bad" : ""],
     ["Avg over bottom", avgSog ? `${avgSog.toFixed(2)} kn` : "–", "start to finish, stops included"],
     ["Stream", lost == null ? "–" : `${lost > 0 ? "costs" : "saves"} ${hm(Math.abs(lost) / 60)}`, "against still water, same plan", lost > 0 ? "bad" : "good"],
-    ["Distance", `${R.total.toFixed(1)} nm`, `${(R.total * NM_MI).toFixed(1)} statute miles`],
+    ["Distance", `${R.total.toFixed(1)} nm`, `${R.course.toFixed(1)} nm course + ${(R.total - R.course).toFixed(1)} nm in and out to stops; ${(R.total * NM_MI).toFixed(1)} statute miles`],
     ["Paddling", hm(R.paddledH), `${hm(R.darkH)} in the dark`],
     ["Stops", `${R.stops.length}`, `${hm(ashoreH)} ashore`],
     ["Calories each", kcal(R.kcal + restKc), `${kcal(R.kcal)} paddling, ${Math.round(paddlerW(v))} W at ${v.toFixed(1)} kn`],
-    ...(() => { const b = R.stops.find((x) => x.kind === "full"); return b ? [["Blake Island", `${fmtT.format(b.t + b.detourH * H)} to ${fmtT.format(b.until)}`, `${hm((b.until - b.t) / H - b.detourH)} ashore, ${Math.round(b.detourH * 60)} min in and out`]] : []; })(),
+    ...(() => { const b = R.stops.find((x) => x.kind === "full"); return b ? [["Blake Island", `${fmtT.format(b.t + b.detourH * H)} to ${fmtT.format(b.until)}`, `${hm((b.until - b.t) / H - b.detourH)} ashore, ${(b.extraNm || 0).toFixed(2)} nm extra in and out`]] : []; })(),
     ["Cutoff margin", R.fin ? hm((cut - R.fin) / H) : "–", "to the bell, 48 h after the gun", R.fin && R.fin > cut ? "bad" : ""],
   ];
   $("tiles").innerHTML = tiles.map(([a, b, c, k]) => `<div class="tile ${k || ""}"><span>${a}</span><b>${b}</b><small>${c}</small></div>`).join("");
@@ -781,7 +812,7 @@ function stopWhere(x) { return x.site ? `${x.site.name}, ${x.site.off.toFixed(2)
 function renderStops() {
   const S = P.R.stops;
   $("stops-tbl").innerHTML = S.length ? `<thead><tr><th>#</th><th>Stop</th><th class="n">Arrive</th><th class="n">Leave</th><th class="n">Ashore</th><th>Where</th><th class="n">nm</th></tr></thead><tbody>` + S.map((x, i) =>
-    `<tr data-t="${x.t}"><td>${i + 1}</td><td style="white-space:nowrap">${ICON[x.kind]} ${STOP_NAME[x.kind]}</td><td class="n">${fmtT.format(x.t)}</td><td class="n">${fmtT.format(x.until)}</td><td class="n">${x.onWater ? "–" : shortDur((x.until - x.t) / H)}</td><td>${esc(stopWhere(x))}${x.detourH > 0.01 ? `<br><span class="hint">${shortDur(x.detourH)} in and out</span>` : ""}${x.onWater && x.kind !== "break" ? `<br><span class="hint">no landing in reach</span>` : ""}</td><td class="n">${x.pos.toFixed(1)}</td></tr>`).join("") + "</tbody>"
+    `<tr data-t="${x.t}"><td>${i + 1}</td><td style="white-space:nowrap">${ICON[x.kind]} ${STOP_NAME[x.kind]}</td><td class="n">${fmtT.format(x.t)}</td><td class="n">${fmtT.format(x.until)}</td><td class="n">${x.onWater ? "–" : shortDur((x.until - x.t) / H)}</td><td>${esc(stopWhere(x))}${x.extraNm > 0.005 ? `<br><span class="hint">${x.extraNm.toFixed(2)} nm extra in and out</span>` : ""}${x.onWater && x.kind !== "break" ? `<br><span class="hint">no landing in reach</span>` : ""}</td><td class="n">${x.pos.toFixed(1)}</td></tr>`).join("") + "</tbody>"
     : `<tbody><tr><td class="hint">No stops on this plan.</td></tr></tbody>`;
 }
 function placeAt(along) {
@@ -794,9 +825,9 @@ function placeAt(along) {
 function renderLog() {
   const { R } = P, rows = [], end = R.fin || R.track[R.track.length - 1][0];
   for (let t = R.t0; t <= end + 1; t += H) {
-    const pos = posAt(R, t), r = rowAt(R, t), ll = pointAt(CH[state.route], pos), next = Math.min(t + H, end);
-    const made = posAt(R, next) - pos, dark = isDark(t, ll);
-    rows.push(`<tr data-t="${t}" class="${dark ? "dark" : ""}"><td>${fmtDT.format(t)}</td><td class="n">${pos.toFixed(1)}</td><td>${esc(placeAt(pos))}</td><td class="n">${r[4] ? (r[4] === 2 ? "ashore" : "stopped") : r[2].toFixed(2)}</td><td class="n ${r[3] >= 0 ? "with" : "against"}">${sgn(r[3])}</td><td class="n">${next > t ? (made / ((next - t) / H)).toFixed(2) : "–"}</td></tr>`);
+    const pos = posAt(R, t), d = distAt(R, t), r = rowAt(R, t), ll = pointAt(CH[state.route], pos), next = Math.min(t + H, end);
+    const made = distAt(R, next) - d, dark = isDark(t, ll);
+    rows.push(`<tr data-t="${t}" class="${dark ? "dark" : ""}"><td>${fmtDT.format(t)}</td><td class="n">${d.toFixed(1)}</td><td>${esc(placeAt(pos))}</td><td class="n">${r[4] ? (r[4] === 2 ? "ashore" : "stopped") : r[2].toFixed(2)}</td><td class="n ${r[3] >= 0 ? "with" : "against"}">${sgn(r[3])}</td><td class="n">${next > t ? (made / ((next - t) / H)).toFixed(2) : "–"}</td></tr>`);
   }
   if (R.fin) rows.push(`<tr data-t="${R.fin}"><td><b>${fmtDT.format(R.fin)}</b></td><td class="n">${R.total.toFixed(1)}</td><td><b>Finish</b></td><td></td><td></td><td></td></tr>`);
   $("log-tbl").innerHTML = `<thead><tr><th>Time</th><th class="n">nm</th><th>Where</th><th class="n">Thru water</th><th class="n">Stream</th><th class="n">Next hour over bottom</th></tr></thead><tbody>${rows.join("")}</tbody>`;
@@ -1076,8 +1107,7 @@ function drawPlanLayers() {
   planLayer.clearLayers();
   P.R.stops.forEach((x, i) => {
     const ll = x.site ? x.site.ll : pointAt(CH[state.route], x.pos), d = shortDur((x.until - x.t) / H);
-    if (x.site) { const s = x.site, a = s.along, L0 = s.lead || 0.01, pts = []; for (let k = 0; k <= 40; k++) pts.push(bentLL(P.R, a - L0 + (2 * L0 * k) / 40));
-      L.polyline(pts, { color: "#facc15", weight: 2.5, dashArray: "4 4", interactive: false }).addTo(planLayer); }
+    if (x.bend) L.polyline(bendPath(CH[state.route], x.bend), { color: "#dc2626", weight: 3, dashArray: "5 4", interactive: false }).addTo(planLayer);
     L.marker(ll, { icon: L.divIcon({ className: `stop ${x.kind}`, html: `${ICON[x.kind]}<b>${i + 1}</b><i class="dur">${d}</i>`, iconSize: [36 + 6 * d.length, 17], iconAnchor: [10, 8] }), zIndexOffset: 500 })
       .bindTooltip(`<b>${i + 1}. ${STOP_NAME[x.kind]}</b> ${fmtT.format(x.t)} to ${fmtT.format(x.until)}<br>${esc(stopWhere(x))}${x.why ? "<br>" + esc(x.why) : ""}`).on("click", () => setTime(x.t)).addTo(planLayer);
   });
@@ -1161,7 +1191,7 @@ function syncTime() {
   const before = t < R.t0, after = R.fin && t > R.fin;
   if ($("pb-time")) {
     $("pb-time").textContent = fmtDT.format(t); $("pb-el").textContent = t >= gunT() ? hm((t - gunT()) / H) : "before the gun";
-    $("pb-dist").textContent = `${pos.toFixed(1)} of ${ch.total.toFixed(1)} nm`;
+    $("pb-dist").textContent = `${distAt(R, t).toFixed(1)} of ${R.total.toFixed(1)} nm`;
     $("pb-stw").textContent = before || after ? "–" : r[4] ? (r[4] === 2 ? "ashore" : "stopped") : `${r[2].toFixed(2)} kn`;
     const s = streamAt(state.route, pos, t); $("pb-cur").textContent = `${sgn(s)} kn`;
     $("pb-sog").textContent = before || after || r[4] === 2 ? "–" : `${((r[4] ? (state.drift ? s : 0) : r[2] + s)).toFixed(2)} kn`;
@@ -1339,11 +1369,11 @@ function printSheets() {
     ev.sort((a, b) => a.t - b.t);
     const hrs = [];
     for (let t = Math.ceil(t0 / (30 * MIN)) * 30 * MIN; t < t1; t += 30 * MIN) { const p = posAt(R, t), r = rowAt(R, t), s = streamAt(key, p, t);
-      hrs.push(`<tr><td>${fmtT.format(t)}</td><td class="n">${p.toFixed(1)}</td><td class="n">${kn(s)}</td><td class="n">${r[4] ? (r[4] === 2 ? "ashore" : "stop") : r[2].toFixed(1)}</td><td class="n">${r[4] === 2 ? "–" : (r[2] + s).toFixed(1)}</td><td>${lightAt(t, pointAt(ch, p)).k}</td></tr>`); }
+      hrs.push(`<tr><td>${fmtT.format(t)}</td><td class="n">${distAt(R, t).toFixed(1)}</td><td class="n">${kn(s)}</td><td class="n">${r[4] ? (r[4] === 2 ? "ashore" : "stop") : r[2].toFixed(1)}</td><td class="n">${r[4] === 2 ? "–" : (r[2] + s).toFixed(1)}</td><td>${lightAt(t, pointAt(ch, p)).k}</td></tr>`); }
     const land = sites.filter((s) => s.along >= A.a - 0.5 && s.along <= B.a + 0.5).sort((a, b) => a.along - b.along);
     const rowH = R.track.filter((r) => r[0] >= t0 && r[0] < t1 && !r[4]).length / 60;
     pages.push(`<section><header><p class="plan">${esc(planLine)}</p><h1>Leg ${i}: ${esc(A.m.name.replace(/,.*$/, ""))} &rarr; ${esc(B.m.name.replace(/,.*$/, ""))}</h1>
-      <p>${fmt.format(t0)} to ${fmt.format(t1)} · ${(B.a - A.a).toFixed(1)} nm (${((B.a - A.a) * NM_MI).toFixed(1)} mi) · paddling ${hm(rowH)} · ${v.toFixed(2)} kn through the water · ${hm((t1 - gunT()) / H)} from the gun at the end</p></header>
+      <p>${fmt.format(t0)} to ${fmt.format(t1)} · ${(distAt(R, t1) - distAt(R, t0)).toFixed(1)} nm (${((distAt(R, t1) - distAt(R, t0)) * NM_MI).toFixed(1)} mi, stops ashore included) · paddling ${hm(rowH)} · ${v.toFixed(2)} kn through the water · ${hm((t1 - gunT()) / H)} from the gun at the end</p></header>
       <h2>Plan</h2><table><thead><tr><th>Time</th><th>What</th><th>Where</th><th class="n">nm</th><th>Notes</th></tr></thead><tbody>${ev.map((e) => `<tr><td>${fmtT.format(e.t)}</td><td><b>${esc(e.k)}</b></td><td>${esc(e.w)}</td><td class="n">${e.p.toFixed(1)}</td><td>${esc(e.n)}</td></tr>`).join("")}</tbody></table>
       <div class="cols"><div><h2>Every half hour</h2><table class="sm"><thead><tr><th>Time</th><th class="n">nm</th><th class="n">Stream</th><th class="n">Thru water</th><th class="n">Over ground</th><th>Light</th></tr></thead><tbody>${hrs.join("")}</tbody></table><p class="k">Stream in knots along the course, + with you, − against.</p></div>
       <div><h2>Landings on this leg (bail-outs)</h2><table class="sm"><thead><tr><th class="n">#</th><th class="n">nm</th><th class="n">Off</th><th>Place</th></tr></thead><tbody>${land.map((s) => `<tr><td class="n">${landN.get(s)}</td><td class="n">${s.along.toFixed(1)}</td><td class="n">${s.off.toFixed(1)}</td><td>${esc(s.name)}</td></tr>`).join("") || `<tr><td colspan="4">None mapped</td></tr>`}</tbody></table>
@@ -1360,9 +1390,10 @@ function printSheets() {
     const W = 1500, Hh = Math.round(W / asp), X = (ll) => ((merc(ll)[0] - x0) / (x1 - x0)) * W, Y = (ll) => ((y1 - merc(ll)[1]) / (y1 - y0)) * Hh;
     const inBox = (ll) => { const m = merc(ll); return m[0] >= x0 && m[0] <= x1 && m[1] >= y0 && m[1] <= y1; };
     let svg = `<polyline points="${ch.points.map((p) => `${X(p).toFixed(1)},${Y(p).toFixed(1)}`).join(" ")}" fill="none" stroke="#c2410c" stroke-width="5" opacity=".85"/>`;
-    for (let t = Math.ceil(R.t0 / (30 * MIN)) * 30 * MIN; t <= (R.fin || R.t0); t += 30 * MIN) { const ll = pointAt(ch, posAt(R, t)); if (!inBox(ll)) continue;
+    for (let t = Math.ceil(R.t0 / (30 * MIN)) * 30 * MIN; t <= (R.fin || R.t0); t += 30 * MIN) { const ll = boatLL(R, t); if (!inBox(ll)) continue;
       svg += `<circle cx="${X(ll)}" cy="${Y(ll)}" r="6" fill="#facc15" stroke="#111" stroke-width="2"/><text x="${X(ll) + 10}" y="${Y(ll) + 8}" class="tk">${fmtT.format(t)}</text>`; }
     sites.forEach((s) => { if (!inBox(s.ll)) return; svg += `<g transform="translate(${X(s.ll)},${Y(s.ll)})"><rect x="-11" y="-11" width="22" height="22" rx="4" fill="${s.kind === "past" ? "#22c55e" : "#c084fc"}" stroke="#111" stroke-width="1.5"/><text y="6" text-anchor="middle" class="ln">${landN.get(s)}</text></g>`; });
+    R.stops.forEach((x) => { if (x.bend) svg += `<polyline points="${bendPath(ch, x.bend).map((p) => `${X(p).toFixed(1)},${Y(p).toFixed(1)}`).join(" ")}" fill="none" stroke="#dc2626" stroke-width="4" stroke-dasharray="10 7"/>`; });
     R.stops.forEach((x, j) => { const ll = x.site ? x.site.ll : pointAt(ch, x.pos); if (!inBox(ll)) return; svg += `<g transform="translate(${X(ll)},${Y(ll)})"><circle r="16" fill="#fde68a" stroke="#111" stroke-width="2.5"/><text y="7" text-anchor="middle" class="ln">${j + 1}</text></g>`; });
     STATIONS.filter((s) => s.kind === "current" && inBox([s.lat, s.lon])).forEach((s) => { const t = s.legs[key] ? timeAt(R, s.legs[key].along) : null, val = t ? valueAt(s, t) : null;
       svg += `<g transform="translate(${X([s.lat, s.lon])},${Y([s.lat, s.lon])})"><path d="M-9 0L9 0M0-9L0 9" stroke="#0e7490" stroke-width="3"/><text x="12" y="-8" class="st">${esc(s.name.replace(/,.*$/, ""))}${t && val != null ? `: ${Math.abs(val) < SLACK_KN ? "slack" : (val > 0 ? "flood " : "ebb ") + Math.abs(val).toFixed(1)} at ${fmtT.format(t)}` : ""}</text></g>`; });
