@@ -15,8 +15,8 @@
    "depth": 40.0,
    "legs": {
     "colvos": {
-     "along": 5.78,
-     "offset": 0.96
+     "along": 5.13,
+     "offset": 1.12
     },
     "east": {
      "along": 5.78,
@@ -38,8 +38,8 @@
    "depth": 128.0,
    "legs": {
     "colvos": {
-     "along": 6.39,
-     "offset": 0.15
+     "along": 5.68,
+     "offset": 0.2
     },
     "east": {
      "along": 6.17,
@@ -50,6 +50,25 @@
    "kind": "current",
    "flood_dir": 293.0,
    "ebb_dir": 130.0
+  },
+  {
+   "id": "PUG1519",
+   "name": "Point Richmond, East of, Colvos Passage",
+   "lat": 47.3766,
+   "lon": -122.5287,
+   "type": "H",
+   "bin": 18,
+   "depth": 44.0,
+   "legs": {
+    "colvos": {
+     "along": 8.78,
+     "offset": 0.06
+    }
+   },
+   "key": "PUG1519",
+   "kind": "current",
+   "flood_dir": 143.0,
+   "ebb_dir": 356.0
   },
   {
    "id": "PUG1521",
@@ -71,25 +90,6 @@
    "ebb_dir": 42.0
   },
   {
-   "id": "PUG1519",
-   "name": "Point Richmond, East of, Colvos Passage",
-   "lat": 47.3766,
-   "lon": -122.5287,
-   "type": "H",
-   "bin": 18,
-   "depth": 44.0,
-   "legs": {
-    "colvos": {
-     "along": 9.75,
-     "offset": 0.08
-    }
-   },
-   "key": "PUG1519",
-   "kind": "current",
-   "flood_dir": 143.0,
-   "ebb_dir": 356.0
-  },
-  {
    "id": "PUG1518",
    "name": "Anderson Point, East of, Colvos Passage",
    "lat": 47.4394,
@@ -99,8 +99,8 @@
    "depth": 35.0,
    "legs": {
     "colvos": {
-     "along": 13.71,
-     "offset": 0.07
+     "along": 12.57,
+     "offset": 0.37
     }
    },
    "key": "PUG1518",
@@ -118,33 +118,14 @@
    "depth": 44.0,
    "legs": {
     "colvos": {
-     "along": 18.91,
-     "offset": 0.21
+     "along": 17.64,
+     "offset": 0.04
     }
    },
    "key": "PUG1517",
    "kind": "current",
    "flood_dir": 244.0,
    "ebb_dir": 350.0
-  },
-  {
-   "id": "PUG1520",
-   "name": "Dolphin Point, 1.3 miles East of",
-   "lat": 47.5015,
-   "lon": -122.4236,
-   "type": "H",
-   "bin": 35,
-   "depth": 48.0,
-   "legs": {
-    "east": {
-     "along": 21.96,
-     "offset": 0.11
-    }
-   },
-   "key": "PUG1520",
-   "kind": "current",
-   "flood_dir": 186.0,
-   "ebb_dir": 343.0
   },
   {
    "id": "PUG1512",
@@ -156,8 +137,8 @@
    "depth": 22.0,
    "legs": {
     "colvos": {
-     "along": 22.89,
-     "offset": 0.11
+     "along": 21.26,
+     "offset": 0.44
     },
     "east": {
      "along": 26.86,
@@ -179,8 +160,8 @@
    "depth": 76.0,
    "legs": {
     "colvos": {
-     "along": 23.18,
-     "offset": 0.58
+     "along": 21.51,
+     "offset": 1.11
     },
     "east": {
      "along": 27.15,
@@ -191,6 +172,44 @@
    "kind": "current",
    "flood_dir": 201.0,
    "ebb_dir": 31.0
+  },
+  {
+   "id": "PUG1520",
+   "name": "Dolphin Point, 1.3 miles East of",
+   "lat": 47.5015,
+   "lon": -122.4236,
+   "type": "H",
+   "bin": 35,
+   "depth": 48.0,
+   "legs": {
+    "east": {
+     "along": 21.96,
+     "offset": 0.11
+    }
+   },
+   "key": "PUG1520",
+   "kind": "current",
+   "flood_dir": 186.0,
+   "ebb_dir": 343.0
+  },
+  {
+   "id": "PUG1505",
+   "name": "Entrance to Eagle Harbor",
+   "lat": 47.6196,
+   "lon": -122.4953,
+   "type": "H",
+   "bin": 8,
+   "depth": 9.0,
+   "legs": {
+    "colvos": {
+     "along": 23.73,
+     "offset": 0.31
+    }
+   },
+   "key": "PUG1505",
+   "kind": "current",
+   "flood_dir": 337.0,
+   "ebb_dir": 137.0
   },
   {
    "id": "PUG1516",
@@ -212,29 +231,6 @@
    "ebb_dir": 4.0
   },
   {
-   "id": "PUG1515",
-   "name": "West Point, West of",
-   "lat": 47.6621,
-   "lon": -122.4417,
-   "type": "H",
-   "bin": 15,
-   "depth": 16.0,
-   "legs": {
-    "colvos": {
-     "along": 28.06,
-     "offset": 0.87
-    },
-    "east": {
-     "along": 32.27,
-     "offset": 0.87
-    }
-   },
-   "key": "PUG1515",
-   "kind": "current",
-   "flood_dir": 234.0,
-   "ebb_dir": 341.0
-  },
-  {
    "id": "PUG1509",
    "name": "Point Jefferson, East of",
    "lat": 47.7445,
@@ -244,8 +240,8 @@
    "depth": 19.0,
    "legs": {
     "colvos": {
-     "along": 33.08,
-     "offset": 0.44
+     "along": 31.62,
+     "offset": 0.26
     },
     "east": {
      "along": 37.3,
@@ -258,6 +254,25 @@
    "ebb_dir": 31.0
   },
   {
+   "id": "PUG1515",
+   "name": "West Point, West of",
+   "lat": 47.6621,
+   "lon": -122.4417,
+   "type": "H",
+   "bin": 15,
+   "depth": 16.0,
+   "legs": {
+    "east": {
+     "along": 32.27,
+     "offset": 0.87
+    }
+   },
+   "key": "PUG1515",
+   "kind": "current",
+   "flood_dir": 234.0,
+   "ebb_dir": 341.0
+  },
+  {
    "id": "PUG1511",
    "name": "President Point, 1.5 miles east of",
    "lat": 47.7671,
@@ -266,10 +281,6 @@
    "bin": 38,
    "depth": 71.0,
    "legs": {
-    "colvos": {
-     "along": 34.44,
-     "offset": 1.02
-    },
     "east": {
      "along": 38.66,
      "offset": 1.02
@@ -289,10 +300,6 @@
    "bin": 34,
    "depth": 67.0,
    "legs": {
-    "colvos": {
-     "along": 36.85,
-     "offset": 0.52
-    },
     "east": {
      "along": 41.06,
      "offset": 0.52
@@ -304,29 +311,6 @@
    "ebb_dir": 358.0
   },
   {
-   "id": "PUG1607",
-   "name": "Point No Point, 2.1 mi. E of",
-   "lat": 47.9189,
-   "lon": -122.4841,
-   "type": "H",
-   "bin": 33,
-   "depth": 30.5,
-   "legs": {
-    "colvos": {
-     "along": 43.53,
-     "offset": 1.15
-    },
-    "east": {
-     "along": 47.74,
-     "offset": 1.15
-    }
-   },
-   "key": "PUG1607",
-   "kind": "current",
-   "flood_dir": 129.0,
-   "ebb_dir": 331.0
-  },
-  {
    "id": "PUG1606",
    "name": "Point No Point, 1.2 mi. E of",
    "lat": 47.9125,
@@ -336,8 +320,8 @@
    "depth": 69.0,
    "legs": {
     "colvos": {
-     "along": 43.76,
-     "offset": 0.37
+     "along": 41.94,
+     "offset": 0.89
     },
     "east": {
      "along": 47.98,
@@ -359,8 +343,8 @@
    "depth": 20.0,
    "legs": {
     "colvos": {
-     "along": 47.66,
-     "offset": 0.45
+     "along": 45.38,
+     "offset": 1.1
     },
     "east": {
      "along": 51.87,
@@ -373,6 +357,25 @@
    "ebb_dir": 302.0
   },
   {
+   "id": "PUG1607",
+   "name": "Point No Point, 2.1 mi. E of",
+   "lat": 47.9189,
+   "lon": -122.4841,
+   "type": "H",
+   "bin": 33,
+   "depth": 30.5,
+   "legs": {
+    "east": {
+     "along": 47.74,
+     "offset": 1.15
+    }
+   },
+   "key": "PUG1607",
+   "kind": "current",
+   "flood_dir": 129.0,
+   "ebb_dir": 331.0
+  },
+  {
    "id": "PUG1611",
    "name": "Olele Point, 1.8 mi. ENE of",
    "lat": 47.9788,
@@ -382,8 +385,8 @@
    "depth": 20.0,
    "legs": {
     "colvos": {
-     "along": 51.41,
-     "offset": 0.43
+     "along": 48.48,
+     "offset": 0.46
     },
     "east": {
      "along": 55.63,
@@ -405,8 +408,8 @@
    "depth": 5.0,
    "legs": {
     "colvos": {
-     "along": 56.61,
-     "offset": 0.12
+     "along": 53.9,
+     "offset": 0.0
     },
     "east": {
      "along": 60.82,
@@ -427,8 +430,8 @@
    "lon": -122.4133,
    "legs": {
     "colvos": {
-     "along": 0.38,
-     "offset": 0.99
+     "along": 0.09,
+     "offset": 1.06
     },
     "east": {
      "along": 0.38,
@@ -445,8 +448,8 @@
    "lon": -122.3393,
    "legs": {
     "colvos": {
-     "along": 24.6,
-     "offset": 5.01
+     "along": 21.82,
+     "offset": 5.73
     },
     "east": {
      "along": 27.41,
@@ -463,8 +466,8 @@
    "lon": -122.7597,
    "legs": {
     "colvos": {
-     "along": 62.01,
-     "offset": 0.35
+     "along": 58.82,
+     "offset": 0.29
     },
     "east": {
      "along": 66.22,
