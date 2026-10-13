@@ -202,7 +202,7 @@ progress { width: 100%; height: 8px; accent-color: var(--accent); }
       <div class="row">
         <label for="brkEvery">Break every (h)<input id="brkEvery" type="number" min="0" max="12" step="0.5" value="2"></label>
         <label for="brkMin">Break length (min)<input id="brkMin" type="number" min="0" max="120" step="1" value="10"></label>
-        <label for="ashoreMin" title="Breaks this long or longer go ashore at the best landing ahead; shorter ones are on the water">Ashore if at least (min)<input id="ashoreMin" type="number" min="5" max="120" step="5" value="20"></label>
+        <label for="ashoreMin" title="Breaks this long or longer go ashore (bathroom breaks) at a place past teams stopped, or the best landing ahead; shorter ones are on the water">Ashore if at least (min)<input id="ashoreMin" type="number" min="1" max="120" step="1" value="5"></label>
       </div>
       <label class="check" for="drift" title="On a break on the water the boat drifts with the stream. Untick if you hold position."><input id="drift" type="checkbox" checked> Drift with the stream on breaks on the water</label>
       <div class="row">
@@ -387,9 +387,9 @@ const sgn = (v, d = 1) => (v >= 0 ? "+" : "−") + Math.abs(v).toFixed(d);
 
 let ROUTE, STATIONS = [], PRED = { stations: {} }, map, CH = {}, routeLines = {}, stnMarkers = {}, boatMarker, P = null, playTimer = null;
 const KEEP = ["sd", "st", "delay", "mode", "target", "speed", "brkEvery", "brkMin", "ashoreMin", "drift", "blakeH", "fayOn", "pnpOn", "fayAid", "aidMin", "tideKn", "restEvery", "restH", "headKn", "sitesOn", "landOn", "nightPct", "fade", "crew", "kg", "shellX", "hullFt", "tracksOn", "ferriesOn"];
-const state = { route: "colvos", sd: "2027-05-28", st: "19:00", delay: 0, mode: "target", target: 18, speed: 3.5, brkEvery: 2, brkMin: 10, ashoreMin: 20, drift: true, blakeH: 3, fayOn: true, pnpOn: true, fayAid: true, aidMin: 20, tideKn: 0.5, restEvery: 0, restH: 2, headKn: 0, sitesOn: true, landOn: true, nightPct: 100, fade: 0, crew: 1, kg: 80, shellX: 3, hullFt: 20, tracksOn: true, ferriesOn: true, t: null, selected: null };
-try { const s = JSON.parse(localStorage.getItem("s48-27v7") || "{}"); KEEP.forEach((k) => { if (k in s) state[k] = s[k]; }); } catch (e) {}
-function save() { try { localStorage.setItem("s48-27v7", JSON.stringify(Object.fromEntries(KEEP.map((k) => [k, state[k]])))); } catch (e) {} }
+const state = { route: "colvos", sd: "2027-05-28", st: "19:00", delay: 0, mode: "target", target: 18, speed: 3.5, brkEvery: 2, brkMin: 10, ashoreMin: 5, drift: true, blakeH: 3, fayOn: true, pnpOn: true, fayAid: true, aidMin: 20, tideKn: 0.5, restEvery: 0, restH: 2, headKn: 0, sitesOn: true, landOn: true, nightPct: 100, fade: 0, crew: 1, kg: 80, shellX: 3, hullFt: 20, tracksOn: true, ferriesOn: true, t: null, selected: null };
+try { const s = JSON.parse(localStorage.getItem("s48-27v8") || "{}"); KEEP.forEach((k) => { if (k in s) state[k] = s[k]; }); } catch (e) {}
+function save() { try { localStorage.setItem("s48-27v8", JSON.stringify(Object.fromEntries(KEEP.map((k) => [k, state[k]])))); } catch (e) {} }
 const startT = () => Date.parse(`${state.sd}T${state.st}:00-07:00`) + state.delay * MIN;
 const gunT = () => Date.parse(`${state.sd}T${state.st}:00-07:00`);
 
@@ -531,17 +531,21 @@ function sitesFor(key, reach = SITE_MAX_NM) {
   const out = [];
   if (state.sitesOn) STOPSITES.forEach((s) => { const l = s.legs[key]; if (l && l.offset <= reach) out.push({ kind: "past", ll: [s.lat, s.lon], along: l.along, off: l.offset, teams: s.teams, s }); });
   if (state.landOn) LANDINGS.forEach((x) => { const l = x.legs[key]; if (l && l.offset <= reach) out.push({ kind: "landing", ll: [x.lat, x.lon], along: l.along, off: l.offset, teams: 0, l: x }); });
-  out.forEach((x) => { x.name = siteName(x); });
+  out.forEach((x) => { x.name = siteName(x); x.lead = leadFor(x.off); x.detourNm = bendNm(x.off, x.lead); });
   return (SITES_MEMO[mk] = out.sort((a, b) => a.along - b.along));
 }
-// The landing that costs the least extra paddling from `pos`: the trip in and out (twice its distance off the course), plus
-// twice the way back for one behind the boat. One ahead costs nothing extra to reach (it is progress). Past stops used by many
-// teams win ties: someone found them good.
-function pickSite(key, pos, ahead, back, reach = SITE_MAX_NM) {
+// The boat bends off the course to a landing and back onto it, over `lead` nm either side, so it never paddles back the way it
+// came: the lead grows with the distance off (0.4 to 2 nm), and the bend adds bendNm to the trip.
+const leadFor = (off) => Math.max(0.4, Math.min(2, 4 * off));
+const bendNm = (off, lead) => 2 * (Math.hypot(lead, off) - lead);
+// The landing for a stop: past stops used by the most teams first (someone found them good, worth about a quarter mile of extra
+// paddling for each doubling of the teams), then the least extra paddling. One behind the boat costs twice the way back.
+function pickSite(key, pos, ahead, back, reach = SITE_MAX_NM, pastOnly = false) {
   let best = null;
   for (const x of sitesFor(key, reach)) {
+    if (pastOnly && x.kind !== "past") continue;
     if (x.along < pos - back || x.along > pos + ahead) continue;
-    const cost = 2 * x.off + (x.along < pos ? 2 * (pos - x.along) : 0) - 0.05 * Math.min(1, x.teams / 20);
+    const cost = x.detourNm + (x.along < pos ? 2 * (pos - x.along) : 0) - 0.25 * Math.log2(1 + x.teams);
     if (!best || cost < best.cost) best = { ...x, cost };
   }
   return best;
@@ -568,9 +572,10 @@ function simulate(key, v0, opt = {}) {
   const restEvery = state.restEvery * H, restLen = state.restH * H, headKn = state.headKn;
   // Planned stops at fixed places: the full stop at Blake Island (30 minutes or more), then Fay Bainbridge Park and Point No Point,
   // where the crew goes ashore only if the tide is foul. The way in and out is the extra distance of bending the line to the
-  // landing over 3 nm either side, not straight in and back.
+  // landing over a mile or more either side, not straight in and back.
   const fixed = (key) => { const m = ROUTE.marks.find((x) => x.key === key); if (!m) return null; const pr = project(ch, [m.lat, m.lon]);
-    return { kind: "planned", ll: [m.lat, m.lon], along: pr.along, off: pr.d, detourNm: 2 * (Math.hypot(3, pr.d) - 3), teams: 0, name: m.name }; };
+    const lead = Math.max(1, leadFor(pr.d));
+    return { kind: "planned", ll: [m.lat, m.lon], along: pr.along, off: pr.d, lead, detourNm: bendNm(pr.d, lead), teams: 0, name: m.name }; };
   const plannedStops = [["blake", true], ["fay", state.fayOn || state.fayAid], ["pnp", state.pnpOn]].filter(([, on]) => on).map(([k]) => ({ key: k, site: fixed(k) })).filter((x) => x.site);
   const tideKn = state.tideKn, aheadStream = (p, tt) => { let a = 0; for (let d = 0; d <= 4; d += 1) a += streamAt(key, Math.min(ch.total, p + d), tt); return a / 5; };
   let pos = 0, t = t0, paddled = 0, sinceBrk = 0, sinceRest = 0, darkH = 0, gain = 0, kc = 0, stop = null, pending = null;
@@ -602,8 +607,8 @@ function simulate(key, v0, opt = {}) {
       begin("shelter", site, { cond: "wind", min: 30 * MIN, why: `${Math.round(w.kn)} kn from ${Math.round(w.from)}°` }); pending = null; continue;
     }
     if (!still && headKn > 0 && s < -headKn && !pending) {
-      const site = pickSite(key, pos, 0.5, 0.3);
-      if (site && site.along <= pos + 0.05) { begin("wait", site, { cond: "foul", min: 20 * MIN, why: `stream ${sgn(s)} kn` }); continue; }
+      const site = pickSite(key, pos, 0.5, 0);
+      if (site) { pending = { kind: "wait", site, cond: "foul", min: 20 * MIN, why: `stream ${sgn(s)} kn` }; continue; }
     }
     const nextP = plannedStops[0];
     if (nextP && pos >= nextP.site.along) {
@@ -618,12 +623,13 @@ function simulate(key, v0, opt = {}) {
     if (pending && pos >= pending.site.along - 1e-6) { begin(pending.kind, pending.site, pending); pending = null; continue; }
     if (!pending && restEvery > 0 && sinceRest >= restEvery) {
       sinceRest = 0; sinceBrk = 0;
-      const site = pickSite(key, pos, 3, 0.5);
+      const site = pickSite(key, pos, 3, 0);
       if (site && site.along > pos) pending = { kind: "rest", site, len: restLen }; else { begin("rest", site, { len: restLen }); continue; }
     } else if (!pending && brkEvery > 0 && brkLen > 0 && sinceBrk >= brkEvery) {
       sinceBrk = 0;
       if (state.brkMin >= state.ashoreMin) {
-        const site = pickSite(key, pos, 1.5, 0.3);
+        // a short stop goes ashore for a bathroom break, at a place past teams stopped if there is one in reach
+        const site = pickSite(key, pos, 2.5, 0, SITE_MAX_NM, true) || pickSite(key, pos, 1.5, 0);
         if (site && site.along > pos) pending = { kind: "break", site, len: brkLen }; else { begin("break", site, { len: brkLen }); continue; }
       } else { begin("break", null, { len: brkLen }); continue; }
     }
@@ -669,7 +675,16 @@ const timeAt = (R, along) => {   // first time the boat reaches a distance along
 // where the boat is at a time: on the course, or at the landing during a stop ashore
 function boatLL(R, t) {
   const st = R.stops.find((x) => x.site && t >= x.t && t < x.until);
-  return st ? st.site.ll : pointAt(CH[R.key], posAt(R, t));
+  return st ? st.site.ll : bentLL(R, posAt(R, t));
+}
+// a point on the course, bent towards the landing of a stop ashore within its lead (a smooth cosine-squared bump)
+function bentLL(R, pos) {
+  const ch = CH[R.key], p = pointAt(ch, pos);
+  let best = null;
+  for (const x of R.stops) { const s = x.site; if (!s || !s.lead) continue; const d = Math.abs(pos - s.along); if (d < s.lead && (!best || d < best.d)) best = { s, d }; }
+  if (!best) return p;
+  const { s, d } = best, c = pointAt(ch, s.along), w = Math.cos((Math.PI / 2) * d / s.lead) ** 2;
+  return [p[0] + w * (s.ll[0] - c[0]), p[1] + w * (s.ll[1] - c[1])];
 }
 
 // ---------- plan and render
@@ -846,7 +861,8 @@ function initMap() {
   const imagery = L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}", { maxZoom: 19, maxNativeZoom: 18, attribution: "Imagery &copy; Esri, Maxar, Earthstar Geographics" });
   const gray = L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}", { maxZoom: 19, maxNativeZoom: 16, attribution: "Esri" }).addTo(map);
   const charts = new ChartLayer("", { maxZoom: 19, opacity: 0.9, attribution: "NOAA ENC" }).addTo(map);
-  L.control.layers({ "Light gray": gray, "Satellite": imagery }, { "NOAA charts": charts }, { position: "topleft", collapsed: true }).addTo(map);
+  const navLights = new LightLayer().addTo(map);
+  L.control.layers({ "Light gray": gray, "Satellite": imagery }, { "NOAA charts": charts, "Navigation lights (flashing)": navLights }, { position: "topleft", collapsed: true }).addTo(map);
   const Op = L.Control.extend({ onAdd() { const d = L.DomUtil.create("div", "opacity-ctl"); d.innerHTML = `<label>Charts <input type="range" min="0" max="1" step="0.05" value="0.9" aria-label="Chart opacity"></label>`; L.DomEvent.disableClickPropagation(d); d.querySelector("input").addEventListener("input", (e) => charts.setOpacity(+e.target.value)); return d; } });
   new Op({ position: "bottomright" }).addTo(map);
   const PlayBar = L.Control.extend({ onAdd() {
@@ -855,7 +871,7 @@ function initMap() {
       <button type="button" id="play-reset" aria-label="Back to the start" title="Back to the start">&#9198;</button>
       <button type="button" id="play" aria-label="Play">&#9654;</button>
       <select id="play-speed" aria-label="Playback speed"><option value="0.0833333">5 min/s</option><option value="0.1666667">10 min/s</option><option value="0.25">15 min/s</option><option value="0.5" selected>30 min/s</option><option value="1">1 h/s</option><option value="2">2 h/s</option></select>
-      <select id="play-zoom" aria-label="Map zoom" title="Map zoom while following the boat"><option value="0">Course</option><option value="11">Zoom 11</option><option value="12" selected>Zoom 12</option><option value="13">Zoom 13</option><option value="14">Zoom 14</option><option value="15">Zoom 15</option></select>
+      <select id="play-zoom" aria-label="Map width" title="How much water the map shows across while following the boat"><option value="0">Course</option><option value="1">1 nm</option><option value="2">2 nm</option><option value="5">5 nm</option><option value="10" selected>10 nm</option><option value="20">20 nm</option></select>
       <label class="follow"><input type="checkbox" id="follow" checked> Follow</label>
       <div class="pb"><span>Time</span><b id="pb-time"></b><span>Elapsed</span><b id="pb-el"></b><span>Distance</span><b id="pb-dist"></b><span>Thru water</span><b id="pb-stw"></b><span>Stream</span><b id="pb-cur"></b><span>Over bottom</span><b id="pb-sog"></b><span>Light</span><b id="pb-sun"></b></div>`;
     L.DomEvent.disableClickPropagation(d); L.DomEvent.disableScrollPropagation(d);
@@ -876,6 +892,132 @@ function initMap() {
   map.on("dragstart", () => { const f = $("follow"); if (f && playTimer) f.checked = false; });
   siteLayer = L.layerGroup().addTo(map); landLayer = L.layerGroup().addTo(map); planLayer = L.layerGroup().addTo(map);
 }
+// ---------- navigation lights (as in the R2AK 2028 planner): flashed on their real rhythm in real time (always lit, whatever the map time), from
+// data/lights.json (NOAA charts, scripts/fetch_lights.py). A light's phases are built from its exact sequence where mapped ("0.5+(3.5)":
+// on 0.5 s, off 3.5 s), otherwise from its IALA characteristic, group and period.
+const LIGHT_COL = { white: "#fffbe6", red: "#ff3b30", green: "#34d058", yellow: "#ffd60a", orange: "#ff9f0a", blue: "#4dabf7", violet: "#c084fc", amber: "#ffbf00" };
+function lightPhases(sec) {
+  const per = sec.per, cols = String(sec.col || "white").toLowerCase().split(/[;,]/).map((c) => c.trim()).filter(Boolean);
+  const ch = String(sec.ch || "F").replace(/\s+/g, ""), alt = /^Al/i.test(ch);
+  const base = ch.replace(/^Al\.?/i, "").replace(/\(.*$/, "").replace(/\+.*$/, "");
+  const grpTxt = sec.grp || (ch.match(/\(([^)]*)\)/) || [])[1] || "";
+  const groups = grpTxt.split("+").map((g) => parseInt(g, 10)).filter((n) => n > 0);
+  const ph = [];   // [seconds, colour index or -1 for dark]
+  const on = (d) => ph.push([d, 0]), off = (d) => ph.push([d, -1]);
+  if (sec.seq) {
+    String(sec.seq).split(/[,+]/).forEach((tok) => { const m = tok.match(/(\()?\s*([\d.]+)/); if (m) (m[1] ? off : on)(+m[2]); });
+    if (ph.length) return alternate({ ph, cols });
+  }
+  const fill = (P) => { const used = ph.reduce((a, q) => a + q[0], 0); if (P && P > used + 0.05) off(P - used); };
+  const flashes = (n, fl, gap) => { for (let i = 0; i < n; i++) { on(fl); if (i < n - 1) off(gap); } };
+  if (/^Mo/i.test(ch)) {
+    const MORSE = { A: ".-", B: "-...", C: "-.-.", D: "-..", E: ".", I: "..", K: "-.-", N: "-.", O: "---", R: ".-.", S: "...", T: "-", U: "..-", W: ".--", X: "-..-", Y: "-.--" };
+    const code = MORSE[(ch.match(/\(([A-Z])\)/i) || [, "A"])[1].toUpperCase()] || ".-";
+    [...code].forEach((c, i) => { on(c === "." ? 0.5 : 1.5); if (i < code.length - 1) off(0.5); }); off(0.5); fill(per || 8);
+  } else if (/^(F|FW|FR|FG)$/i.test(base) && !/Fl/i.test(ch)) {
+    on(1); return { ph, cols, fixed: true };
+  } else if (/^Iso/i.test(base)) {
+    const P = per || 4; on(P / 2); off(P / 2);
+  } else if (/^Oc/i.test(base)) {
+    const n = groups[0] || 1, P = per || 4; for (let i = 0; i < n; i++) { off(1); if (i < n - 1) on(1); }
+    const used = ph.reduce((a, q) => a + q[0], 0); on(Math.max(0.5, P - used));
+  } else if (/^(UQ|IUQ)/i.test(base)) {
+    if (groups.length) { flashes(groups[0], 0.1, 0.15); fill(per); } else { on(0.1); off(0.15); }
+  } else if (/^(VQ|IVQ)/i.test(base)) {
+    if (groups.length) { flashes(groups[0], 0.2, 0.3); if (/LFl/i.test(ch)) { off(0.3); on(2); } fill(per); } else { on(0.2); off(0.3); }
+  } else if (/^(Q|IQ)/i.test(base)) {
+    if (groups.length) { flashes(groups[0], 0.3, 0.7); if (/LFl/i.test(ch)) { off(0.7); on(2); } fill(per); } else { on(0.3); off(0.7); }
+  } else if (/^LFl/i.test(base)) {
+    flashes(groups[0] || 1, 2, 2); fill(per || 10);
+  } else {   // Fl, Fl(n), Fl(n+m), FFl
+    const P = per || 4, fl = P <= 2.5 ? 0.3 : 0.5;
+    if (groups.length > 1) groups.forEach((n, gi) => { flashes(n, fl, 1); if (gi < groups.length - 1) off(2); });
+    else flashes(groups[0] || 1, fl, 1);
+    fill(P);
+    if (/^FFl/i.test(ch)) return { ph, cols, fixedUnder: true };
+  }
+  return alternate({ ph, cols });
+  // Al: successive flashes take the colours in turn, so repeat the cycle until each flash has had each colour
+  function alternate(r) {
+    if (!alt || r.cols.length < 2) return r;
+    let k = 0; const ph2 = [];
+    for (let i = 0; i < r.cols.length; i++) r.ph.forEach(([d, c]) => ph2.push([d, c < 0 ? -1 : k++ % r.cols.length]));
+    return { ph: ph2, cols: r.cols };
+  }
+}
+function navLightAt(L0, ms) {   // colour now, or null for dark
+  const r = L0.r;
+  if (r.fixed) return r.cols[0];
+  const T = r.T || (r.T = r.ph.reduce((a, q) => a + q[0], 0)); if (!T) return r.cols[0];
+  let x = ((ms / 1000) % T + T) % T;
+  for (const [d, c] of r.ph) { if (x < d) return c < 0 ? (r.fixedUnder ? r.cols[0] + "|dim" : null) : r.cols[c] || r.cols[0]; x -= d; }
+  return null;
+}
+const LightLayer = L.Layer.extend({
+  onAdd(map) {
+    this.map = map;
+    if (!map.getPane("lightPane")) { const p = map.createPane("lightPane"); p.style.zIndex = 395; p.style.pointerEvents = "none"; }
+    this.canvas = L.DomUtil.create("canvas"); this.canvas.style.pointerEvents = "none";
+    map.getPane("lightPane").appendChild(this.canvas);
+    map.on("moveend zoomend resize", this._reset, this); map.on("movestart zoomstart", this._hide, this); map.on("click", this._click, this);
+    this.running = true;
+    (this.dataP ||= fetch("data/lights.json", { cache: "no-cache" }).then((r) => r.ok ? r.json() : { lights: [] }).catch(() => ({ lights: [] }))).then((d) => {
+      // each sector its own rhythm; a light shows the sector facing our boat (or its first)
+      this.lights = (d.lights || []).map((l) => ({ ...l, rs: l.s.map(lightPhases) }));
+      if (this.running) { this._reset(); this._loop(); }
+    });
+  },
+  onRemove(map) {
+    this.running = false; cancelAnimationFrame(this.raf);
+    map.off("moveend zoomend resize", this._reset, this); map.off("movestart zoomstart", this._hide, this); map.off("click", this._click, this);
+    this.canvas.remove();
+  },
+  _hide() { this.hidden = true; if (this.ctx) this.ctx.clearRect(0, 0, this.w, this.h); },
+  _reset() {
+    if (!this.lights) return;
+    const map = this.map, size = map.getSize(), dpr = window.devicePixelRatio || 1;
+    this.w = size.x; this.h = size.y; this.canvas.width = size.x * dpr; this.canvas.height = size.y * dpr;
+    this.canvas.style.width = size.x + "px"; this.canvas.style.height = size.y + "px";
+    L.DomUtil.setPosition(this.canvas, map.containerPointToLayerPoint([0, 0]));
+    this.ctx = this.canvas.getContext("2d"); this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const b = map.getBounds().pad(0.05), z = map.getZoom();
+    this.vis = z < 8 ? [] : this.lights.filter((l) => b.contains([l.lat, l.lon])).map((l) => ({ l, p: map.latLngToContainerPoint([l.lat, l.lon]) }));
+    this.rad = z >= 13 ? 1.4 : z >= 11 ? 1.15 : 0.9;
+    this.hidden = false;
+  },
+  _loop() { const go = () => { if (!this.running) return; this._draw(); this.raf = requestAnimationFrame(go); }; this.raf = requestAnimationFrame(go); },
+  _sector(l) {
+    if (l.s.length < 2) return 0;
+    if (!P || !P.R || state.t == null) return 0;
+    const b = { ll: boatLL(P.R, state.t) };
+    const brg = (Math.atan2((l.lon - b.ll[1]) * Math.cos(l.lat * Math.PI / 180), l.lat - b.ll[0]) * 180 / Math.PI + 360) % 360;   // boat to light
+    const i = l.s.findIndex((s) => s.s0 != null && s.s1 != null && (s.s0 <= s.s1 ? brg >= s.s0 && brg <= s.s1 : brg >= s.s0 || brg <= s.s1));
+    return i < 0 ? 0 : i;
+  },
+  _draw() {
+    if (this.hidden || !this.ctx || !this.vis) return;
+    const ctx = this.ctx, now = Date.now(), k = this.rad;
+    ctx.clearRect(0, 0, this.w, this.h);
+    if (this._secT !== state.t) { this._secT = state.t; this.vis.forEach((v) => { v.si = this._sector(v.l); }); }
+    this.vis.forEach((v) => {
+      const sec = v.l.s[v.si || 0];
+      let c = navLightAt({ r: v.l.rs[v.si || 0] }, now); const dim = c && c.endsWith("|dim"); if (dim) c = c.slice(0, -4);
+      const hex = LIGHT_COL[(c || sec.col.split(/[;,]/)[0] || "white").trim().toLowerCase()] || "#fffbe6", { x, y } = v.p;
+      // the beacon itself: a small ringed dot in its colour, lit or not
+      ctx.beginPath(); ctx.arc(x, y, 2.6 * k, 0, 7); ctx.fillStyle = "#111827"; ctx.fill(); ctx.lineWidth = 1.2; ctx.strokeStyle = hex; ctx.stroke();
+      if (!c) return;
+      const R = (dim ? 7 : 13) * k, g = ctx.createRadialGradient(x, y, 0, x, y, R);
+      g.addColorStop(0, "#ffffff"); g.addColorStop(0.18, hex); g.addColorStop(1, hex + "00");
+      ctx.globalAlpha = dim ? 0.55 : 1; ctx.beginPath(); ctx.arc(x, y, R, 0, 7); ctx.fillStyle = g; ctx.fill(); ctx.globalAlpha = 1;
+    });
+  },
+  _click(e) {
+    if (!this.vis) return;
+    const p = this.map.latLngToContainerPoint(e.latlng), v = this.vis.find((v) => v.p.distanceTo(p) < 9); if (!v) return;
+    const txt = v.l.s.map((s) => `${esc(s.ch)}${s.grp && !/\(/.test(s.ch) ? `(${esc(s.grp)})` : ""} ${esc(s.col)}${s.per ? ` ${s.per} s` : ""}${s.seq ? ` [${esc(s.seq)}]` : ""}${s.s0 != null ? ` (${s.s0}°–${s.s1}°)` : ""}`).join("<br>");
+    L.popup().setLatLng([v.l.lat, v.l.lon]).setContent(`<b>${esc(v.l.name || "Light")}</b><br>${txt}`).openOn(this.map);
+  },
+});
 // the Vessel Traffic Lanes: entering one disqualifies the team (race packet). From OpenStreetMap seamarks (scripts/fetch_lanes.py).
 function drawLanes(d) {
   if (!d || !d.features) return;
@@ -919,7 +1061,8 @@ function drawPlanLayers() {
   planLayer.clearLayers();
   P.R.stops.forEach((x, i) => {
     const ll = x.site ? x.site.ll : pointAt(CH[state.route], x.pos), d = shortDur((x.until - x.t) / H);
-    if (x.site) L.polyline([pointAt(CH[state.route], x.site.along), x.site.ll], { color: "#facc15", weight: 2, dashArray: "4 4", interactive: false }).addTo(planLayer);
+    if (x.site) { const s = x.site, a = s.along, L0 = s.lead || 0.01, pts = []; for (let k = 0; k <= 40; k++) pts.push(bentLL(P.R, a - L0 + (2 * L0 * k) / 40));
+      L.polyline(pts, { color: "#facc15", weight: 2.5, dashArray: "4 4", interactive: false }).addTo(planLayer); }
     L.marker(ll, { icon: L.divIcon({ className: `stop ${x.kind}`, html: `${ICON[x.kind]}<b>${i + 1}</b><i class="dur">${d}</i>`, iconSize: [36 + 6 * d.length, 17], iconAnchor: [10, 8] }), zIndexOffset: 500 })
       .bindTooltip(`<b>${i + 1}. ${STOP_NAME[x.kind]}</b> ${fmtT.format(x.t)} to ${fmtT.format(x.until)}<br>${esc(stopWhere(x))}${x.why ? "<br>" + esc(x.why) : ""}`).on("click", () => setTime(x.t)).addTo(planLayer);
   });
@@ -1016,16 +1159,21 @@ function syncTime() {
 }
 function renderHeatCursor() { clearTimeout(renderHeatCursor.tm); renderHeatCursor.tm = setTimeout(renderHeat, 80); }
 // the zoom picked on the play bar: the whole course, or a fixed zoom on the boat
+// the zoom that shows w nm across the map's width at the boat's latitude (Web Mercator: 156543 m per pixel at zoom 0)
+function zoomForNm(w, lat) {
+  const px = map.getSize().x || 800;
+  return Math.log2(px * 156543.03 * Math.cos(lat * Math.PI / 180) / (w * 1852));
+}
 function applyZoom() {
   if (!P || !P.R || !map) return;
-  const z = +$("play-zoom").value;
-  if (!z) { $("follow").checked = false; map.fitBounds(routeLines[state.route].getBounds(), { padding: [20, 20], animate: false }); }
-  else { $("follow").checked = true; map.setView(boatLL(P.R, state.t), z, { animate: false }); }
+  const w = +$("play-zoom").value, ll = boatLL(P.R, state.t), z = w && zoomForNm(w, ll.lat ?? ll[0]);
+  if (!w) { $("follow").checked = false; map.fitBounds(routeLines[state.route].getBounds(), { padding: [20, 20], animate: false }); }
+  else { $("follow").checked = true; map.setView(ll, z, { animate: false }); }
 }
 function startPlay() {
   const R = P.R; if (state.t >= (R.fin || 0)) state.t = R.t0;
   $("play").innerHTML = "&#10074;&#10074;"; $("play").setAttribute("aria-label", "Pause");
-  if ($("follow").checked) map.setView(boatLL(R, state.t), +$("play-zoom").value || Math.max(map.getZoom(), 12));
+  if ($("follow").checked) { const ll = boatLL(R, state.t), w = +$("play-zoom").value; map.setView(ll, w ? zoomForNm(w, ll.lat ?? ll[0]) : Math.max(map.getZoom(), 12)); }
   playTimer = setInterval(() => { const sp = +$("play-speed").value; setTime(state.t + sp * H / 10); if (state.t >= (P.R.fin || Infinity)) stopPlay(); }, 100);
 }
 function stopPlay() { clearInterval(playTimer); playTimer = null; $("play").innerHTML = "&#9654;"; $("play").setAttribute("aria-label", "Play"); }
