@@ -1,0 +1,3015 @@
+{
+"stay_nm": 0.08,
+"min_minutes": 15,
+"group_nm": 0.25,
+"sites": [
+{
+"lat": 47.2433,
+"lon": -122.4319,
+"teams": 1,
+"stops": 1,
+"median_min": 15,
+"years": [
+"2026"
+],
+"who": [
+"2026 Starlight"
+],
+"legs": {
+"colvos": {
+"along": 0.0,
+"offset": 0.93
+},
+"east": {
+"along": 0.0,
+"offset": 0.93
+}
+}
+},
+{
+"lat": 47.2748,
+"lon": -122.4591,
+"teams": 1,
+"stops": 1,
+"median_min": 15,
+"years": [
+"2025"
+],
+"who": [
+"2025 Inertial Mass"
+],
+"legs": {
+"colvos": {
+"along": 1.56,
+"offset": 0.62
+},
+"east": {
+"along": 1.56,
+"offset": 0.62
+}
+}
+},
+{
+"lat": 47.3059,
+"lon": -122.5133,
+"teams": 2,
+"stops": 2,
+"median_min": 42,
+"years": [
+"2025",
+"2026"
+],
+"who": [
+"2025 May The Tides Be With You",
+"2026 Starlight"
+],
+"legs": {
+"colvos": {
+"along": 5.12,
+"offset": 0.59
+},
+"east": {
+"along": 5.12,
+"offset": 0.59
+}
+}
+},
+{
+"lat": 47.3137,
+"lon": -122.529,
+"teams": 11,
+"stops": 11,
+"median_min": 25,
+"years": [
+"2025",
+"2026"
+],
+"who": [
+"2025 Caffeinated Coho",
+"2025 Good 'Nuff",
+"2025 Haggis Head",
+"2025 Rob Free Not Sleep Free",
+"2026 47 59",
+"2026 Camp Seymour",
+"2026 Grin and Bair it",
+"2026 Paddlegoat",
+"2026 Puddle Jumper",
+"2026 Salmon Run",
+"2026 opagoagain"
+],
+"legs": {
+"colvos": {
+"along": 5.73,
+"offset": 0.08
+},
+"east": {
+"along": 5.73,
+"offset": 0.08
+}
+}
+},
+{
+"lat": 47.3397,
+"lon": -122.5248,
+"teams": 4,
+"stops": 4,
+"median_min": 15,
+"years": [
+"2024",
+"2025",
+"2026"
+],
+"who": [
+"2024 Good Fourtune",
+"2024 Salmon Beach Rowing Club",
+"2025 Skookum Joe",
+"2026 47 59"
+],
+"legs": {
+"colvos": {
+"along": 7.43,
+"offset": 0.6
+},
+"east": {
+"along": 6.16,
+"offset": 1.21
+}
+}
+},
+{
+"lat": 47.3446,
+"lon": -122.5277,
+"teams": 1,
+"stops": 1,
+"median_min": 25,
+"years": [
+"2025"
+],
+"who": [
+"2025 Doing this on Porpoise"
+],
+"legs": {
+"colvos": {
+"along": 7.74,
+"offset": 0.48
+}
+}
+},
+{
+"lat": 47.3532,
+"lon": -122.5275,
+"teams": 7,
+"stops": 7,
+"median_min": 20,
+"years": [
+"2025",
+"2026"
+],
+"who": [
+"2025 Fun While Lost",
+"2025 GoRobGo",
+"2025 GoVicGo!",
+"2025 Motoboat",
+"2025 SALISH5371",
+"2025 Water Striders",
+"2026 Otter Limits"
+],
+"legs": {
+"colvos": {
+"along": 8.24,
+"offset": 0.49
+}
+}
+},
+{
+"lat": 47.3659,
+"lon": -122.5231,
+"teams": 2,
+"stops": 2,
+"median_min": 25,
+"years": [
+"2026"
+],
+"who": [
+"2026 Old Man Raven",
+"2026 Spam Musubi"
+],
+"legs": {
+"colvos": {
+"along": 9.26,
+"offset": 0.42
+}
+}
+},
+{
+"lat": 47.3709,
+"lon": -122.5163,
+"teams": 2,
+"stops": 2,
+"median_min": 198,
+"years": [
+"2024"
+],
+"who": [
+"2024 Harp Dogs",
+"2024 Wood Warriors"
+],
+"legs": {
+"colvos": {
+"along": 9.47,
+"offset": 0.59
+}
+}
+},
+{
+"lat": 47.3746,
+"lon": -122.5398,
+"teams": 2,
+"stops": 2,
+"median_min": 28,
+"years": [
+"2025",
+"2026"
+],
+"who": [
+"2025 OneFiveOhOh",
+"2026 Grampa T"
+],
+"legs": {
+"colvos": {
+"along": 9.63,
+"offset": 0.37
+}
+}
+},
+{
+"lat": 47.3912,
+"lon": -122.5261,
+"teams": 8,
+"stops": 8,
+"median_min": 30,
+"years": [
+"2024",
+"2026"
+],
+"who": [
+"2024 Go Faster Benny",
+"2024 Half Tame",
+"2024 Henderson Inlet",
+"2024 Kensdottirs",
+"2024 Pandatrax 2",
+"2024 Rob Free",
+"2024 Wood Warriors",
+"2026 RowBear the SlowBear"
+],
+"legs": {
+"colvos": {
+"along": 10.72,
+"offset": 0.46
+}
+}
+},
+{
+"lat": 47.3971,
+"lon": -122.5275,
+"teams": 7,
+"stops": 7,
+"median_min": 20,
+"years": [
+"2025",
+"2026"
+],
+"who": [
+"2025 Let the Good Times Row",
+"2025 Mayerly Mayerly Life is But a Dream",
+"2025 Skookum Joe",
+"2026 DAG after a frothie",
+"2026 Looking Back",
+"2026 Red",
+"2026 Rickety Jim"
+],
+"legs": {
+"colvos": {
+"along": 11.03,
+"offset": 0.4
+}
+}
+},
+{
+"lat": 47.4054,
+"lon": -122.5219,
+"teams": 36,
+"stops": 36,
+"median_min": 38,
+"years": [
+"2024",
+"2025",
+"2026"
+],
+"who": [
+"2024 Field Mice",
+"2024 Good News I Saw A Seal",
+"2024 Let'S Go Girls!",
+"2024 Moving Forward",
+"2024 Nardi Party",
+"2024 Octocosta",
+"2024 Old Man Raven",
+"2024 Paddle On... Paddle On",
+"2024 Rogue Kayaker",
+"2024 Tiktaalik",
+"2024 Usually Upright",
+"2025 2 Seventies for 70"
+],
+"legs": {
+"colvos": {
+"along": 11.64,
+"offset": 0.55
+}
+}
+},
+{
+"lat": 47.4124,
+"lon": -122.53,
+"teams": 1,
+"stops": 1,
+"median_min": 15,
+"years": [
+"2025"
+],
+"who": [
+"2025 The Captain the Engineer the Biker and Bilbo"
+],
+"legs": {
+"colvos": {
+"along": 12.05,
+"offset": 0.09
+}
+}
+},
+{
+"lat": 47.4252,
+"lon": -122.5188,
+"teams": 1,
+"stops": 1,
+"median_min": 20,
+"years": [
+"2024"
+],
+"who": [
+"2024 Red Lodge Yacht Club"
+],
+"legs": {
+"colvos": {
+"along": 12.83,
+"offset": 0.21
+}
+}
+},
+{
+"lat": 47.426,
+"lon": -122.5121,
+"teams": 1,
+"stops": 1,
+"median_min": 20,
+"years": [
+"2024"
+],
+"who": [
+"2024 Jettysome"
+],
+"legs": {
+"colvos": {
+"along": 12.88,
+"offset": 0.48
+}
+}
+},
+{
+"lat": 47.4295,
+"lon": -122.5322,
+"teams": 3,
+"stops": 3,
+"median_min": 25,
+"years": [
+"2024",
+"2026"
+],
+"who": [
+"2024 Utah Schools For The Deaf And The Blind (Usdb)",
+"2026 Baldy Bear",
+"2026 Salish Cruiser"
+],
+"legs": {
+"colvos": {
+"along": 13.08,
+"offset": 0.33
+}
+}
+},
+{
+"lat": 47.4379,
+"lon": -122.5342,
+"teams": 5,
+"stops": 5,
+"median_min": 320,
+"years": [
+"2025"
+],
+"who": [
+"2025 Caffeinated Coho",
+"2025 Good 'Nuff",
+"2025 Haggis Head",
+"2025 Harp Dog",
+"2025 Paddle"
+],
+"legs": {
+"colvos": {
+"along": 13.6,
+"offset": 0.42
+}
+}
+},
+{
+"lat": 47.4398,
+"lon": -122.5137,
+"teams": 10,
+"stops": 11,
+"median_min": 20,
+"years": [
+"2024",
+"2025",
+"2026"
+],
+"who": [
+"2024 Chippy Love",
+"2024 Finnegan'S Wake",
+"2024 Good Fourtune",
+"2024 Hard Knots",
+"2024 Salmon Beach Rowing Club",
+"2024 Why Knot?",
+"2025 Dame Corky's Crew",
+"2026 ATEAM Marine Cowboy",
+"2026 Cap'n Hunch",
+"2026 Kikaha"
+],
+"legs": {
+"colvos": {
+"along": 13.7,
+"offset": 0.42
+}
+}
+},
+{
+"lat": 47.447,
+"lon": -122.5134,
+"teams": 8,
+"stops": 8,
+"median_min": 20,
+"years": [
+"2024",
+"2025",
+"2026"
+],
+"who": [
+"2024 Seatownsupperclub",
+"2025 Apple bottom boy",
+"2025 Ayla's Dad",
+"2025 Captain Ross and The Stowaway",
+"2025 Motoboat",
+"2026 Maury Dory",
+"2026 The Saltwater Syndicate - Riptide",
+"2026 The Saltwater Syndicate - Torrent"
+],
+"legs": {
+"colvos": {
+"along": 14.16,
+"offset": 0.43
+}
+}
+},
+{
+"lat": 47.454,
+"lon": -122.5122,
+"teams": 3,
+"stops": 3,
+"median_min": 25,
+"years": [
+"2025"
+],
+"who": [
+"2025 GoRobGo",
+"2025 GoVicGo!",
+"2025 Lost But Don't Care"
+],
+"legs": {
+"colvos": {
+"along": 14.67,
+"offset": 0.43
+}
+}
+},
+{
+"lat": 47.4567,
+"lon": -122.5309,
+"teams": 1,
+"stops": 1,
+"median_min": 340,
+"years": [
+"2026"
+],
+"who": [
+"2026 opagoagain"
+],
+"legs": {
+"colvos": {
+"along": 14.67,
+"offset": 0.34
+}
+}
+},
+{
+"lat": 47.4601,
+"lon": -122.5101,
+"teams": 2,
+"stops": 2,
+"median_min": 17,
+"years": [
+"2025",
+"2026"
+],
+"who": [
+"2025 PITA (Pain In The Ass)",
+"2026 Tell My Wife I\u2019m OK"
+],
+"legs": {
+"colvos": {
+"along": 15.02,
+"offset": 0.45
+}
+}
+},
+{
+"lat": 47.4657,
+"lon": -122.5028,
+"teams": 2,
+"stops": 2,
+"median_min": 28,
+"years": [
+"2024"
+],
+"who": [
+"2024 Tpac Capital",
+"2024 Water-Lou"
+],
+"legs": {
+"colvos": {
+"along": 15.68,
+"offset": 0.61
+}
+}
+},
+{
+"lat": 47.475,
+"lon": -122.4978,
+"teams": 2,
+"stops": 2,
+"median_min": 35,
+"years": [
+"2024"
+],
+"who": [
+"2024 Dumas Bay Associate",
+"2024 Starlight"
+],
+"legs": {
+"colvos": {
+"along": 16.24,
+"offset": 0.46
+}
+}
+},
+{
+"lat": 47.4899,
+"lon": -122.5159,
+"teams": 2,
+"stops": 2,
+"median_min": 105,
+"years": [
+"2025"
+],
+"who": [
+"2025 Dame Corky's Crew",
+"2025 Doing this on Porpoise"
+],
+"legs": {
+"colvos": {
+"along": 16.6,
+"offset": 0.64
+}
+}
+},
+{
+"lat": 47.4821,
+"lon": -122.4947,
+"teams": 1,
+"stops": 1,
+"median_min": 15,
+"years": [
+"2026"
+],
+"who": [
+"2026 Fleeced Lightning"
+],
+"legs": {
+"colvos": {
+"along": 16.7,
+"offset": 0.34
+}
+}
+},
+{
+"lat": 47.4889,
+"lon": -122.4804,
+"teams": 8,
+"stops": 8,
+"median_min": 82,
+"years": [
+"2024",
+"2026"
+],
+"who": [
+"2024 Old Man Raven",
+"2024 Old Man Raven'S Slightly Younger Brother (And Friend)",
+"2024 Tiktaalik",
+"2026 Baby Shark!",
+"2026 Grin and Bair it",
+"2026 Old Man Raven",
+"2026 Otter Limits",
+"2026 Spam Musubi"
+],
+"legs": {
+"colvos": {
+"along": 17.11,
+"offset": 0.64
+}
+}
+},
+{
+"lat": 47.501,
+"lon": -122.5041,
+"teams": 1,
+"stops": 2,
+"median_min": 132,
+"years": [
+"2026"
+],
+"who": [
+"2026 Cold Molded"
+],
+"legs": {
+"colvos": {
+"along": 17.68,
+"offset": 0.36
+}
+}
+},
+{
+"lat": 47.5096,
+"lon": -122.4959,
+"teams": 9,
+"stops": 9,
+"median_min": 15,
+"years": [
+"2025",
+"2026"
+],
+"who": [
+"2025 Good News: I Saw a Seal!",
+"2025 Paddle On... Paddle On",
+"2025 Rogue Kayaker",
+"2025 Salty Current",
+"2025 Salty Senior",
+"2025 Slightly Senile With A Side Of Chips",
+"2026 47 59",
+"2026 Keewaydin Loons",
+"2026 Salmon Run"
+],
+"legs": {
+"colvos": {
+"along": 18.1,
+"offset": 0.23
+}
+}
+},
+{
+"lat": 47.5088,
+"lon": -122.4646,
+"teams": 1,
+"stops": 1,
+"median_min": 40,
+"years": [
+"2024"
+],
+"who": [
+"2024 Salmon Beach Rowing Club"
+],
+"legs": {
+"colvos": {
+"along": 18.42,
+"offset": 0.88
+}
+}
+},
+{
+"lat": 47.5097,
+"lon": -122.4763,
+"teams": 2,
+"stops": 2,
+"median_min": 22,
+"years": [
+"2026"
+],
+"who": [
+"2026 Chum",
+"2026 Red"
+],
+"legs": {
+"colvos": {
+"along": 18.42,
+"offset": 0.4
+}
+}
+},
+{
+"lat": 47.531,
+"lon": -122.4853,
+"teams": 7,
+"stops": 7,
+"median_min": 70,
+"years": [
+"2024",
+"2025"
+],
+"who": [
+"2024 Abiding Dude",
+"2024 Jettysome",
+"2024 Martin Musson",
+"2024 Paddle",
+"2025 Ayla's Dad",
+"2025 Doing this on Porpoise",
+"2025 Skookum Joe"
+],
+"legs": {
+"colvos": {
+"along": 19.44,
+"offset": 0.59
+}
+}
+},
+{
+"lat": 47.5405,
+"lon": -122.4819,
+"teams": 164,
+"stops": 166,
+"median_min": 57,
+"years": [
+"2024",
+"2025",
+"2026"
+],
+"who": [
+"2024 A Working Tidal Effort",
+"2024 Apple Bottom Boy And The Boots With The Fleece",
+"2024 Aqua-Haulic",
+"2024 Bucketlist",
+"2024 Chippy Love",
+"2024 Daddleboard",
+"2024 Dude",
+"2024 Dumas Bay Brethren",
+"2024 Erik Tries Again",
+"2024 Fullsterkur",
+"2024 Gastropod",
+"2024 Gemaries"
+],
+"legs": {
+"colvos": {
+"along": 20.55,
+"offset": 0.64
+}
+}
+},
+{
+"lat": 47.5563,
+"lon": -122.4717,
+"teams": 1,
+"stops": 1,
+"median_min": 20,
+"years": [
+"2025"
+],
+"who": [
+"2025 Ripple in Still Water"
+],
+"legs": {
+"colvos": {
+"along": 21.51,
+"offset": 0.23
+},
+"east": {
+"along": 25.75,
+"offset": 0.84
+}
+}
+},
+{
+"lat": 47.5814,
+"lon": -122.4894,
+"teams": 2,
+"stops": 2,
+"median_min": 40,
+"years": [
+"2024",
+"2026"
+],
+"who": [
+"2024 Harp Dogs",
+"2026 47 59"
+],
+"legs": {
+"colvos": {
+"along": 23.03,
+"offset": 0.94
+},
+"east": {
+"along": 28.21,
+"offset": 1.35
+}
+}
+},
+{
+"lat": 47.5837,
+"lon": -122.48,
+"teams": 13,
+"stops": 13,
+"median_min": 30,
+"years": [
+"2024",
+"2025",
+"2026"
+],
+"who": [
+"2024 Nardi Party",
+"2024 Pandatrax 2",
+"2024 Pws Sea Otter",
+"2024 Snowy Plover",
+"2025 Harp Dog",
+"2025 Motoboat",
+"2025 Salty Current",
+"2025 Salty Senior",
+"2025 Skookum Joe",
+"2025 Slightly Senile With A Side Of Chips",
+"2025 Smoking Daisies In Paris",
+"2026 Counterpoint"
+],
+"legs": {
+"colvos": {
+"along": 23.18,
+"offset": 0.56
+},
+"east": {
+"along": 28.01,
+"offset": 0.99
+}
+}
+},
+{
+"lat": 47.5877,
+"lon": -122.4884,
+"teams": 4,
+"stops": 4,
+"median_min": 52,
+"years": [
+"2024",
+"2026"
+],
+"who": [
+"2024 Misty Rows ... Again ?",
+"2024 Old Man Raven'S Slightly Younger Brother (And Friend)",
+"2026 Salmon Run",
+"2026 The Long and Short Of It"
+],
+"legs": {
+"colvos": {
+"along": 23.38,
+"offset": 0.91
+},
+"east": {
+"along": 28.42,
+"offset": 1.06
+}
+}
+},
+{
+"lat": 47.5947,
+"lon": -122.4811,
+"teams": 4,
+"stops": 4,
+"median_min": 30,
+"years": [
+"2024",
+"2025",
+"2026"
+],
+"who": [
+"2024 Finnegan'S Wake",
+"2024 Mor Row",
+"2025 Apple bottom boy",
+"2026 ATEAM Marine Cowboy"
+],
+"legs": {
+"colvos": {
+"along": 24.2,
+"offset": 0.56
+},
+"east": {
+"along": 28.42,
+"offset": 0.56
+}
+}
+},
+{
+"lat": 47.599,
+"lon": -122.4982,
+"teams": 2,
+"stops": 2,
+"median_min": 98,
+"years": [
+"2024",
+"2026"
+],
+"who": [
+"2024 Tpac Capital",
+"2026 47 59"
+],
+"legs": {
+"colvos": {
+"along": 24.2,
+"offset": 1.15
+},
+"east": {
+"along": 28.42,
+"offset": 1.15
+}
+}
+},
+{
+"lat": 47.6089,
+"lon": -122.4981,
+"teams": 1,
+"stops": 1,
+"median_min": 40,
+"years": [
+"2026"
+],
+"who": [
+"2026 Baldy Bear"
+],
+"legs": {
+"colvos": {
+"along": 24.2,
+"offset": 1.26
+},
+"east": {
+"along": 28.42,
+"offset": 1.26
+}
+}
+},
+{
+"lat": 47.6128,
+"lon": -122.4842,
+"teams": 1,
+"stops": 1,
+"median_min": 15,
+"years": [
+"2024"
+],
+"who": [
+"2024 Skinny Gull (Wearing Louboutin)"
+],
+"legs": {
+"colvos": {
+"along": 25.09,
+"offset": 0.85
+},
+"east": {
+"along": 29.3,
+"offset": 0.85
+}
+}
+},
+{
+"lat": 47.6201,
+"lon": -122.4901,
+"teams": 4,
+"stops": 4,
+"median_min": 18,
+"years": [
+"2024",
+"2025",
+"2026"
+],
+"who": [
+"2024 Skinny Gull (Wearing Louboutin)",
+"2025 The Captain the Engineer the Biker and Bilbo",
+"2026 47 59",
+"2026 Grampa T"
+],
+"legs": {
+"colvos": {
+"along": 25.54,
+"offset": 1.09
+},
+"east": {
+"along": 29.76,
+"offset": 1.09
+}
+}
+},
+{
+"lat": 47.6209,
+"lon": -122.4942,
+"teams": 1,
+"stops": 1,
+"median_min": 20,
+"years": [
+"2024"
+],
+"who": [
+"2024 Odyssey"
+],
+"legs": {
+"colvos": {
+"along": 25.59,
+"offset": 1.26
+},
+"east": {
+"along": 29.81,
+"offset": 1.26
+}
+}
+},
+{
+"lat": 47.6291,
+"lon": -122.4861,
+"teams": 1,
+"stops": 1,
+"median_min": 15,
+"years": [
+"2024"
+],
+"who": [
+"2024 Mor Row"
+],
+"legs": {
+"colvos": {
+"along": 26.05,
+"offset": 0.93
+},
+"east": {
+"along": 30.26,
+"offset": 0.93
+}
+}
+},
+{
+"lat": 47.6311,
+"lon": -122.4917,
+"teams": 23,
+"stops": 25,
+"median_min": 35,
+"years": [
+"2024",
+"2025",
+"2026"
+],
+"who": [
+"2024 Dude",
+"2024 Erik Tries Again",
+"2024 Jettysome",
+"2024 Let'S Go Girls!",
+"2024 Nautinurse",
+"2024 Pandatrax 2",
+"2024 Salty Current",
+"2024 Serendipity",
+"2024 Skinny Gull (Wearing Louboutin)",
+"2024 Water-Lou",
+"2025 Captain Ross and The Stowaway",
+"2025 Free Quilcene"
+],
+"legs": {
+"colvos": {
+"along": 26.2,
+"offset": 1.16
+},
+"east": {
+"along": 30.41,
+"offset": 1.16
+}
+}
+},
+{
+"lat": 47.635,
+"lon": -122.4891,
+"teams": 1,
+"stops": 1,
+"median_min": 15,
+"years": [
+"2025"
+],
+"who": [
+"2025 Smoking Daisies In Paris"
+],
+"legs": {
+"colvos": {
+"along": 26.4,
+"offset": 1.05
+},
+"east": {
+"along": 30.61,
+"offset": 1.05
+}
+}
+},
+{
+"lat": 47.6365,
+"lon": -122.4972,
+"teams": 5,
+"stops": 5,
+"median_min": 45,
+"years": [
+"2025",
+"2026"
+],
+"who": [
+"2025 Search and Res-canoe",
+"2026 Baby Shark!",
+"2026 Kikaha",
+"2026 Puddle Jumper",
+"2026 Tell My Wife I\u2019m OK"
+],
+"legs": {
+"colvos": {
+"along": 26.5,
+"offset": 1.38
+},
+"east": {
+"along": 30.71,
+"offset": 1.38
+}
+}
+},
+{
+"lat": 47.6475,
+"lon": -122.4938,
+"teams": 1,
+"stops": 1,
+"median_min": 15,
+"years": [
+"2025"
+],
+"who": [
+"2025 Laughing Academy"
+],
+"legs": {
+"colvos": {
+"along": 27.16,
+"offset": 1.24
+},
+"east": {
+"along": 31.37,
+"offset": 1.24
+}
+}
+},
+{
+"lat": 47.6565,
+"lon": -122.4842,
+"teams": 1,
+"stops": 1,
+"median_min": 15,
+"years": [
+"2024"
+],
+"who": [
+"2024 Skinny Gull (Wearing Louboutin)"
+],
+"legs": {
+"colvos": {
+"along": 27.71,
+"offset": 0.85
+},
+"east": {
+"along": 31.92,
+"offset": 0.85
+}
+}
+},
+{
+"lat": 47.6672,
+"lon": -122.4925,
+"teams": 1,
+"stops": 1,
+"median_min": 15,
+"years": [
+"2025"
+],
+"who": [
+"2025 Francis Strikes Back"
+],
+"legs": {
+"colvos": {
+"along": 28.37,
+"offset": 1.19
+},
+"east": {
+"along": 32.58,
+"offset": 1.19
+}
+}
+},
+{
+"lat": 47.6738,
+"lon": -122.486,
+"teams": 1,
+"stops": 1,
+"median_min": 15,
+"years": [
+"2025"
+],
+"who": [
+"2025 Swedish American Yacht Club"
+],
+"legs": {
+"colvos": {
+"along": 28.72,
+"offset": 0.92
+},
+"east": {
+"along": 32.93,
+"offset": 0.92
+}
+}
+},
+{
+"lat": 47.7266,
+"lon": -122.4879,
+"teams": 1,
+"stops": 1,
+"median_min": 15,
+"years": [
+"2024"
+],
+"who": [
+"2024 Serendipity"
+],
+"legs": {
+"colvos": {
+"along": 31.99,
+"offset": 1.24
+},
+"east": {
+"along": 36.2,
+"offset": 1.24
+}
+}
+},
+{
+"lat": 47.7438,
+"lon": -122.4883,
+"teams": 9,
+"stops": 9,
+"median_min": 30,
+"years": [
+"2024",
+"2025",
+"2026"
+],
+"who": [
+"2024 Nautinurse",
+"2024 Wilson & I",
+"2025 SALISH5371",
+"2025 Salty Current",
+"2025 Salty Senior",
+"2025 Slightly Senile With A Side Of Chips",
+"2025 YNPA: You'll Never Paddle Alone",
+"2026 Bishman on Trak",
+"2026 Skinny Gull (wearing Louboutin)"
+],
+"legs": {
+"colvos": {
+"along": 33.04,
+"offset": 1.26
+},
+"east": {
+"along": 37.25,
+"offset": 1.26
+}
+}
+},
+{
+"lat": 47.746,
+"lon": -122.4776,
+"teams": 15,
+"stops": 16,
+"median_min": 40,
+"years": [
+"2024",
+"2025",
+"2026"
+],
+"who": [
+"2024 Mor Row",
+"2024 Octocosta",
+"2024 Salty Current",
+"2024 Water-Lou",
+"2025 Caffeinated Coho",
+"2025 Haggis Head",
+"2025 OneFiveOhOh",
+"2025 PITA (Pain In The Ass)",
+"2025 Skookum Joe",
+"2026 ATEAM Marine Cowboy",
+"2026 Camp Seymour",
+"2026 Counterpoint"
+],
+"legs": {
+"colvos": {
+"along": 33.14,
+"offset": 0.82
+},
+"east": {
+"along": 37.35,
+"offset": 0.82
+}
+}
+},
+{
+"lat": 47.7508,
+"lon": -122.4728,
+"teams": 13,
+"stops": 13,
+"median_min": 30,
+"years": [
+"2024",
+"2025",
+"2026"
+],
+"who": [
+"2024 Gemaries",
+"2024 Late To Work",
+"2024 Mustache For Directions",
+"2024 Sculling Chinooks",
+"2025 A Working Tidal Effort",
+"2025 Inertial Mass",
+"2025 Mayerly Mayerly Life is But a Dream",
+"2025 Salty Current",
+"2025 Salty Senior",
+"2025 Slightly Senile With A Side Of Chips",
+"2026 Keewaydin Loons",
+"2026 Press Gang"
+],
+"legs": {
+"colvos": {
+"along": 33.44,
+"offset": 0.63
+},
+"east": {
+"along": 37.65,
+"offset": 0.63
+}
+}
+},
+{
+"lat": 47.7583,
+"lon": -122.4711,
+"teams": 10,
+"stops": 10,
+"median_min": 30,
+"years": [
+"2024",
+"2025",
+"2026"
+],
+"who": [
+"2024 Good News I Saw A Seal",
+"2024 Paddle On... Paddle On",
+"2024 Rogue Kayaker",
+"2024 Tpac Capital",
+"2025 Apple bottom boy",
+"2025 Ballard Bullies",
+"2025 Stella Maris",
+"2026 Chum",
+"2026 Paddle",
+"2026 Skinny Gull (wearing Louboutin)"
+],
+"legs": {
+"colvos": {
+"along": 33.89,
+"offset": 0.56
+},
+"east": {
+"along": 38.1,
+"offset": 0.56
+}
+}
+},
+{
+"lat": 47.7646,
+"lon": -122.4716,
+"teams": 5,
+"stops": 5,
+"median_min": 40,
+"years": [
+"2024",
+"2026"
+],
+"who": [
+"2024 Let The Good Times Row",
+"2024 Rob Free",
+"2026 Chum",
+"2026 Nicky-No-Paddle",
+"2026 Pocket Gopher"
+],
+"legs": {
+"colvos": {
+"along": 34.29,
+"offset": 0.58
+},
+"east": {
+"along": 38.51,
+"offset": 0.58
+}
+}
+},
+{
+"lat": 47.7689,
+"lon": -122.4782,
+"teams": 2,
+"stops": 2,
+"median_min": 260,
+"years": [
+"2025"
+],
+"who": [
+"2025 GoRobGo",
+"2025 GoVicGo!"
+],
+"legs": {
+"colvos": {
+"along": 34.54,
+"offset": 0.85
+},
+"east": {
+"along": 38.76,
+"offset": 0.85
+}
+}
+},
+{
+"lat": 47.7768,
+"lon": -122.4831,
+"teams": 3,
+"stops": 3,
+"median_min": 120,
+"years": [
+"2024",
+"2025",
+"2026"
+],
+"who": [
+"2024 Obi-Wan Canoebi",
+"2025 YNPA: You'll Never Paddle Alone",
+"2026 Multi-Player"
+],
+"legs": {
+"colvos": {
+"along": 34.99,
+"offset": 1.05
+},
+"east": {
+"along": 39.21,
+"offset": 1.05
+}
+}
+},
+{
+"lat": 47.7845,
+"lon": -122.4918,
+"teams": 1,
+"stops": 1,
+"median_min": 380,
+"years": [
+"2025"
+],
+"who": [
+"2025 Like a G6"
+],
+"legs": {
+"colvos": {
+"along": 35.44,
+"offset": 1.4
+},
+"east": {
+"along": 39.66,
+"offset": 1.4
+}
+}
+},
+{
+"lat": 47.7954,
+"lon": -122.4798,
+"teams": 1,
+"stops": 1,
+"median_min": 15,
+"years": [
+"2025"
+],
+"who": [
+"2025 Smoking Daisies In Paris"
+],
+"legs": {
+"colvos": {
+"along": 36.1,
+"offset": 0.91
+},
+"east": {
+"along": 40.31,
+"offset": 0.91
+}
+}
+},
+{
+"lat": 47.8017,
+"lon": -122.4825,
+"teams": 1,
+"stops": 1,
+"median_min": 115,
+"years": [
+"2024"
+],
+"who": [
+"2024 Tidely Idely"
+],
+"legs": {
+"colvos": {
+"along": 36.5,
+"offset": 1.02
+},
+"east": {
+"along": 40.71,
+"offset": 1.02
+}
+}
+},
+{
+"lat": 47.8022,
+"lon": -122.4878,
+"teams": 17,
+"stops": 17,
+"median_min": 35,
+"years": [
+"2024",
+"2025"
+],
+"who": [
+"2024 Apple Bottom Boy And The Boots With The Fleece",
+"2024 Aqua-Haulic",
+"2024 Dumas Bay Brethren",
+"2024 Erik Tries Again",
+"2024 In Search Of A Siren",
+"2024 Kensdottirs",
+"2024 We Found Our Porpoise",
+"2025 25/68",
+"2025 Chapped Sterns",
+"2025 Green Boat Go",
+"2025 LFG",
+"2025 Let the Good Times Row"
+],
+"legs": {
+"colvos": {
+"along": 36.55,
+"offset": 1.24
+},
+"east": {
+"along": 40.76,
+"offset": 1.24
+}
+}
+},
+{
+"lat": 47.8129,
+"lon": -122.4818,
+"teams": 18,
+"stops": 18,
+"median_min": 35,
+"years": [
+"2024",
+"2025",
+"2026"
+],
+"who": [
+"2024 Go Faster Benny",
+"2024 Half Tame",
+"2024 Harp Dogs",
+"2024 Henderson Inlet",
+"2024 Old Man Raven",
+"2024 Tiktaalik",
+"2025 Banana Boat",
+"2025 Captain Ross and The Stowaway",
+"2025 Chapped Sterns",
+"2025 Miss Minneaux",
+"2025 Red",
+"2025 Steak Knives to a Gun Fight"
+],
+"legs": {
+"colvos": {
+"along": 37.15,
+"offset": 0.99
+},
+"east": {
+"along": 41.36,
+"offset": 0.99
+}
+}
+},
+{
+"lat": 47.8184,
+"lon": -122.4857,
+"teams": 17,
+"stops": 17,
+"median_min": 25,
+"years": [
+"2024",
+"2025",
+"2026"
+],
+"who": [
+"2024 A Working Tidal Effort",
+"2024 Daddleboard",
+"2024 Meandering Wherryman",
+"2024 Mustache For Directions",
+"2024 Octocosta",
+"2024 Water-Lou",
+"2025 25/68",
+"2025 Betwixt",
+"2025 Harp Dog",
+"2025 Obstinate Rowing Club",
+"2026 Go Go Paddle Rangers",
+"2026 Grin and Bair it"
+],
+"legs": {
+"colvos": {
+"along": 37.5,
+"offset": 1.15
+},
+"east": {
+"along": 41.71,
+"offset": 1.15
+}
+}
+},
+{
+"lat": 47.876,
+"lon": -122.5133,
+"teams": 6,
+"stops": 6,
+"median_min": 60,
+"years": [
+"2025",
+"2026"
+],
+"who": [
+"2025 Ayla's Dad",
+"2025 Salty Current",
+"2025 Slightly Senile With A Side Of Chips",
+"2025 Snoose Junction",
+"2026 Camp Seymour",
+"2026 Wind and Waves and Water"
+],
+"legs": {
+"colvos": {
+"along": 42.52,
+"offset": 1.49
+},
+"east": {
+"along": 46.74,
+"offset": 1.49
+}
+}
+},
+{
+"lat": 47.8823,
+"lon": -122.5147,
+"teams": 3,
+"stops": 3,
+"median_min": 20,
+"years": [
+"2025"
+],
+"who": [
+"2025 Let the Good Times Row",
+"2025 Loony",
+"2025 Obstinate Rowing Club"
+],
+"legs": {
+"colvos": {
+"along": 42.83,
+"offset": 1.27
+},
+"east": {
+"along": 47.04,
+"offset": 1.27
+}
+}
+},
+{
+"lat": 47.8904,
+"lon": -122.5089,
+"teams": 1,
+"stops": 1,
+"median_min": 20,
+"years": [
+"2024"
+],
+"who": [
+"2024 Skinny Gull (Wearing Louboutin)"
+],
+"legs": {
+"colvos": {
+"along": 42.98,
+"offset": 0.76
+},
+"east": {
+"along": 47.19,
+"offset": 0.76
+}
+}
+},
+{
+"lat": 47.8862,
+"lon": -122.5191,
+"teams": 3,
+"stops": 3,
+"median_min": 50,
+"years": [
+"2025"
+],
+"who": [
+"2025 Betwixt",
+"2025 Miss Minneaux",
+"2025 You Canoe It"
+],
+"legs": {
+"colvos": {
+"along": 43.08,
+"offset": 1.23
+},
+"east": {
+"along": 47.29,
+"offset": 1.23
+}
+}
+},
+{
+"lat": 47.8982,
+"lon": -122.5256,
+"teams": 2,
+"stops": 2,
+"median_min": 58,
+"years": [
+"2026"
+],
+"who": [
+"2026 Ope, Still Paddling",
+"2026 Press Gang"
+],
+"legs": {
+"colvos": {
+"along": 43.79,
+"offset": 0.91
+},
+"east": {
+"along": 48.0,
+"offset": 0.91
+}
+}
+},
+{
+"lat": 47.9114,
+"lon": -122.5271,
+"teams": 104,
+"stops": 111,
+"median_min": 55,
+"years": [
+"2024",
+"2025",
+"2026"
+],
+"who": [
+"2024 Apple Bottom Boy And The Boots With The Fleece",
+"2024 Beasts From The East",
+"2024 California Kook",
+"2024 Chippy Love",
+"2024 Don't Panic",
+"2024 Erik Tries Again",
+"2024 Good Fourtune",
+"2024 Happy Pace",
+"2024 Hard Knots",
+"2024 Insomnia",
+"2024 Kayac Orca Yak!",
+"2024 Kensdottirs"
+],
+"legs": {
+"colvos": {
+"along": 44.76,
+"offset": 0.24
+},
+"east": {
+"along": 48.98,
+"offset": 0.24
+}
+}
+},
+{
+"lat": 47.912,
+"lon": -122.5333,
+"teams": 9,
+"stops": 10,
+"median_min": 32,
+"years": [
+"2024",
+"2025"
+],
+"who": [
+"2024 Epicgirl",
+"2024 Finnegan'S Wake",
+"2024 Half Tame",
+"2024 Henderson Inlet",
+"2024 Mor Row",
+"2025 Ayla's Dad",
+"2025 Let the Good Times Row",
+"2025 Obstinate Rowing Club",
+"2025 Stella Maris"
+],
+"legs": {
+"colvos": {
+"along": 44.82,
+"offset": 0.22
+},
+"east": {
+"along": 49.03,
+"offset": 0.22
+}
+}
+},
+{
+"lat": 47.9178,
+"lon": -122.546,
+"teams": 61,
+"stops": 63,
+"median_min": 60,
+"years": [
+"2024",
+"2025",
+"2026"
+],
+"who": [
+"2024 Big Deck Energy",
+"2024 Bucketlist",
+"2024 Callous Crazy",
+"2024 Daddleboard",
+"2024 Field Mice",
+"2024 Gastropod",
+"2024 Goldenbuoy",
+"2024 Hargrove Performance",
+"2024 In Search Of A Siren",
+"2024 Kensdottirs",
+"2024 Let The Good Times Row",
+"2024 Let'S Go Girls!"
+],
+"legs": {
+"colvos": {
+"along": 45.43,
+"offset": 0.47
+},
+"east": {
+"along": 49.64,
+"offset": 0.47
+}
+}
+},
+{
+"lat": 47.9203,
+"lon": -122.5551,
+"teams": 10,
+"stops": 13,
+"median_min": 60,
+"years": [
+"2024",
+"2025",
+"2026"
+],
+"who": [
+"2024 Skinny Gull (Wearing Louboutin)",
+"2025 Chamberlain",
+"2025 GoRobGo",
+"2025 GoVicGo!",
+"2025 Obstinate Rowing Club",
+"2025 You Canoe It",
+"2026 Noey\u2019s Ark",
+"2026 Prone to Dumb Ideas",
+"2026 Red",
+"2026 WOW Factor"
+],
+"legs": {
+"colvos": {
+"along": 45.78,
+"offset": 0.62
+},
+"east": {
+"along": 50.0,
+"offset": 0.62
+}
+}
+},
+{
+"lat": 47.9203,
+"lon": -122.5629,
+"teams": 1,
+"stops": 1,
+"median_min": 15,
+"years": [
+"2025"
+],
+"who": [
+"2025 Francis Strikes Back"
+],
+"legs": {
+"colvos": {
+"along": 46.03,
+"offset": 0.84
+},
+"east": {
+"along": 50.25,
+"offset": 0.84
+}
+}
+},
+{
+"lat": 47.9204,
+"lon": -122.5833,
+"teams": 3,
+"stops": 3,
+"median_min": 35,
+"years": [
+"2024",
+"2026"
+],
+"who": [
+"2024 Tpac Capital",
+"2026 Noey\u2019s Ark",
+"2026 Salty Current"
+],
+"legs": {
+"colvos": {
+"along": 46.59,
+"offset": 1.42
+},
+"east": {
+"along": 50.8,
+"offset": 1.42
+}
+}
+},
+{
+"lat": 47.9428,
+"lon": -122.5618,
+"teams": 1,
+"stops": 2,
+"median_min": 30,
+"years": [
+"2026"
+],
+"who": [
+"2026 Stinging Nettels"
+],
+"legs": {
+"colvos": {
+"along": 46.94,
+"offset": 0.14
+},
+"east": {
+"along": 51.15,
+"offset": 0.14
+}
+}
+},
+{
+"lat": 47.9279,
+"lon": -122.5989,
+"teams": 2,
+"stops": 2,
+"median_min": 265,
+"years": [
+"2025",
+"2026"
+],
+"who": [
+"2025 You Canoe It",
+"2026 Freccia"
+],
+"legs": {
+"colvos": {
+"along": 48.58,
+"offset": 1.06
+},
+"east": {
+"along": 52.79,
+"offset": 1.06
+}
+}
+},
+{
+"lat": 47.9379,
+"lon": -122.6037,
+"teams": 28,
+"stops": 29,
+"median_min": 35,
+"years": [
+"2024",
+"2025",
+"2026"
+],
+"who": [
+"2024 Erik Tries Again",
+"2024 Hard Knots",
+"2024 Hopelessly Lolo",
+"2024 Red",
+"2024 Tidely Idely",
+"2024 Water-Lou",
+"2024 Why Knot?",
+"2025 Hopelessly Lolo",
+"2025 Kayak Orca Yak!",
+"2025 Mayerly Mayerly Life is But a Dream",
+"2025 Motoboat",
+"2025 Paddle"
+],
+"legs": {
+"colvos": {
+"along": 48.73,
+"offset": 0.45
+},
+"east": {
+"along": 52.95,
+"offset": 0.45
+}
+}
+},
+{
+"lat": 47.9222,
+"lon": -122.6049,
+"teams": 1,
+"stops": 1,
+"median_min": 90,
+"years": [
+"2026"
+],
+"who": [
+"2026 Noey\u2019s Ark"
+],
+"legs": {
+"colvos": {
+"along": 48.84,
+"offset": 1.38
+},
+"east": {
+"along": 53.05,
+"offset": 1.38
+}
+}
+},
+{
+"lat": 47.9408,
+"lon": -122.6076,
+"teams": 2,
+"stops": 2,
+"median_min": 80,
+"years": [
+"2024",
+"2026"
+],
+"who": [
+"2024 Hargrove Performance",
+"2026 Red"
+],
+"legs": {
+"colvos": {
+"along": 48.84,
+"offset": 0.26
+},
+"east": {
+"along": 53.05,
+"offset": 0.26
+}
+}
+},
+{
+"lat": 47.9269,
+"lon": -122.6159,
+"teams": 1,
+"stops": 1,
+"median_min": 25,
+"years": [
+"2026"
+],
+"who": [
+"2026 Search & Res-canoe"
+],
+"legs": {
+"colvos": {
+"along": 48.94,
+"offset": 1.11
+},
+"east": {
+"along": 53.15,
+"offset": 1.11
+}
+}
+},
+{
+"lat": 47.9333,
+"lon": -122.6194,
+"teams": 2,
+"stops": 2,
+"median_min": 295,
+"years": [
+"2025",
+"2026"
+],
+"who": [
+"2025 Kayak Orca Yak!",
+"2026 Float On"
+],
+"legs": {
+"colvos": {
+"along": 48.94,
+"offset": 0.79
+},
+"east": {
+"along": 53.15,
+"offset": 0.79
+}
+}
+},
+{
+"lat": 47.9376,
+"lon": -122.6181,
+"teams": 1,
+"stops": 1,
+"median_min": 135,
+"years": [
+"2024"
+],
+"who": [
+"2024 We Found Our Porpoise"
+],
+"legs": {
+"colvos": {
+"along": 48.94,
+"offset": 0.55
+},
+"east": {
+"along": 53.15,
+"offset": 0.55
+}
+}
+},
+{
+"lat": 47.9408,
+"lon": -122.6129,
+"teams": 1,
+"stops": 1,
+"median_min": 15,
+"years": [
+"2025"
+],
+"who": [
+"2025 Captain Ross and The Stowaway"
+],
+"legs": {
+"colvos": {
+"along": 48.94,
+"offset": 0.27
+},
+"east": {
+"along": 53.15,
+"offset": 0.27
+}
+}
+},
+{
+"lat": 47.9633,
+"lon": -122.6377,
+"teams": 1,
+"stops": 1,
+"median_min": 25,
+"years": [
+"2026"
+],
+"who": [
+"2026 Inertial Mass"
+],
+"legs": {
+"colvos": {
+"along": 50.49,
+"offset": 0.01
+},
+"east": {
+"along": 54.71,
+"offset": 0.01
+}
+}
+},
+{
+"lat": 47.9563,
+"lon": -122.6775,
+"teams": 6,
+"stops": 7,
+"median_min": 30,
+"years": [
+"2024",
+"2025",
+"2026"
+],
+"who": [
+"2024 Apple Bottom Boy And The Boots With The Fleece",
+"2025 Captain Ross and The Stowaway",
+"2025 Grit & Giggles",
+"2026 Bishman on Trak",
+"2026 Garden Weasel",
+"2026 Search & Res-canoe"
+],
+"legs": {
+"colvos": {
+"along": 51.35,
+"offset": 1.44
+},
+"east": {
+"along": 55.56,
+"offset": 1.44
+}
+}
+},
+{
+"lat": 47.9622,
+"lon": -122.6844,
+"teams": 2,
+"stops": 2,
+"median_min": 228,
+"years": [
+"2024",
+"2025"
+],
+"who": [
+"2024 Snoose Junction",
+"2025 Francis Strikes Back"
+],
+"legs": {
+"colvos": {
+"along": 51.8,
+"offset": 1.38
+},
+"east": {
+"along": 56.01,
+"offset": 1.38
+}
+}
+},
+{
+"lat": 47.9658,
+"lon": -122.6792,
+"teams": 5,
+"stops": 6,
+"median_min": 88,
+"years": [
+"2024",
+"2026"
+],
+"who": [
+"2024 Chippy Love",
+"2024 Kensdottirs",
+"2026 Multi-Player",
+"2026 Ope, Still Paddling",
+"2026 WOW Factor"
+],
+"legs": {
+"colvos": {
+"along": 51.8,
+"offset": 1.08
+},
+"east": {
+"along": 56.01,
+"offset": 1.08
+}
+}
+},
+{
+"lat": 47.9712,
+"lon": -122.6835,
+"teams": 7,
+"stops": 7,
+"median_min": 30,
+"years": [
+"2024",
+"2025",
+"2026"
+],
+"who": [
+"2024 Go Faster Benny",
+"2024 Half Tame",
+"2024 Henderson Inlet",
+"2025 Caffeinated Coho",
+"2025 Haggis Head",
+"2025 LFG",
+"2026 Nicky-No-Paddle"
+],
+"legs": {
+"colvos": {
+"along": 52.15,
+"offset": 0.98
+},
+"east": {
+"along": 56.36,
+"offset": 0.98
+}
+}
+},
+{
+"lat": 47.9892,
+"lon": -122.7188,
+"teams": 1,
+"stops": 1,
+"median_min": 15,
+"years": [
+"2025"
+],
+"who": [
+"2025 Ayla's Dad"
+],
+"legs": {
+"colvos": {
+"along": 53.67,
+"offset": 0.75
+},
+"east": {
+"along": 57.89,
+"offset": 0.75
+}
+}
+},
+{
+"lat": 47.9955,
+"lon": -122.72,
+"teams": 2,
+"stops": 2,
+"median_min": 25,
+"years": [
+"2025"
+],
+"who": [
+"2025 Francis Strikes Back",
+"2025 Wind and Waves and Water"
+],
+"legs": {
+"colvos": {
+"along": 54.36,
+"offset": 0.73
+},
+"east": {
+"along": 58.57,
+"offset": 0.73
+}
+}
+},
+{
+"lat": 48.0096,
+"lon": -122.6908,
+"teams": 13,
+"stops": 15,
+"median_min": 50,
+"years": [
+"2024",
+"2025",
+"2026"
+],
+"who": [
+"2024 Let The Good Times Row",
+"2024 Red",
+"2025 Banana Boat",
+"2025 High Sparkle Standards",
+"2025 Salty Current",
+"2025 Search and Res-canoe",
+"2025 Slightly Senile With A Side Of Chips",
+"2025 Still Searching",
+"2025 Zeus's Resplendent Dinghy",
+"2026 Maury Dory",
+"2026 Salty Current",
+"2026 The Saltwater Syndicate - Riptide"
+],
+"legs": {
+"colvos": {
+"along": 54.57,
+"offset": 0.7
+},
+"east": {
+"along": 58.78,
+"offset": 0.7
+}
+}
+},
+{
+"lat": 48.0023,
+"lon": -122.7211,
+"teams": 1,
+"stops": 1,
+"median_min": 25,
+"years": [
+"2025"
+],
+"who": [
+"2025 Friendship"
+],
+"legs": {
+"colvos": {
+"along": 54.82,
+"offset": 0.56
+},
+"east": {
+"along": 59.03,
+"offset": 0.56
+}
+}
+},
+{
+"lat": 48.0145,
+"lon": -122.6967,
+"teams": 3,
+"stops": 3,
+"median_min": 20,
+"years": [
+"2025",
+"2026"
+],
+"who": [
+"2025 Red",
+"2025 Silverdale Outrigger",
+"2026 Salty Current"
+],
+"legs": {
+"colvos": {
+"along": 54.87,
+"offset": 0.66
+},
+"east": {
+"along": 59.09,
+"offset": 0.66
+}
+}
+},
+{
+"lat": 48.007,
+"lon": -122.7237,
+"teams": 1,
+"stops": 1,
+"median_min": 540,
+"years": [
+"2025"
+],
+"who": [
+"2025 OneFiveOhOh"
+],
+"legs": {
+"colvos": {
+"along": 55.12,
+"offset": 0.49
+},
+"east": {
+"along": 59.34,
+"offset": 0.49
+}
+}
+},
+{
+"lat": 48.0188,
+"lon": -122.7059,
+"teams": 4,
+"stops": 4,
+"median_min": 25,
+"years": [
+"2024",
+"2025"
+],
+"who": [
+"2024 Octocosta",
+"2024 Old Man Raven",
+"2024 Tiktaalik",
+"2025 SALISH5371"
+],
+"legs": {
+"colvos": {
+"along": 55.33,
+"offset": 0.49
+},
+"east": {
+"along": 59.54,
+"offset": 0.49
+}
+}
+},
+{
+"lat": 48.0233,
+"lon": -122.7198,
+"teams": 5,
+"stops": 5,
+"median_min": 15,
+"years": [
+"2025",
+"2026"
+],
+"who": [
+"2025 GoRobGo",
+"2025 GoVicGo!",
+"2025 Slightly Senile With A Side Of Chips",
+"2026 Old Man Raven",
+"2026 Spam Musubi"
+],
+"legs": {
+"colvos": {
+"along": 55.83,
+"offset": 0.18
+},
+"east": {
+"along": 60.04,
+"offset": 0.18
+}
+}
+},
+{
+"lat": 48.0246,
+"lon": -122.7246,
+"teams": 33,
+"stops": 36,
+"median_min": 35,
+"years": [
+"2024",
+"2025",
+"2026"
+],
+"who": [
+"2024 Bark At The Loon",
+"2024 Kayac Orca Yak!",
+"2024 Trishkabob",
+"2024 Water-Lou",
+"2025 Caffeinated Coho",
+"2025 Captain Ross and The Stowaway",
+"2025 Chafed and Confused",
+"2025 Good 'Nuff",
+"2025 Grit & Giggles",
+"2025 Harp Dog",
+"2025 Mako",
+"2025 OctoCosta"
+],
+"legs": {
+"colvos": {
+"along": 56.03,
+"offset": 0.07
+},
+"east": {
+"along": 60.24,
+"offset": 0.07
+}
+}
+},
+{
+"lat": 48.033,
+"lon": -122.7317,
+"teams": 16,
+"stops": 16,
+"median_min": 32,
+"years": [
+"2024",
+"2025",
+"2026"
+],
+"who": [
+"2024 Hargrove Performance",
+"2024 Pale Valley Rowers",
+"2025 Ballard Bullies",
+"2025 Good News: I Saw a Seal!",
+"2025 Hopelessly Lolo",
+"2025 Mayerly Mayerly Life is But a Dream",
+"2025 Obstinate Rowing Club",
+"2025 Paddle On... Paddle On",
+"2025 Rogue Kayaker",
+"2025 Salty Current",
+"2025 Sculling Chinooks",
+"2025 Slightly Senile With A Side Of Chips"
+],
+"legs": {
+"colvos": {
+"along": 56.59,
+"offset": 0.17
+},
+"east": {
+"along": 60.81,
+"offset": 0.17
+}
+}
+},
+{
+"lat": 48.032,
+"lon": -122.7383,
+"teams": 3,
+"stops": 3,
+"median_min": 25,
+"years": [
+"2024",
+"2026"
+],
+"who": [
+"2024 Half Tame",
+"2024 Henderson Inlet",
+"2026 Otter Limits"
+],
+"legs": {
+"colvos": {
+"along": 56.7,
+"offset": 0.08
+},
+"east": {
+"along": 60.91,
+"offset": 0.08
+}
+}
+},
+{
+"lat": 48.0298,
+"lon": -122.7452,
+"teams": 3,
+"stops": 3,
+"median_min": 115,
+"years": [
+"2025",
+"2026"
+],
+"who": [
+"2025 25/68",
+"2026 Melonheads",
+"2026 The Boondogglers"
+],
+"legs": {
+"colvos": {
+"along": 56.8,
+"offset": 0.37
+},
+"east": {
+"along": 61.01,
+"offset": 0.37
+}
+}
+},
+{
+"lat": 48.0339,
+"lon": -122.7523,
+"teams": 6,
+"stops": 7,
+"median_min": 30,
+"years": [
+"2024",
+"2026"
+],
+"who": [
+"2024 Let'S Go Girls!",
+"2024 We Found Our Porpoise",
+"2026 Paddlegoat",
+"2026 Salish Mist",
+"2026 Stinging Nettels",
+"2026 Timber Wrangling Splash Bandit Alliance"
+],
+"legs": {
+"colvos": {
+"along": 57.16,
+"offset": 0.43
+},
+"east": {
+"along": 61.37,
+"offset": 0.43
+}
+}
+},
+{
+"lat": 48.04,
+"lon": -122.7634,
+"teams": 2,
+"stops": 2,
+"median_min": 50,
+"years": [
+"2026"
+],
+"who": [
+"2026 Multi-Player",
+"2026 Puddle Jumper"
+],
+"legs": {
+"colvos": {
+"along": 57.72,
+"offset": 0.53
+},
+"east": {
+"along": 61.93,
+"offset": 0.53
+}
+}
+},
+{
+"lat": 48.0451,
+"lon": -122.7678,
+"teams": 4,
+"stops": 4,
+"median_min": 238,
+"years": [
+"2026"
+],
+"who": [
+"2026 Red",
+"2026 ShanSteKIr",
+"2026 Stinging Nettels",
+"2026 Team Sanguine"
+],
+"legs": {
+"colvos": {
+"along": 57.82,
+"offset": 0.52
+},
+"east": {
+"along": 62.03,
+"offset": 0.52
+}
+}
+},
+{
+"lat": 48.0516,
+"lon": -122.7699,
+"teams": 1,
+"stops": 1,
+"median_min": 25,
+"years": [
+"2026"
+],
+"who": [
+"2026 Kayak Orca Yak"
+],
+"legs": {
+"colvos": {
+"along": 58.08,
+"offset": 0.6
+},
+"east": {
+"along": 62.29,
+"offset": 0.6
+}
+}
+},
+{
+"lat": 48.057,
+"lon": -122.767,
+"teams": 7,
+"stops": 7,
+"median_min": 35,
+"years": [
+"2025",
+"2026"
+],
+"who": [
+"2025 Francis Strikes Back",
+"2026 Bishman on Trak",
+"2026 Counterpoint",
+"2026 Follow the Pink Line",
+"2026 Grampa T",
+"2026 Nicky-No-Paddle",
+"2026 The Boondogglers"
+],
+"legs": {
+"colvos": {
+"along": 58.44,
+"offset": 0.48
+},
+"east": {
+"along": 62.65,
+"offset": 0.48
+}
+}
+},
+{
+"lat": 48.0598,
+"lon": -122.7734,
+"teams": 1,
+"stops": 1,
+"median_min": 480,
+"years": [
+"2024"
+],
+"who": [
+"2024 Utah Schools For The Deaf And The Blind (Usdb)"
+],
+"legs": {
+"colvos": {
+"along": 59.09,
+"offset": 0.64
+},
+"east": {
+"along": 63.3,
+"offset": 0.64
+}
+}
+},
+{
+"lat": 48.0728,
+"lon": -122.7865,
+"teams": 2,
+"stops": 2,
+"median_min": 23,
+"years": [
+"2026"
+],
+"who": [
+"2026 Apple Bottom boy",
+"2026 Red"
+],
+"legs": {
+"colvos": {
+"along": 59.45,
+"offset": 1.02
+},
+"east": {
+"along": 63.66,
+"offset": 1.02
+}
+}
+},
+{
+"lat": 48.076,
+"lon": -122.7435,
+"teams": 2,
+"stops": 2,
+"median_min": 30,
+"years": [
+"2026"
+],
+"who": [
+"2026 Counterpoint",
+"2026 Grampa T"
+],
+"legs": {
+"colvos": {
+"along": 59.65,
+"offset": 0.7
+},
+"east": {
+"along": 63.87,
+"offset": 0.7
+}
+}
+},
+{
+"lat": 48.0761,
+"lon": -122.7618,
+"teams": 1,
+"stops": 1,
+"median_min": 20,
+"years": [
+"2026"
+],
+"who": [
+"2026 Maury Dory"
+],
+"legs": {
+"colvos": {
+"along": 59.65,
+"offset": 0.03
+},
+"east": {
+"along": 63.87,
+"offset": 0.03
+}
+}
+},
+{
+"lat": 48.0849,
+"lon": -122.7336,
+"teams": 1,
+"stops": 1,
+"median_min": 15,
+"years": [
+"2026"
+],
+"who": [
+"2026 Skinny Gull (wearing Louboutin)"
+],
+"legs": {
+"colvos": {
+"along": 60.22,
+"offset": 1.1
+},
+"east": {
+"along": 64.43,
+"offset": 1.1
+}
+}
+},
+{
+"lat": 48.1086,
+"lon": -122.7746,
+"teams": 1,
+"stops": 1,
+"median_min": 34,
+"years": [
+"2026"
+],
+"who": [
+"2026 Noey\u2019s Ark"
+],
+"legs": {
+"colvos": {
+"along": 61.85,
+"offset": 0.96
+},
+"east": {
+"along": 66.07,
+"offset": 0.96
+}
+}
+},
+{
+"lat": 48.1095,
+"lon": -122.7685,
+"teams": 3,
+"stops": 5,
+"median_min": 40,
+"years": [
+"2026"
+],
+"who": [
+"2026 Baby Shark!",
+"2026 Float On",
+"2026 Search & Res-canoe"
+],
+"legs": {
+"colvos": {
+"along": 61.9,
+"offset": 0.71
+},
+"east": {
+"along": 66.12,
+"offset": 0.71
+}
+}
+},
+{
+"lat": 48.1122,
+"lon": -122.7826,
+"teams": 4,
+"stops": 4,
+"median_min": 619,
+"years": [
+"2024"
+],
+"who": [
+"2024 She And Ah",
+"2024 Two Spoons",
+"2024 Wherryarewe",
+"2024 Woodhall"
+],
+"legs": {
+"colvos": {
+"along": 62.11,
+"offset": 1.26
+},
+"east": {
+"along": 66.32,
+"offset": 1.26
+}
+}
+}
+]
+}

@@ -1,0 +1,1671 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Seventy48 2027 Planner</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@400;500;600&display=swap">
+<style>
+/* Layout: full-bleed chart on the left, a pilot-book style side panel on the right (bottom sheet on phones). Same look as the R2AK 2028 planner. */
+:root {
+  --bg: #f3f5f6; --panel: #ffffff; --ink: #102a3a; --muted: #5b6f7c; --rule: #d6dee3;
+  --accent: #c2410c; --with: #0f766e; --against: #b91c1c; --flood: #0f766e; --ebb: #b45309; --slack: #64748b;
+  --good: #15803d; --bad: #b91c1c; --chip: #eef2f4;
+  --font-ui: "IBM Plex Sans Condensed", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+  --font-data: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0b1820; --panel: #10222d; --ink: #e3ecf1; --muted: #93a8b5; --rule: #24404f;
+  --accent: #fb923c; --with: #2dd4bf; --against: #f87171; --flood: #2dd4bf; --ebb: #fbbf24; --slack: #94a3b8; --good: #4ade80; --bad: #f87171; --chip: #183140;
+  color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #0b1820; --panel: #10222d; --ink: #e3ecf1; --muted: #93a8b5; --rule: #24404f;
+  --accent: #fb923c; --with: #2dd4bf; --against: #f87171; --flood: #2dd4bf; --ebb: #fbbf24; --slack: #94a3b8; --good: #4ade80; --bad: #f87171; --chip: #183140;
+  color-scheme: dark; }
+* { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; }
+body { background: var(--bg); color: var(--ink); font: 14px/1.45 var(--font-ui); }
+.app { display: grid; grid-template-columns: minmax(0, 1fr) 430px; height: 100%; }
+#map { height: 100%; min-height: 300px; background: #0a2533; }
+aside { background: var(--panel); border-left: 1px solid var(--rule); overflow-y: auto; padding-block: 16px 32px; padding-inline: 18px; display: flex; flex-direction: column; gap: 20px; min-width: 0; }
+@media (max-width: 820px) {
+  .app { grid-template-columns: 1fr; grid-template-rows: 58vh auto; height: auto; }
+  #map { height: 58vh; }
+  aside { border-left: 0; border-top: 1px solid var(--rule); padding-inline: 16px; }
+}
+h1 { font-size: 21px; font-weight: 600; margin: 0; letter-spacing: .01em; text-wrap: balance; }
+h2 { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin: 0 0 8px; }
+h3 { font-size: 15px; margin: 0; }
+p { margin: 0; }
+.sub { color: var(--muted); font-size: 13px; }
+.hint { font-size: 12.5px; color: var(--muted); }
+section { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.row { display: flex; gap: 12px; flex-wrap: wrap; align-items: end; }
+label { display: flex; flex-direction: column; gap: 3px; font-size: 12px; color: var(--muted); }
+label.check { flex-direction: row; align-items: center; gap: 6px; font-size: 13px; color: var(--ink); }
+input[type="number"], select, input[type="date"], input[type="time"] { font: 14px var(--font-data); color: var(--ink); background: var(--bg); border: 1px solid var(--rule); border-radius: 5px; padding: 5px 7px; }
+input[type="number"] { width: 84px; }
+select { font-family: var(--font-ui); }
+input[type="range"] { width: 100%; accent-color: var(--accent); }
+input:focus-visible, select:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.clock { font: 500 15px var(--font-data); font-variant-numeric: tabular-nums; }
+.seg { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid var(--rule); border-radius: 6px; overflow: hidden; }
+.seg button { font: inherit; color: var(--ink); background: transparent; border: 0; padding: 8px 8px; cursor: pointer; text-align: left; display: flex; flex-direction: column; gap: 1px; }
+.seg button + button { border-left: 1px solid var(--rule); }
+.seg button[aria-pressed="true"] { background: var(--chip); box-shadow: inset 0 -3px 0 var(--accent); }
+.seg button small { color: var(--muted); font-size: 12px; }
+.tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 8px; }
+.tile { background: var(--chip); border-radius: 6px; padding: 7px 9px; display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+.tile span { font-size: 11.5px; color: var(--muted); }
+.tile b { font: 500 18px var(--font-data); font-variant-numeric: tabular-nums; }
+.tile small { font-size: 11.5px; color: var(--muted); }
+.tile.bad b { color: var(--bad); } .tile.good b { color: var(--good); }
+.note { background: var(--chip); border-radius: 6px; padding: 9px 11px; font-size: 13px; }
+.warn { color: var(--bad); font-weight: 600; }
+.tbl-wrap { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font: 12.5px var(--font-data); font-variant-numeric: tabular-nums; }
+th { text-align: left; font: 600 10.5px var(--font-ui); text-transform: uppercase; letter-spacing: .05em; color: var(--muted); padding: 4px 6px 4px 0; border-bottom: 1px solid var(--rule); vertical-align: bottom; }
+td { padding: 4px 6px 4px 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
+td.n, th.n { text-align: right; white-space: nowrap; }
+tr[data-t] { cursor: pointer; } tr[data-t]:hover, tr.on { background: var(--chip); }
+tr.dark td:first-child { box-shadow: inset 3px 0 0 #475569; }
+.with { color: var(--with); } .against { color: var(--against); }
+.pill { display: inline-block; font: 500 11.5px var(--font-data); padding: 1px 6px; border-radius: 999px; background: var(--chip); white-space: nowrap; }
+.pill.flood { color: var(--flood); } .pill.ebb { color: var(--ebb); } .pill.slack { color: var(--slack); }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 12.5px; color: var(--muted); }
+.legend i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 5px; vertical-align: -1px; }
+.chart { width: 100%; height: auto; display: block; }
+.chart text { font: 10.5px var(--font-data); fill: var(--muted); }
+#heat { width: 100%; height: auto; display: block; border-radius: 4px; cursor: crosshair; image-rendering: auto; }
+.sources { font-size: 12.5px; color: var(--muted); display: flex; flex-direction: column; gap: 6px; }
+.sources a { color: inherit; }
+.past-row { display: grid; grid-template-columns: 62px minmax(0, 1fr); gap: 0 10px; padding: 5px 2px; border-bottom: 1px solid var(--rule); cursor: pointer; font-size: 13px; }
+.past-row:hover, .past-row.on { background: var(--chip); }
+.past-row.near { box-shadow: inset 3px 0 0 #facc15; }
+.past-row .t { font: 12.5px var(--font-data); font-variant-numeric: tabular-nums; }
+.past-row .c { color: var(--muted); font-size: 12px; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chips button { font: 13px var(--font-ui); color: var(--ink); background: var(--chip); border: 1px solid transparent; border-radius: 999px; padding: 3px 10px; cursor: pointer; }
+.chips button[aria-pressed="true"] { border-color: var(--accent); }
+#detail .detail-head { display: flex; justify-content: space-between; gap: 10px; align-items: baseline; }
+.close { font: inherit; background: none; border: 1px solid var(--rule); color: var(--muted); border-radius: 5px; cursor: pointer; padding: 2px 8px; }
+[hidden] { display: none !important; }
+/* map furniture */
+.leaflet-container { font: 13px var(--font-ui); }
+.playbar { display: flex; flex-wrap: wrap; width: 240px; align-items: center; gap: 4px 6px; padding: 6px 8px; border-radius: 8px; background: rgba(15, 23, 42, .86); color: #f1f5f9; font: 11px var(--font-data); }
+.playbar button { width: 28px; height: 24px; padding: 0; border-radius: 5px; border: 1px solid #475569; background: #1e293b; color: #f8fafc; cursor: pointer; font-size: 12px; }
+.playbar select { font: 11px var(--font-data); background: #1e293b; color: #f8fafc; border: 1px solid #475569; border-radius: 4px; padding: 1px 2px; }
+.playbar .prog { flex: 1 0 100%; display: flex; align-items: center; gap: 5px; }
+.playbar .prog input { flex: 1; min-width: 0; accent-color: #facc15; }
+.playbar .pb { flex: 1 0 100%; display: grid; grid-template-columns: auto 1fr; gap: 0 8px; }
+.playbar .pb span { color: #94a3b8; } .playbar .pb b { font-weight: 600; color: #f8fafc; }
+.playbar label.follow { display: flex; flex-direction: row; align-items: center; gap: 3px; color: #e2e8f0; font-size: 10px; }
+.playbar { width: 260px; }
+@media (max-width: 760px) { .playbar { width: 190px; font-size: 10px; } }
+.stn-ico { background: none; border: none; }
+.stn-ico svg { overflow: visible; filter: drop-shadow(0 0 1.5px rgba(0,0,0,.8)); }
+.mark-ico { background: none; border: none; }
+.mark-ico i { display: block; width: 16px; height: 16px; border-radius: 50%; border: 3px solid #fff; box-shadow: 0 0 0 2px #0f172a; background: var(--accent); }
+.mark-ico.checkpoint i { background: #facc15; border-radius: 3px; transform: rotate(45deg); }
+.boat { background: none; border: none; }
+.boat svg { overflow: visible; filter: drop-shadow(0 0 2px rgba(0,0,0,.8)); }
+.leaflet-tooltip.stn { font: 12px var(--font-data); padding: 3px 6px; }
+.opacity-ctl { background: #fff; padding: 6px 8px; border-radius: 4px; font: 12px var(--font-ui); color: #102a3a; box-shadow: 0 1px 4px rgba(0,0,0,.35); }
+.opacity-ctl input[type="range"] { width: 110px; vertical-align: middle; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+/* ---------- added with stops, output and the storm page */
+.pagelink { display: inline-block; margin-top: 8px; font: 600 13px var(--font-ui); color: var(--accent); text-decoration: none; border: 1px solid var(--accent); border-radius: 999px; padding: 3px 12px; }
+button.genout { display: block; width: 100%; margin-top: 10px; padding: 9px 14px; font: 700 15px var(--font-ui); color: #fff; background: var(--accent); border: 0; border-radius: 10px; cursor: pointer; text-align: left; }
+button.genout small { display: block; font-weight: 400; font-size: 12px; opacity: .9; margin-top: 1px; }
+button.genout:hover { filter: brightness(1.08); }
+.ico { width: 14px; height: 14px; vertical-align: -2px; flex: none; }
+.stop { display: flex; align-items: center; justify-content: center; gap: 1px; background: #fff; border: 1.5px solid #111827; border-radius: 9px; font: 600 10px/1 var(--font-data); color: #111827; box-shadow: 0 1px 3px rgba(0,0,0,.5); white-space: nowrap; }
+.stop.aid { background: #bbf7d0; } .stop.rest, .stop.full { background: #fde68a; } .stop.break { background: #e0f2fe; } .stop.wait, .stop.tide { background: #ddd6fe; } .stop.shelter { background: #fecaca; }
+.stop .ico { width: 12px; height: 12px; }
+.stop .dur { font-style: normal; font-weight: 500; margin-left: 3px; padding-left: 3px; border-left: 1px solid rgba(17,24,39,.35); }
+#stops-tbl { font-size: 11.5px; } #stops-tbl th { font-size: 9.5px; } #stops-tbl td { padding: 3px 4px 3px 0; }
+.site-dot { border-radius: 50%; border: 1.5px solid #052e16; background: #22c55e; }
+.land-dot { border-radius: 3px; border: 1.5px solid #3b0764; background: #c084fc; }
+.layers { display: flex; flex-wrap: wrap; gap: 4px 14px; }
+.pics { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; }
+.pic { margin: 0; cursor: pointer; }
+.pic .pm { aspect-ratio: 1; width: 100%; border-radius: 6px; background: #0b1d28; }
+.pic figcaption { font-size: 11px; color: var(--muted); padding-top: 3px; line-height: 1.3; }
+.mini { width: 200px; height: 240px; border-radius: 8px; overflow: hidden; border: 2px solid #f8fafc; box-shadow: 0 1px 6px rgba(0,0,0,.45); background: #0a2533; cursor: pointer; }
+.mini .leaflet-control-attribution { display: none; }
+.tides { width: 200px; background: rgba(10,37,51,.92); color: #e2e8f0; border: 2px solid #f8fafc; border-radius: 8px; box-shadow: 0 1px 6px rgba(0,0,0,.45); font: 11px/1.3 system-ui, sans-serif; }
+.tides > button { all: unset; display: block; width: 100%; box-sizing: border-box; padding: 4px 8px; font-weight: 600; cursor: pointer; }
+.tides > button::after { content: " \25BE"; } .tides.shut > button::after { content: " \25B8"; } .tides.shut .tc { display: none; }
+.tc { padding: 2px 6px 4px; border-top: 1px solid rgba(248,250,252,.2); }
+.tc b { display: block; font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } .tc small { color: #94a3b8; }
+.tc svg { display: block; width: 100%; height: 56px; }
+@media (max-width: 760px) { .tides { width: 150px; } .tc svg { height: 40px; } }
+@media (max-width: 760px) { .mini { width: 120px; height: 150px; } }
+#map .leaflet-tile-pane { transition: filter .4s; }
+.ferry { background: none; border: 0; }
+.boat.lit svg { filter: drop-shadow(0 0 3px #fef08a) drop-shadow(0 0 2px rgba(0,0,0,.8)); }
+/* storm page */
+.app[hidden], #storm-page[hidden] { display: none !important; }
+#storm-page { height: 100%; overflow-y: auto; padding: 18px 20px 40px; }
+#storm-page .wrap { max-width: 1280px; margin: 0 auto; display: flex; flex-direction: column; gap: 18px; }
+#storm-page .top { display: flex; flex-wrap: wrap; gap: 8px 18px; align-items: baseline; justify-content: space-between; }
+#storm-page .grid { display: grid; grid-template-columns: 330px minmax(0, 1fr); gap: 18px; align-items: start; }
+@media (max-width: 900px) { #storm-page .grid { grid-template-columns: 1fr; } #storm-page { padding-inline: 16px; } }
+.card { background: var(--panel); border: 1px solid var(--rule); border-radius: 8px; padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.card h2 { margin: 0; }
+.sl { display: flex; flex-direction: column; gap: 2px; font-size: 12.5px; color: var(--muted); }
+.sl b { color: var(--ink); font: 500 13px var(--font-data); }
+.runbar { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.runbar button { font: 600 14px var(--font-ui); border-radius: 6px; padding: 7px 16px; cursor: pointer; border: 1px solid var(--accent); background: var(--accent); color: #fff; }
+.runbar button.ghost { background: transparent; color: var(--ink); border-color: var(--rule); }
+.runbar button:disabled { opacity: .5; cursor: default; }
+progress { width: 100%; height: 8px; accent-color: var(--accent); }
+#sm-hist svg { width: 100%; height: auto; display: block; }
+#sm-hist text { font: 11px var(--font-data); fill: var(--muted); }
+#sm-map { height: 420px; border-radius: 6px; background: #0a2533; }
+.stbl { width: 100%; border-collapse: collapse; font-size: 12px; }
+.stbl th { font-size: 10px; }
+.stbl tr[data-i] { cursor: pointer; } .stbl tr[data-i]:hover { background: var(--chip); }
+.stale { opacity: .55; }
+</style>
+</head>
+<body>
+<div class="app" id="app">
+  <div id="map" role="region" aria-label="Course map"></div>
+  <aside>
+    <header>
+      <h1>Seventy48 2027 planner</h1>
+      <p class="sub">Tacoma to Port Townsend, 70 miles, human power only, 48 hours. Friday 28 May 2027, gun at 19:00. Set a finish time to see the speed it takes through the water once the tidal stream along the course is counted, where to stop, and where the stream helps and hurts.</p>
+      <a class="pagelink" href="#storms">Storm contingency: test this plan against 50 years of wind &rarr;</a>
+      <button type="button" class="genout" id="print">&#128438; Generate output<small>leg sheets and chart strips for this plan, to print or save as PDF</small></button>
+    </header>
+
+    <section aria-labelledby="h-plan">
+      <h2 id="h-plan">Plan</h2>
+      <div class="row">
+        <label for="sd">Start<input id="sd" type="date" min="2027-05-24" max="2027-06-01" value="2027-05-28"></label>
+        <label for="st">Gun<input id="st" type="time" value="19:00"></label>
+        <label for="delay" title="Teams have 30 minutes after the gun to cross the start line">Cross the line (min after gun)<input id="delay" type="number" min="0" max="30" step="1" value="0"></label>
+      </div>
+      <div class="seg" role="group" aria-label="Plan by" id="mode-seg">
+        <button type="button" data-mode="target"><span>Target finish</span><small>solve for speed</small></button>
+        <button type="button" data-mode="speed"><span>Set speed</span><small>see the finish</small></button>
+      </div>
+      <label for="target" id="target-l">Target elapsed time: <b class="clock" id="target-out"></b>
+        <input id="target" type="range" min="10" max="44" step="0.25" value="18"></label>
+      <label for="speed" id="speed-l" hidden>Speed through the water: <b class="clock" id="speed-out"></b>
+        <input id="speed" type="range" min="1.5" max="7" step="0.05" value="3.5"></label>
+      <div class="row">
+        <label for="nightPct" title="Speed through the water in the dark, as a share of daytime speed">Night pace (% of day)<input id="nightPct" type="number" min="50" max="110" step="1" value="100"></label>
+        <label for="fade" title="How much the speed through the water drops over each 12 hours of paddling">Fade (% per 12 h)<input id="fade" type="number" min="0" max="30" step="1" value="0"></label>
+      </div>
+      <p class="hint">Speed through the water is your paddling or rowing speed in still water. Speed over the bottom adds the tidal stream along the course. Night is sunset to sunrise.</p>
+    </section>
+
+    <section aria-labelledby="h-stopset">
+      <h2 id="h-stopset">Stops</h2>
+      <div class="row">
+        <label for="brkEvery">Break every (h)<input id="brkEvery" type="number" min="0" max="12" step="0.5" value="2"></label>
+        <label for="brkMin">Break length (min)<input id="brkMin" type="number" min="0" max="120" step="1" value="10"></label>
+        <label for="ashoreMin" title="Breaks this long or longer go ashore (bathroom breaks) at a place past teams stopped, or the best landing ahead; shorter ones are on the water">Ashore if at least (min)<input id="ashoreMin" type="number" min="1" max="120" step="1" value="5"></label>
+      </div>
+      <label class="check" for="drift" title="On a break on the water the boat drifts with the stream. Untick if you hold position."><input id="drift" type="checkbox" checked> Drift with the stream on breaks on the water</label>
+      <div class="row">
+      </div>
+      <label for="blakeH" title="The first full stop, at the state park campground on Blake Island, off the north end of Colvos Passage.">Full stop at Blake Island: <b class="clock" id="blakeH-out"></b>
+        <input id="blakeH" type="range" min="0.5" max="10" step="0.25" value="3"></label>
+      <div class="layers">
+        <label class="check" for="fayOn" title="If the stream is against you when you reach Fay Bainbridge Park, go ashore until it turns"><input id="fayOn" type="checkbox" checked> Wait out a foul tide at Fay Bainbridge</label>
+        <label class="check" for="pnpOn" title="If the stream is against you when you reach Point No Point, go ashore until it turns"><input id="pnpOn" type="checkbox" checked> and at Point No Point</label>
+      </div>
+      <div class="row">
+        <label class="check" for="fayAid" title="Volunteers at Fay Bainbridge Park have food and coffee. Stop there every time, and hold any break that falls due in the hour before it for the stop."><input id="fayAid" type="checkbox" checked> Stop at the Fay Bainbridge aid station</label>
+        <label for="aidMin">Aid stop (min)<input id="aidMin" type="number" min="5" max="120" step="5" value="20"></label>
+      </div>
+      <div class="row">
+        <label for="tideKn" title="Wait at Fay Bainbridge or Point No Point when the stream over the next 4 nm is against you by more than this; leave when it has eased to half of it, or after 6 hours">Foul tide worth waiting out (kn)<input id="tideKn" type="number" min="0.1" max="4" step="0.1" value="0.5"></label>
+      </div>
+      <div class="row">
+        <label for="restEvery" title="Another long rest ashore (sleep, food) after this many hours of paddling, counted from Blake Island. 0 = none.">Next long rest after (h paddling)<input id="restEvery" type="number" min="0" max="30" step="0.5" value="0"></label>
+        <label for="restH">Long rest (h)<input id="restH" type="number" min="0.5" max="12" step="0.5" value="2"></label>
+      </div>
+      <div class="row">
+        <label for="headKn" title="Go ashore and wait when the stream against you is stronger than this, if a landing is within half a mile. 0 = never.">Wait ashore when the stream against is over (kn)<input id="headKn" type="number" min="0" max="4" step="0.1" value="0"></label>
+      </div>
+      <div class="layers">
+        <label class="check" for="sitesOn"><input id="sitesOn" type="checkbox" checked> Past stops (green)</label>
+        <label class="check" for="landOn"><input id="landOn" type="checkbox" checked> Beaches, launches, marinas (purple)</label>
+      </div>
+      <p class="hint" id="stops-hint">Breaks ashore, long rests and waits for the current go to the landing that costs the least extra paddling: a past stop (where teams in 2024 to 2026 stayed 15 minutes or more) or a mapped beach, campsite, launch or marina within a mile of the course. The trip in and out counts as paddling. Click a row to set the map time.</p>
+      <div class="tbl-wrap"><table id="stops-tbl"></table></div>
+    </section>
+
+    <section aria-labelledby="h-crew">
+      <h2 id="h-crew">Boat and crew</h2>
+      <div class="row">
+        <label for="crew">Paddlers / rowers<input id="crew" type="number" min="1" max="12" step="1" value="1"></label>
+        <label for="kg">Each (kg)<input id="kg" type="number" min="40" max="140" step="1" value="80"></label>
+        <label for="shellX" title="Power each paddler needs at a given speed, as a multiple of a racing single scull at the same speed">Watts vs a racing shell (×)<input id="shellX" type="number" min="1" max="8" step="0.1" value="3"></label>
+      </div>
+      <div class="row">
+        <label for="hullFt-r" style="flex:1">Hull length (waterline, ft)<input id="hullFt-r" type="range" min="10" max="40" step="0.5" value="20"></label>
+        <label for="hullFt">ft<input id="hullFt" type="number" min="10" max="40" step="0.5" value="20" style="width:70px"></label>
+      </div>
+      <p class="hint">Hull speed <b class="clock" id="hull-v"></b> (1.34 × √waterline in ft): the plan never asks for more speed through the water than this.</p>
+      <p class="hint" id="kcal-note"></p>
+    </section>
+
+    <section aria-labelledby="h-res">
+      <h2 id="h-res">Result</h2>
+      <div class="tiles" id="tiles"></div>
+      <p class="note" id="res-note"></p>
+    </section>
+
+    <section aria-labelledby="h-marks">
+      <h2 id="h-marks">Checkpoints and waypoints</h2>
+      <p class="hint">Arrival times on your plan (Pacific Daylight Time) and the stream at the nearest NOAA station then. Click a row to set the map time.</p>
+      <div class="tbl-wrap"><table id="marks-tbl"></table></div>
+    </section>
+
+    <section aria-labelledby="h-heat">
+      <h2 id="h-heat">Stream along the course</h2>
+      <p class="hint">Distance along the course across, time down. Green is stream with you, red against, from the NOAA stations on the course. The yellow line is your boat, the dashed line the boat at the same speed in still water; the darker band is night. Click to set the map time.</p>
+      <canvas id="heat" width="800" height="560" aria-label="Stream along the course over time, with your plan"></canvas>
+      <div class="legend"><span><i style="background:#15803d"></i>With you</span><span><i style="background:#b91c1c"></i>Against</span><span><i style="background:#facc15"></i>Your plan</span></div>
+    </section>
+
+    <section aria-labelledby="h-curve">
+      <h2 id="h-curve">Finish time against speed</h2>
+      <p class="hint">Speed through the water each finish time needs, both sides of Vashon, with your stops, night pace and fade. Where the line flattens the stream turns in your favour; a steep stretch means a foul tide costs the most there.</p>
+      <svg class="chart" id="curve" viewBox="0 0 400 220" role="img" aria-label="Finish time against speed"></svg>
+    </section>
+
+    <section aria-labelledby="h-log">
+      <h2 id="h-log">Hour by hour</h2>
+      <div class="tbl-wrap"><table id="log-tbl"></table></div>
+    </section>
+
+    <section id="detail" hidden aria-live="polite"></section>
+
+    <section aria-labelledby="h-time">
+      <h2 id="h-time">Map time</h2>
+      <div class="clock" id="clock"></div>
+      <input id="time" type="range" min="0" max="1" step="300000" aria-label="Map time">
+      <div class="legend">
+        <span><i style="background:var(--flood)"></i>Flood</span><span><i style="background:var(--ebb)"></i>Ebb</span><span><i style="background:var(--slack)"></i>Slack (&lt;0.3 kn)</span>
+        <span>Arrows point where the stream sets; click a station for its curve.</span>
+      </div>
+      <label class="check" for="ferriesOn"><input id="ferriesOn" type="checkbox" checked> Ferries on their schedule (stay 100 yards clear)</label>
+      <p class="hint" id="ferry-note"></p>
+    </section>
+
+    <section aria-labelledby="h-past">
+      <h2 id="h-past">Past races</h2>
+      <p class="hint" id="past-hint">Loading past results.</p>
+      <label class="check" for="tracksOn" title="Every finisher's YB track, 2024 to 2026. The course line is their average."><input id="tracksOn" type="checkbox" checked> Show every finisher's track on the map (2024 to 2026)</label>
+      <div class="tbl-wrap"><table id="past-sum"></table></div>
+      <div class="row"><div class="chips" id="past-years"></div><label for="past-class">Class<select id="past-class" style="width:auto"></select></label></div>
+      <p class="hint" id="past-list-hint">Highlighted: finished within an hour of your plan. Click a team with a track to see it on the map.</p>
+      <div id="past-list" style="max-height:420px;overflow-y:auto"></div>
+    </section>
+
+    <section aria-labelledby="h-pics">
+      <h2 id="h-pics">Stop close-ups</h2>
+      <p class="hint">Each stop ashore on a quarter-kilometre square of satellite imagery, with your course in yellow and past tracks in purple. Click one to set the map time.</p>
+      <div class="pics" id="pics"></div>
+    </section>
+
+    <section aria-labelledby="h-src" class="sources">
+      <h2 id="h-src">Data</h2>
+      <p id="data-status"></p>
+      <p>Predictions: <a href="https://tidesandcurrents.noaa.gov/" target="_blank" rel="noopener">NOAA CO-OPS</a>. Tracks: YB Tracking (2024 to 2026). Results: seventy48.com race recaps. Landings: OpenStreetMap contributors. Charts: NOAA ENC chart service. Imagery &copy; Esri, Maxar, Earthstar Geographics.</p>
+      <p>The stream between stations is blended from the stations either side along the course; open water away from a station is a guess. Course lines are shortest-water lines for distance and ETA only. Planning aid, not for navigation.</p>
+    </section>
+  </aside>
+</div>
+
+<div id="storm-page" hidden>
+ <div class="wrap">
+  <div class="top">
+    <h1>Storm contingency</h1>
+    <a class="pagelink" href="#">&larr; Back to the planner</a>
+  </div>
+  <p class="sub" id="sm-plan"></p>
+  <div class="grid">
+   <div class="card">
+    <h2>Scenarios</h2>
+    <label for="sm-mode">Weather<select id="sm-mode"><option value="hist">History: a past year's wind on a day near the race date</option><option value="fixed">Made-up blows</option></select></label>
+    <div class="sl" id="sm-hist-ctl">
+      <label for="sm-jit">Race date from <b id="sm-jit-v"></b> either side of the planned date, any year 1976&ndash;2025<input id="sm-jit" type="range" min="0" max="18" step="1" value="14"></label>
+      <label class="check" for="sm-scale"><input id="sm-scale" type="checkbox" checked> Scale ERA5 wind to the observed wind (NDBC stations)</label>
+    </div>
+    <div class="sl" id="sm-fixed-ctl" hidden>
+      <label for="sm-k">Blows per race <b id="sm-k-v"></b><input id="sm-k" type="range" min="1" max="3" step="1" value="1"></label>
+      <label for="sm-kn">Wind <b id="sm-kn-v"></b><input id="sm-kn" type="range" min="10" max="40" step="1" value="22"></label>
+      <label for="sm-hrs">Lasting <b id="sm-hrs-v"></b><input id="sm-hrs" type="range" min="1" max="24" step="1" value="6"></label>
+      <label for="sm-dir">From<select id="sm-dir"><option value="n">North (on the nose)</option><option value="s">South (behind you)</option><option value="r">Either, at random</option></select></label>
+    </div>
+    <h2>The crew</h2>
+    <div class="sl">
+      <label for="sm-shelter">Go ashore when the wind reaches <b id="sm-shelter-v"></b><input id="sm-shelter" type="range" min="12" max="34" step="1" value="20"></label>
+      <label for="sm-resume">Set off again when it drops below <b id="sm-resume-v"></b><input id="sm-resume" type="range" min="8" max="30" step="1" value="15"></label>
+      <label for="sm-reach">Shelter within <b id="sm-reach-v"></b> of where the boat is<input id="sm-reach" type="range" min="0.5" max="6" step="0.5" value="3"></label>
+      <label for="sm-head">Headwind costs <b id="sm-head-v"></b> of speed per 10 kn<input id="sm-head" type="range" min="0" max="40" step="1" value="15"></label>
+      <label for="sm-tail">Tailwind adds <b id="sm-tail-v"></b> per 10 kn<input id="sm-tail" type="range" min="0" max="20" step="1" value="5"></label>
+      <label for="sm-chop">Wind against tide (12 kn+ against 1 kn+ of stream) costs another <b id="sm-chop-v"></b><input id="sm-chop" type="range" min="0" max="40" step="1" value="10"></label>
+    </div>
+    <h2>Run</h2>
+    <div class="sl">
+      <label for="sm-n">Scenarios <b id="sm-n-v"></b><input id="sm-n" type="range" min="100" max="5000" step="100" value="1000"></label>
+      <label for="sm-seed">Seed<input id="sm-seed" type="number" min="1" max="99999" value="48"></label>
+    </div>
+    <div class="runbar"><button type="button" id="sm-run">Run</button><button type="button" class="ghost" id="sm-stop" disabled>Stop</button><button type="button" class="ghost" id="sm-csv" disabled>CSV</button></div>
+    <progress id="sm-prog" value="0" max="1"></progress>
+    <p class="hint" id="sm-status"></p>
+   </div>
+   <div id="sm-results" style="display:flex;flex-direction:column;gap:18px;min-width:0">
+    <div class="card"><h2>Finish, gun to bell</h2><div class="tiles" id="sm-tiles"></div><div id="sm-hist"></div><p class="hint" id="sm-hist-note"></p></div>
+    <div class="card"><h2>Wind along the course, 10 May to 20 June, 1976&ndash;2025</h2><p class="hint" id="sm-area-note">Loading&hellip;</p><div class="tbl-wrap"><table class="stbl" id="sm-area"></table></div></div>
+    <div class="card"><h2>Shelters</h2><p class="hint">Where the crew sat out the wind, most used first. Click a row to see it on the map.</p><div class="tbl-wrap"><table class="stbl" id="sm-shel"></table></div><div id="sm-map"></div></div>
+    <div class="card"><h2>Gaps: no shelter in reach</h2><p class="hint">Stretches where the wind caught the crew with no landing within reach, so it was ridden out on the water. Worth knowing a bail-out there, or only going with a good forecast.</p><div class="tbl-wrap"><table class="stbl" id="sm-gaps"></table></div></div>
+    <div class="card"><h2>Worst scenarios</h2><div class="tbl-wrap"><table class="stbl" id="sm-worst"></table></div></div>
+   </div>
+  </div>
+ </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+"use strict";
+const TZ = "America/Los_Angeles";
+const H = 3600e3, MIN = 60e3, STEP = MIN;    // simulator step
+const LIMIT_H = 48;
+const NM_MI = 1.15078;
+const SLACK_KN = 0.3;
+const fmt = new Intl.DateTimeFormat("en-US", { timeZone: TZ, weekday: "short", day: "numeric", month: "short", hour: "2-digit", minute: "2-digit", hour12: false });
+const fmtT = new Intl.DateTimeFormat("en-US", { timeZone: TZ, hour: "2-digit", minute: "2-digit", hour12: false });
+const fmtDT = new Intl.DateTimeFormat("en-US", { timeZone: TZ, weekday: "short", hour: "2-digit", minute: "2-digit", hour12: false });
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const hm = (h) => { const m = Math.round(h * 60); return `${Math.floor(m / 60)} h ${String(m % 60).padStart(2, "0")}`; };
+const sgn = (v, d = 1) => (v >= 0 ? "+" : "−") + Math.abs(v).toFixed(d);
+
+let ROUTE, STATIONS = [], PRED = { stations: {} }, map, CH = {}, routeLines = {}, stnMarkers = {}, boatMarker, P = null, playTimer = null;
+const KEEP = ["sd", "st", "delay", "mode", "target", "speed", "brkEvery", "brkMin", "ashoreMin", "drift", "blakeH", "fayOn", "pnpOn", "fayAid", "aidMin", "tideKn", "restEvery", "restH", "headKn", "sitesOn", "landOn", "nightPct", "fade", "crew", "kg", "shellX", "hullFt", "tracksOn", "ferriesOn", "tidesOn"];
+const state = { route: "colvos", sd: "2027-05-28", st: "19:00", delay: 0, mode: "target", target: 18, speed: 3.5, brkEvery: 2, brkMin: 10, ashoreMin: 5, drift: true, blakeH: 3, fayOn: true, pnpOn: true, fayAid: true, aidMin: 20, tideKn: 0.5, restEvery: 0, restH: 2, headKn: 0, sitesOn: true, landOn: true, nightPct: 100, fade: 0, crew: 1, kg: 80, shellX: 3, hullFt: 20, tracksOn: true, ferriesOn: true, tidesOn: true, t: null, selected: null };
+// Your settings are kept in this browser under one key that new versions of the page keep reading. Settings saved by older
+// versions (s48-27v1 to v8) are carried over, newest last; a setting a version added starts at its default, and a value of the
+// wrong type is ignored. The play bar's speed and map width are kept too.
+const SAVE_KEY = "s48-27", DEFAULTS = { ...state }, PLAY = {};
+try {
+  const keys = [...Array.from({ length: 8 }, (_, i) => `s48-27v${i + 1}`), SAVE_KEY];
+  keys.forEach((key) => { const s = JSON.parse(localStorage.getItem(key) || "{}");
+    KEEP.forEach((k) => { if (k in s && typeof s[k] === typeof DEFAULTS[k]) state[k] = s[k]; });
+    if (s.play) Object.assign(PLAY, s.play); });
+} catch (e) {}
+function save() {
+  const play = typeof document !== "undefined" && document.getElementById("play-speed") ? { speed: $("play-speed").value, zoom: $("play-zoom").value } : PLAY;
+  try { localStorage.setItem(SAVE_KEY, JSON.stringify({ ...Object.fromEntries(KEEP.map((k) => [k, state[k]])), play })); } catch (e) {}
+}
+const startT = () => Date.parse(`${state.sd}T${state.st}:00-07:00`) + state.delay * MIN;
+const gunT = () => Date.parse(`${state.sd}T${state.st}:00-07:00`);
+
+// ---------- geometry
+function nmBetween(a, b) {
+  const R = 3440.065, r = Math.PI / 180, dLat = (b[0] - a[0]) * r, dLon = (b[1] - a[1]) * r;
+  const x = Math.sin(dLat / 2) ** 2 + Math.cos(a[0] * r) * Math.cos(b[0] * r) * Math.sin(dLon / 2) ** 2;
+  return 2 * R * Math.asin(Math.sqrt(x));
+}
+function chain(points) {
+  const cum = [0];
+  for (let i = 1; i < points.length; i++) cum.push(cum[i - 1] + nmBetween(points[i - 1], points[i]));
+  return { points, cum, total: cum[cum.length - 1] };
+}
+function pointAt(ch, along) {
+  const a = Math.max(0, Math.min(ch.total, along));
+  let i = 1; while (i < ch.cum.length - 1 && ch.cum[i] < a) i++;
+  const f = (a - ch.cum[i - 1]) / ((ch.cum[i] - ch.cum[i - 1]) || 1), p = ch.points[i - 1], q = ch.points[i];
+  return [p[0] + (q[0] - p[0]) * f, p[1] + (q[1] - p[1]) * f];
+}
+function project(ch, p) {
+  let best = { d: Infinity, along: 0 };
+  const k = Math.cos(p[0] * Math.PI / 180);
+  for (let i = 1; i < ch.points.length; i++) {
+    const a = ch.points[i - 1], b = ch.points[i], bx = (b[1] - a[1]) * k, by = b[0] - a[0], px = (p[1] - a[1]) * k, py = p[0] - a[0];
+    const f = Math.max(0, Math.min(1, (px * bx + py * by) / ((bx * bx + by * by) || 1)));
+    const q = [a[0] + by * f, a[1] + (b[1] - a[1]) * f], d = nmBetween(q, p);
+    if (d < best.d) best = { d, along: ch.cum[i - 1] + (ch.cum[i] - ch.cum[i - 1]) * f };
+  }
+  return best;
+}
+// course heading (degrees true) at a distance along, over a 1 nm baseline
+function headingAt(ch, along) {
+  const p = pointAt(ch, along - 0.5), q = pointAt(ch, along + 0.5);
+  return (Math.atan2((q[1] - p[1]) * Math.cos(p[0] * Math.PI / 180), q[0] - p[0]) * 180 / Math.PI + 360) % 360;
+}
+
+// ---------- predictions
+function currentAt(sd, t) {   // + flood, − ebb, knots; cosine shape between NOAA's max and slack events
+  const ev = sd.events, ts = sd._ts || (sd._ts = ev.map((e) => Date.parse(e.t)));
+  const i = ts.findIndex((x) => x > t);
+  if (i <= 0) return null;
+  const a = ev[i - 1], b = ev[i], sv = (e) => (e.type === "flood" ? e.kn : e.type === "ebb" ? -e.kn : 0);
+  const va = sv(a), vb = sv(b), f = (t - ts[i - 1]) / (ts[i] - ts[i - 1]);
+  if (a.type === "slack" && b.type !== "slack") return vb * Math.sin((Math.PI / 2) * f);
+  if (a.type !== "slack" && b.type === "slack") return va * Math.cos((Math.PI / 2) * f);
+  return va + (vb - va) * (1 - Math.cos(Math.PI * f)) / 2;
+}
+function tideAt(sd, t) {
+  const ev = sd.events, ts = sd._ts || (sd._ts = ev.map((e) => Date.parse(e.t)));
+  const i = ts.findIndex((x) => x > t);
+  if (i <= 0) return null;
+  const a = ev[i - 1], b = ev[i], f = (t - ts[i - 1]) / (ts[i] - ts[i - 1]);
+  return { ft: a.ft + (b.ft - a.ft) * (1 - Math.cos(Math.PI * f)) / 2, rising: b.ft > a.ft };
+}
+const valueAt = (st, t) => { const sd = PRED.stations[st.key]; return sd ? (st.kind === "current" ? currentAt(sd, t) : tideAt(sd, t)) : null; };
+// next turn (slack) after t at a station
+function nextSlack(st, t) {
+  const sd = PRED.stations[st.key]; if (!sd) return null;
+  const e = sd.events.find((e) => e.type === "slack" && Date.parse(e.t) > t);
+  return e ? Date.parse(e.t) : null;
+}
+// a station's stream resolved onto the course heading, + = with you
+function alongStream(st, v, hd) {
+  if (v == null) return null;
+  const set = v >= 0 ? st.flood_dir : st.ebb_dir;
+  if (set == null) return -v;    // Puget Sound floods south: against a northbound boat
+  return Math.abs(v) * Math.cos((set - hd) * Math.PI / 180);
+}
+
+// Stream field for a course: current stations within reach of the line, grouped where they sit within 0.75 nm of each other along
+// it (weighted towards the station closest to the line), each group a time series every 6 minutes. Between groups the stream is
+// blended linearly along the course; before the first and after the last it holds the end value.
+const FIELD_STEP = 6 * MIN;
+const REACH_NM = 5, FADE_NM = 2;   // a station's stream holds this far along the course, then fades to nothing over FADE_NM
+function buildField(key) {
+  const ch = CH[key], t0 = gunT() - 6 * H, t1 = gunT() + 60 * H, n = Math.ceil((t1 - t0) / FIELD_STEP) + 1;
+  const zs = STATIONS.filter((s) => s.kind === "current" && s.legs[key] && PRED.stations[s.key])
+    .map((s) => ({ s, along: s.legs[key].along, w: 1 / (0.2 + s.legs[key].offset) ** 2 })).sort((a, b) => a.along - b.along);
+  const groups = [];
+  for (const z of zs) { const g = groups[groups.length - 1]; if (g && z.along - g.first <= 0.75) g.m.push(z); else groups.push({ first: z.along, m: [z] }); }
+  const out = groups.map((g) => {
+    const W = g.m.reduce((a, z) => a + z.w, 0), along = g.m.reduce((a, z) => a + z.w * z.along, 0) / W, hd = headingAt(ch, along);
+    const v = new Float32Array(n);
+    for (let j = 0; j < n; j++) {
+      const t = t0 + j * FIELD_STEP; let s = 0, w = 0;
+      for (const z of g.m) { const a = alongStream(z.s, currentAt(PRED.stations[z.s.key], t), hd); if (a != null) { s += z.w * a; w += z.w; } }
+      v[j] = w ? s / w : 0;
+    }
+    // a station in a narrow cut (the Port Townsend Canal) only speaks for the cut itself
+    const reach = g.m.some((z) => /canal|narrows/i.test(z.s.name) && z.s.legs[key].offset < 0.3) ? 0.4 : REACH_NM;
+    return { along, v, reach, names: g.m.map((z) => z.s.name) };
+  });
+  return { t0, n, groups: out };
+}
+let FIELDS = {};
+function streamAt(key, pos, t) {
+  if (!FIELDS[key] || FIELDS[key].gun !== gunT()) { FIELDS[key] = buildField(key); FIELDS[key].gun = gunT(); }
+  const F = FIELDS[key], G = F.groups; if (!G.length) return 0;
+  const x = (t - F.t0) / FIELD_STEP, j = Math.max(0, Math.min(F.n - 2, Math.floor(x))), f = Math.max(0, Math.min(1, x - j));
+  const val = (g) => (g.v[j] + (g.v[j + 1] - g.v[j]) * f) * Math.max(0, Math.min(1, 1 - (Math.abs(pos - g.along) - g.reach) / FADE_NM));
+  if (pos <= G[0].along) return val(G[0]);
+  if (pos >= G[G.length - 1].along) return val(G[G.length - 1]);
+  let i = 1; while (G[i].along < pos) i++;
+  const a = G[i - 1], b = G[i], k = (pos - a.along) / (b.along - a.along);
+  return val(a) * (1 - k) + val(b) * k;
+}
+
+// ---------- sun
+function sunAlt(t, lat, lon) {
+  const d = t / 864e5 + 2440587.5 - 2451545, rad = Math.PI / 180;
+  const g = (357.529 + 0.98560028 * d) * rad, q = 280.459 + 0.98564736 * d;
+  const Ls = (q + 1.915 * Math.sin(g) + 0.02 * Math.sin(2 * g)) * rad, e = (23.439 - 3.6e-7 * d) * rad;
+  const ra = Math.atan2(Math.cos(e) * Math.sin(Ls), Math.cos(Ls)), dec = Math.asin(Math.sin(e) * Math.sin(Ls));
+  const ha = ((18.697374558 + 24.06570982441908 * d) * 15 + lon) * rad - ra;
+  return Math.asin(Math.sin(lat * rad) * Math.sin(dec) + Math.cos(lat * rad) * Math.cos(dec) * Math.cos(ha)) / rad;
+}
+const isDark = (t, ll) => sunAlt(t, ll[0], ll[1]) < -0.833;
+function sunEvents(ll, t0, t1) {   // sunset/sunrise crossings between t0 and t1, 1-minute resolution
+  const out = []; let prev = isDark(t0, ll);
+  for (let t = t0 + MIN; t <= t1; t += MIN) { const d = isDark(t, ll); if (d !== prev) out.push({ t, set: d }); prev = d; }
+  return out;
+}
+function moonLit(t) {   // fraction of the moon lit, from the mean synodic month
+  const days = (t - Date.parse("2000-01-06T18:14Z")) / 864e5, ph = ((days / 29.530588853) % 1 + 1) % 1;
+  return { lit: (1 - Math.cos(2 * Math.PI * ph)) / 2, waxing: ph < 0.5 };
+}
+
+
+// ---------- landings: past stops (data/stops.json, scripts/build_stops.py) and mapped landings (data/landings.json, OpenStreetMap)
+let STOPSITES = [], LANDINGS = [];
+const SITE_MAX_NM = 1.0;   // a landing further off the course than this is not used for planned stops
+const LAND_KIND = { campsite: "campsite", beach: "beach", shingle: "shingle beach", slipway: "launch", marina: "marina", "small craft": "small-craft float" };
+const siteName = (x) => x.kind === "past" ? `past stop, ${x.teams} team${x.teams > 1 ? "s" : ""} (${x.s.years.join(", ")})` : `${LAND_KIND[x.l.kind] || x.l.kind}${x.l.name ? " " + x.l.name : ""}`;
+const SITES_MEMO = {};
+function sitesFor(key, reach = SITE_MAX_NM) {
+  const mk = `${key}|${reach}|${state.sitesOn}|${state.landOn}`;
+  if (SITES_MEMO[mk]) return SITES_MEMO[mk];
+  const out = [];
+  if (state.sitesOn) STOPSITES.forEach((s) => { const l = s.legs[key]; if (l && l.offset <= reach) out.push({ kind: "past", ll: [s.lat, s.lon], along: l.along, off: l.offset, teams: s.teams, s }); });
+  if (state.landOn) LANDINGS.forEach((x) => { const l = x.legs[key]; if (l && l.offset <= reach) out.push({ kind: "landing", ll: [x.lat, x.lon], along: l.along, off: l.offset, teams: 0, l: x }); });
+  out.forEach((x) => { x.name = siteName(x); x.lead = leadFor(x.off); x.detourNm = bendNm(x.off, x.lead); });
+  return (SITES_MEMO[mk] = out.sort((a, b) => a.along - b.along));
+}
+// The boat bends off the course to a landing and back onto it, over `lead` nm either side, so it never paddles back the way it
+// came: the lead grows with the distance off (0.4 to 2 nm), and the bend adds bendNm to the trip.
+const leadFor = (off) => Math.max(0.4, Math.min(2, 4 * off));
+const bendNm = (off, lead) => 2 * (Math.hypot(lead, off) - lead);
+// The landing for a stop: past stops used by the most teams first (someone found them good, worth about a quarter mile of extra
+// paddling for each doubling of the teams), then the least extra paddling. One behind the boat costs twice the way back.
+function pickSite(key, pos, ahead, back, reach = SITE_MAX_NM, pastOnly = false) {
+  let best = null;
+  for (const x of sitesFor(key, reach)) {
+    if (pastOnly && x.kind !== "past") continue;
+    if (x.along < pos - back || x.along > pos + ahead) continue;
+    const cost = x.detourNm + (x.along < pos ? 2 * (pos - x.along) : 0) - 0.25 * Math.log2(1 + x.teams);
+    if (!best || cost < best.cost) best = { ...x, cost };
+  }
+  return best;
+}
+
+// ---------- energy
+// Paddling power from the speed through the water: a racing single scull needs 2.80 x speed^3 watts (speed in m/s; the Concept2
+// rowing machine's calibration), and your boat a multiple of that (a setting). Muscle turns food into power at 22% net
+// efficiency (calories above resting). Resting burn is Mifflin-St Jeor (180 cm, age 40) for each paddler's weight.
+const MUSCLE_EFF = 0.22, SHELL_K = 2.8;
+const paddlerW = (kn) => state.shellX * SHELL_K * (kn * 0.5144) ** 3;
+const kcalH = (kn) => (paddlerW(kn) / MUSCLE_EFF) * 3600 / 4184;
+const restKcalH = () => (10 * state.kg + 6.25 * 180 - 5 * 40 + 5) * 1.2 / 24;
+const kcal = (k) => Math.round(k).toLocaleString("en-US");
+
+// ---------- bends ashore: the track leaves the course at a0, reaches the landing at a (distance along) and rejoins at a1,
+// shifted towards the landing by a cosine-squared weight (1 at the landing, 0 at either end)
+const llNm = (p, q) => Math.hypot((q[0] - p[0]) * 60, (q[1] - p[1]) * 60 * Math.cos(p[0] * Math.PI / 180));
+function bendPt(ch, b, p) {
+  const q = pointAt(ch, p), f = p < b.a ? (b.a - b.a0 > 1e-9 ? (b.a - p) / (b.a - b.a0) : 1) : (b.a1 - b.a > 1e-9 ? (p - b.a) / (b.a1 - b.a) : 1);
+  const w = Math.cos((Math.PI / 2) * Math.min(1, f)) ** 2;
+  return [q[0] + w * (b.ll[0] - b.c[0]), q[1] + w * (b.ll[1] - b.c[1])];
+}
+function bendPath(ch, b, n = 60) { const out = []; for (let k = 0; k <= n; k++) out.push(bendPt(ch, b, b.a0 + ((b.a1 - b.a0) * k) / n)); return out; }
+function bendExtra(ch, b) { const P = bendPath(ch, b); let d = 0; for (let k = 1; k < P.length; k++) d += llNm(P[k - 1], P[k]); return Math.max(0, d - (b.a1 - b.a0)); }
+
+// ---------- simulator: 1-minute steps. v0 = speed through the water at the start (knots).
+// opt.still: no stream. opt.wind(pos, t) -> { kn, from } for the storm page, with opt.env for the crew's wind settings.
+// Stops: breaks every brkEvery hours (on the water and drifting, or ashore if at least ashoreMin), a long rest after restEvery
+// hours of paddling, a wait ashore while the stream against is over headKn, and (with wind) shelter ashore while the wind is
+// over shelterKn. Track rows: [t, along, speed through the water, stream, 0 paddling | 1 stopped on the water | 2 ashore].
+function simulate(key, v0, opt = {}) {
+  const ch = CH[key], t0 = startT(), still = !!opt.still, W = opt.wind || null, E = opt.env || {};
+  const night = state.nightPct / 100, fade = state.fade / 100, brkEvery = state.brkEvery * H, brkLen = state.brkMin * MIN;
+  const restEvery = state.restEvery * H, restLen = state.restH * H, headKn = state.headKn;
+  // Planned stops at fixed places: the full stop at Blake Island (30 minutes or more), then Fay Bainbridge Park and Point No Point,
+  // where the crew goes ashore only if the tide is foul. The way in and out is the extra distance of bending the line to the
+  // landing over a mile or more either side, not straight in and back.
+  const fixed = (key) => { const m = ROUTE.marks.find((x) => x.key === key); if (!m) return null; const pr = project(ch, [m.lat, m.lon]);
+    const lead = Math.max(1, leadFor(pr.d));
+    return { kind: "planned", ll: [m.lat, m.lon], along: pr.along, off: pr.d, lead, detourNm: bendNm(pr.d, lead), teams: 0, name: m.name }; };
+  const plannedStops = [["blake", true], ["fay", state.fayOn || state.fayAid], ["pnp", state.pnpOn]].filter(([, on]) => on).map(([k]) => ({ key: k, site: fixed(k) })).filter((x) => x.site);
+  const tideKn = state.tideKn, aheadStream = (p, tt) => { let a = 0; for (let d = 0; d <= 4; d += 1) a += streamAt(key, Math.min(ch.total, p + d), tt); return a / 5; };
+  let pos = 0, dist = 0, t = t0, paddled = 0, sinceBrk = 0, sinceRest = 0, darkH = 0, gain = 0, kc = 0, stop = null, pending = null;
+  const stops = [], track = [[t, 0, v0, still ? 0 : streamAt(key, 0, t), 0, 0]], end = t0 + 60 * H;
+  // Going ashore bends the track off the course to the landing and back onto it, over the landing's lead before it (or from
+  // where the stop was decided, if nearer) and after it. The boat paddles the bent path, so its extra miles cost time at your
+  // speed: `dist` is the distance actually covered, `pos` the progress along the course.
+  const bends = [];
+  const bendFor = (site) => { const b = { a0: Math.min(site.along, Math.max(pos, site.along - site.lead)), a: site.along, a1: Math.min(ch.total, site.along + site.lead), ll: site.ll, c: pointAt(ch, site.along) }; bends.push(b); return b; };
+  const stretchAt = (p) => { const b = bends.find((x) => p >= x.a0 && p < x.a1); if (!b) return 1; const e = 0.02; return Math.max(1, llNm(bendPt(ch, b, p), bendPt(ch, b, p + e)) / e); };
+  const begin = (kind, site, o) => {
+    const onWater = !site; let detour = 0, b = null;
+    if (site) {
+      b = o.bend || bendFor(site);
+      const inNm = b.a0 >= b.a - 1e-6 ? site.off + Math.max(0, pos - site.along) : 0;   // no bend in: straight in (or back) to it
+      detour = inNm / v0; dist += inNm;
+      if (site.along < pos - 0.2) pos = site.along;
+    }
+    stop = { kind, site, bend: b, onWater, t, pos, detourH: detour, cond: o.cond || null, until: t + detour * H + (o.len || 0), minUntil: t + detour * H + (o.min || 0), why: o.why || "" };
+    paddled += detour * H; kc += detour * kcalH(v0);
+    stops.push(stop);
+  };
+  while (pos < ch.total && t < end) {
+    const s = still ? 0 : streamAt(key, pos, t), ll = pointAt(ch, pos), dark = isDark(t, ll), w = W ? W(pos, t) : null;
+    if (stop) {
+      let done = t >= stop.until;
+      if (stop.cond === "wind") done = t >= stop.minUntil && (!w || w.kn < E.resumeKn);
+      else if (stop.cond === "foul") done = t >= stop.minUntil && (s > -headKn / 2 || t - stop.t > 6 * H);
+      else if (stop.cond === "tide") done = t >= stop.minUntil && (aheadStream(pos, t) > -tideKn / 2 || t - stop.t > 6 * H);
+      if (done) { stop.until = t; stop = null; }
+      else {
+        const d = stop.onWater && state.drift ? s : 0;
+        pos = Math.max(0, Math.min(ch.total, pos + d * STEP / H)); gain += d * STEP / H; dist += d * STEP / H;
+        t += STEP; track.push([t, pos, 0, s, stop.onWater ? 1 : 2, dist]); continue;
+      }
+    }
+    // what to do now, most pressing first
+    if (w && w.kn >= E.shelterKn) {
+      const site = pickSite(key, pos, E.shelterNm, E.shelterNm, Math.max(SITE_MAX_NM, 1.5)), o = { cond: "wind", min: 30 * MIN, why: `${Math.round(w.kn)} kn from ${Math.round(w.from)}°` };
+      if (!pending || pending.kind !== "shelter") {
+        if (pending && pending.bend) bends.splice(bends.indexOf(pending.bend), 1);   // the stop it was heading for is off
+        if (site && site.along > pos) { pending = { kind: "shelter", site, ...o, bend: bendFor(site) }; }   // paddle on to it
+        else { begin("shelter", site, o); pending = null; continue; }   // turn back to it (or sit it out on the water)
+      }
+    }
+    if (!still && headKn > 0 && s < -headKn && !pending) {
+      const site = pickSite(key, pos, 0.5, 0);
+      if (site) { pending = { kind: "wait", site, cond: "foul", min: 20 * MIN, why: `stream ${sgn(s)} kn`, bend: bendFor(site) }; continue; }
+    }
+    const nextP = plannedStops[0];
+    // a planned stop is decided where the bend in to it starts, so the boat heads in smoothly
+    if (nextP && !pending && pos >= nextP.site.along - nextP.site.lead) {
+      plannedStops.shift();
+      const site = nextP.site, go = (o) => { sinceBrk = 0; pending = { site, ...o, bend: bendFor(site) }; };
+      if (nextP.key === "blake") { sinceRest = 0; go({ kind: "full", len: Math.max(0.5, state.blakeH) * H, why: "planned full stop" }); continue; }
+      const a = still ? 0 : aheadStream(site.along, t + (site.along - pos) / v0 * H), tideOn = nextP.key === "pnp" || state.fayOn, aid = nextP.key === "fay" && state.fayAid;
+      if (tideOn && a < -tideKn) { go({ kind: "tide", cond: "tide", min: aid ? Math.max(30, state.aidMin) * MIN : 30 * MIN, why: `stream ${sgn(a)} kn over the next 4 nm${aid ? "; food and coffee at the aid station" : ""}` }); continue; }
+      if (aid) { go({ kind: "aid", len: state.aidMin * MIN, why: "volunteers with food and coffee" }); continue; }
+    }
+    // no break in the hour before Blake or the Fay Bainbridge aid station: it is taken there
+    if (nextP && (nextP.key === "blake" || (nextP.key === "fay" && state.fayAid)) && nextP.site.along - pos < v0 * 1) { sinceBrk = Math.min(sinceBrk, brkEvery - STEP); sinceRest = Math.min(sinceRest, restEvery - STEP); }
+    if (pending && pos >= pending.site.along - 1e-6) { begin(pending.kind, pending.site, pending); pending = null; continue; }
+    if (!pending && restEvery > 0 && sinceRest >= restEvery) {
+      sinceRest = 0; sinceBrk = 0;
+      const site = pickSite(key, pos, 3, 0);
+      if (site && site.along > pos) pending = { kind: "rest", site, len: restLen, bend: bendFor(site) }; else { begin("rest", site, { len: restLen }); continue; }
+    } else if (!pending && brkEvery > 0 && brkLen > 0 && sinceBrk >= brkEvery) {
+      sinceBrk = 0;
+      if (state.brkMin >= state.ashoreMin) {
+        // a short stop goes ashore for a bathroom break, at a place past teams stopped if there is one in reach
+        const site = pickSite(key, pos, 2.5, 0, SITE_MAX_NM, true) || pickSite(key, pos, 1.5, 0);
+        if (site && site.along > pos) pending = { kind: "break", site, len: brkLen, bend: bendFor(site) }; else { begin("break", site, { len: brkLen }); continue; }
+      } else { begin("break", null, { len: brkLen }); continue; }
+    }
+    // paddle
+    let stw = v0 * (dark ? night : 1) * Math.max(0.3, 1 - fade * (paddled / (12 * H)));
+    if (w) stw *= windFactor(w, headingAt(ch, pos), s, E);
+    const sog = stw + s;
+    pos = Math.max(0, pos + sog * STEP / H / stretchAt(pos)); dist += sog * STEP / H; gain += s * STEP / H; paddled += STEP; sinceBrk += STEP; sinceRest += STEP; kc += kcalH(stw) / 60;
+    if (dark) darkH += STEP / H;
+    t += STEP;
+    track.push([t, Math.min(pos, ch.total), stw, s, 0, dist]);
+  }
+  let fin = null;
+  if (pos >= ch.total) { const a = track[track.length - 2], over = pos - ch.total, sog = (pos - a[1]) || 1e-9, f = Math.min(1, over / sog); fin = t - f * STEP; dist -= f * (dist - a[5]); track[track.length - 1][5] = dist; }
+  stops.forEach((x) => { if (x.until > t) x.until = t; if (x.bend) x.extraNm = bendExtra(ch, x.bend) + x.detourH * v0; });
+  return { key, v0, t0, fin, track, stops, paddledH: paddled / H, darkH, gain, total: dist, course: ch.total, kcal: kc };
+}
+// wind on the boat: the part along the course helps or hurts, and wind against a running stream stands the sea up
+function windFactor(w, hd, s, E) {
+  const comp = w.kn * Math.cos(((w.from + 180 - hd) % 360) * Math.PI / 180);   // + behind you
+  let f = comp >= 0 ? 1 + (E.tailPct / 100) * comp / 10 : 1 + (E.headPct / 100) * comp / 10;
+  if (w.kn >= 12 && Math.abs(s) >= 1 && Math.abs(comp) >= 6 && Math.sign(comp) !== Math.sign(s)) f *= 1 - E.chopPct / 100;
+  return Math.max(0.15, f);
+}
+function solveFor(key, hours, opt = {}) {
+  const want = startT() + hours * H;
+  let lo = 0.3, hi = 12;
+  const f = (v) => { const r = simulate(key, v, opt); return r.fin == null ? Infinity : r.fin; };
+  if (f(hi) > want) return { v: null };
+  for (let i = 0; i < 24; i++) { const m = (lo + hi) / 2; if (f(m) > want) lo = m; else hi = m; }
+  return { v: hi };
+}
+const posAt = (R, t) => {
+  const tr = R.track; if (t <= tr[0][0]) return tr[0][1]; if (t >= tr[tr.length - 1][0]) return tr[tr.length - 1][1];
+  const i = Math.min(tr.length - 1, Math.max(1, Math.ceil((t - tr[0][0]) / STEP))), a = tr[i - 1], b = tr[i];
+  return a[1] + (b[1] - a[1]) * (t - a[0]) / ((b[0] - a[0]) || 1);
+};
+const rowAt = (R, t) => R.track[Math.max(0, Math.min(R.track.length - 1, Math.round((t - R.track[0][0]) / STEP)))];
+const timeAt = (R, along) => {   // first time the boat reaches a distance along
+  const tr = R.track; for (let i = 1; i < tr.length; i++) if (tr[i][1] >= along) { const a = tr[i - 1], b = tr[i]; return a[0] + (b[0] - a[0]) * (along - a[1]) / ((b[1] - a[1]) || 1); }
+  return null;
+};
+// where the boat is at a time: on the course, or at the landing during a stop ashore
+function boatLL(R, t) {
+  const st = R.stops.find((x) => x.site && t >= x.t && t < x.until);
+  return st ? st.site.ll : bentLL(R, posAt(R, t));
+}
+// a point on the course, or on the bend to a landing where the boat leaves the course for a stop ashore
+function bentLL(R, pos) {
+  const ch = CH[R.key]; let best = null;
+  for (const x of R.stops) { const b = x.bend; if (b && pos >= b.a0 && pos <= b.a1 && (!best || Math.abs(pos - b.a) < Math.abs(pos - best.a))) best = b; }
+  return best ? bendPt(ch, best, pos) : pointAt(ch, pos);
+}
+// distance actually covered (bends ashore included) at a time
+const distAt = (R, t) => {
+  const tr = R.track; if (t <= tr[0][0]) return 0; if (t >= tr[tr.length - 1][0]) return tr[tr.length - 1][5];
+  const i = Math.min(tr.length - 1, Math.max(1, Math.ceil((t - tr[0][0]) / STEP))), a = tr[i - 1], b = tr[i];
+  return a[5] + (b[5] - a[5]) * (t - a[0]) / ((b[0] - a[0]) || 1);
+};
+
+// ---------- plan and render
+// a displacement hull can't be driven much past 1.34 x sqrt(waterline length in ft) knots through the water
+const hullSpeed = (ft) => 1.34 * Math.sqrt(ft);
+function plan() {
+  let v = state.speed, hullCap = false;
+  const vH = hullSpeed(state.hullFt);
+  if (state.mode === "target") v = solveFor(state.route, state.target).v;
+  if (v == null || v > vH) {
+    // a slightly slower boat can catch a fairer tide and finish sooner, so take the quickest finish at or under hull speed
+    let best = null;
+    for (let u = vH; u >= vH * 0.85; u -= 0.02) { const f = simulate(state.route, u).fin; if (f && (!best || f < best.f - MIN)) best = { u, f }; }
+    if (!best) return { impossible: true };
+    v = best.u; hullCap = true;
+  }
+  const R = simulate(state.route, v), still = simulate(state.route, v, { still: true });
+  return { R, still, v, hullCap, vH };
+}
+function nearestStation(along, kind = "current", maxNm = Infinity) {
+  let best = null;
+  for (const s of STATIONS) { const l = s.legs[state.route]; if (s.kind !== kind || !l || !PRED.stations[s.key]) continue;
+    const d = Math.abs(l.along - along) + l.offset; if (!best || d < best.d) best = { s, d }; }
+  return best && best.d <= maxNm ? best.s : null;
+}
+// map inset: the stream at the current station nearest the boat (it changes as the boat moves on), and fixed charts at Point No
+// Point and the Port Townsend Canal. Each runs from 3 h before the map time to 9 h after: flood above the line (teal), ebb below
+// (amber), the map time in yellow and, at the fixed stations, when the plan passes in red.
+function tideChart(st, t, eta, title) {
+  const t0 = t - 3 * H, t1 = t + 9 * H, n = 96, W = 188, Hh = 56, vals = [];
+  for (let i = 0; i <= n; i++) { const v = valueAt(st, t0 + (i / n) * (t1 - t0)); vals.push(v == null ? 0 : v); }
+  const m = Math.max(1.5, ...vals.map(Math.abs)), X = (tt) => ((tt - t0) / (t1 - t0)) * W, Y = (v) => Hh / 2 - (v / m) * (Hh / 2 - 3);
+  const line = vals.map((v, i) => `${((i / n) * W).toFixed(1)},${Y(v).toFixed(1)}`).join(" ");
+  let svg = `<svg viewBox="0 0 ${W} ${Hh}" preserveAspectRatio="none" aria-hidden="true"><defs><clipPath id="up-${st.key}"><rect width="${W}" height="${Hh / 2}"/></clipPath><clipPath id="dn-${st.key}"><rect y="${Hh / 2}" width="${W}" height="${Hh / 2}"/></clipPath></defs>`;
+  svg += `<polygon points="0,${Hh / 2} ${line} ${W},${Hh / 2}" fill="#0f766e" clip-path="url(#up-${st.key})"/><polygon points="0,${Hh / 2} ${line} ${W},${Hh / 2}" fill="#b45309" clip-path="url(#dn-${st.key})"/>`;
+  svg += `<line x1="0" x2="${W}" y1="${Hh / 2}" y2="${Hh / 2}" stroke="#94a3b8" stroke-width=".6"/>`;
+  for (let h = Math.ceil(t0 / (3 * H)) * 3 * H; h <= t1; h += 3 * H) svg += `<line x1="${X(h)}" x2="${X(h)}" y1="0" y2="${Hh}" stroke="#475569" stroke-width=".5"/>`;
+  if (eta && eta > t0 && eta < t1) svg += `<line x1="${X(eta)}" x2="${X(eta)}" y1="0" y2="${Hh}" stroke="#ef4444" stroke-width="2" stroke-dasharray="3 2"/>`;
+  svg += `<line x1="${X(t)}" x2="${X(t)}" y1="0" y2="${Hh}" stroke="#facc15" stroke-width="2"/></svg>`;
+  const v = valueAt(st, t), ns = nextSlack(st, t);
+  const l = st.legs[state.route], al = v == null || !l ? null : alongStream(st, v, headingAt(CH[state.route], l.along));
+  const now = v == null ? "no data" : Math.abs(v) < SLACK_KN ? "slack" : `${v > 0 ? "flood" : "ebb"} ${Math.abs(v).toFixed(1)} kn${al == null ? "" : al >= 0 ? " with you" : " against"}`;
+  return `<b title="${esc(st.name)}">${esc(title)}</b>${svg}<small>${now}${ns ? `, turns ${fmtT.format(ns)}` : ""}${eta ? ` · <span style="color:#fca5a5">you pass ${fmtT.format(eta)}</span>` : ""} · ±${m.toFixed(1)} kn</small>`;
+}
+function drawTides(t) {
+  const el = $("tc-boat"); if (!el || !state.tidesOn || !P || !P.R) return;
+  const R = P.R, pos = posAt(R, t), here = nearestStation(pos);
+  el.innerHTML = here ? tideChart(here, t, null, `Near you: ${here.name.replace(/,.*$/, "")}`) : "";
+  [["tc-pnp", "PUG1606", "Point No Point"], ["tc-canal", "PUG1614", "Port Townsend Canal"]].forEach(([id, k, name]) => {
+    const st = STATIONS.find((x) => x.key === k), box = $(id); if (!box) return;
+    if (!st || !PRED.stations[k]) { box.innerHTML = ""; return; }
+    const l = st.legs[state.route], eta = l ? timeAt(R, l.along) : null;
+    box.innerHTML = tideChart(st, t, eta, name);
+  });
+}
+function stationState(st, t) {
+  const v = valueAt(st, t); if (v == null) return "";
+  if (st.kind === "tide") return `<span class="pill">Tide ${v.ft.toFixed(1)} ft, ${v.rising ? "rising" : "falling"}</span>`;
+  const ns = nextSlack(st, t), cls = Math.abs(v) < SLACK_KN ? "slack" : v > 0 ? "flood" : "ebb";
+  return `<span class="pill ${cls}">${cls === "slack" ? "Slack" : cls === "flood" ? "Flood" : "Ebb"} ${Math.abs(v).toFixed(1)} kn</span>${ns ? ` <span class="hint">turns ${fmtT.format(ns)}</span>` : ""}`;
+}
+function markAlong(m, key = state.route) { const ch = CH[key]; return m.key === "start" ? 0 : m.key === "finish" ? ch.total : project(ch, [m.lat, m.lon]).along; }
+function render() {
+  $("mode-seg").querySelectorAll("button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.mode === state.mode)));
+  $("target-l").hidden = state.mode !== "target"; $("speed-l").hidden = state.mode !== "speed";
+  $("target-out").textContent = hm(state.target); $("blakeH-out").textContent = hm(state.blakeH); $("hull-v").textContent = `${hullSpeed(state.hullFt).toFixed(2)} kn`; $("speed-out").textContent = `${(+state.speed).toFixed(2)} kn`;
+  P = plan();
+  if (P.impossible) { $("tiles").innerHTML = ""; $("res-note").innerHTML = `<span class="warn">No speed under 12 kn makes that finish.</span>`; return; }
+  const { R, still, v } = P, el = R.fin ? (R.fin - gunT()) / H : null;
+  const lost = R.fin && still.fin ? (R.fin - still.fin) / MIN : null, avgSog = R.fin ? R.total / ((R.fin - R.t0) / H) : null, cut = gunT() + LIMIT_H * H;
+  const ashoreH = R.stops.filter((x) => !x.onWater).reduce((a, x) => a + (x.until - x.t) / H, 0);
+  const restKc = restKcalH() * (((R.fin || R.track[R.track.length - 1][0]) - R.t0) / H);
+  const tiles = [
+    ["Speed through water", `${v.toFixed(2)} kn`, `${(v * NM_MI).toFixed(2)} mph while paddling`],
+    ["Finish", R.fin ? fmtDT.format(R.fin) : "–", R.fin ? `${hm(el)} from the gun` : "not inside 60 h", R.fin && R.fin > cut ? "bad" : ""],
+    ["Avg over bottom", avgSog ? `${avgSog.toFixed(2)} kn` : "–", "start to finish, stops included"],
+    ["Stream", lost == null ? "–" : `${lost > 0 ? "costs" : "saves"} ${hm(Math.abs(lost) / 60)}`, "against still water, same plan", lost > 0 ? "bad" : "good"],
+    ["Distance", `${R.total.toFixed(1)} nm`, `${R.course.toFixed(1)} nm course + ${(R.total - R.course).toFixed(1)} nm in and out to stops; ${(R.total * NM_MI).toFixed(1)} statute miles`],
+    ["Paddling", hm(R.paddledH), `${hm(R.darkH)} in the dark`],
+    ["Stops", `${R.stops.length}`, `${hm(ashoreH)} ashore`],
+    ["Calories each", kcal(R.kcal + restKc), `${kcal(R.kcal)} paddling, ${Math.round(paddlerW(v))} W at ${v.toFixed(1)} kn`],
+    ...(() => { const b = R.stops.find((x) => x.kind === "full"); return b ? [["Blake Island", `${fmtT.format(b.t + b.detourH * H)} to ${fmtT.format(b.until)}`, `${hm((b.until - b.t) / H - b.detourH)} ashore, ${(b.extraNm || 0).toFixed(2)} nm extra in and out`]] : []; })(),
+    ["Cutoff margin", R.fin ? hm((cut - R.fin) / H) : "–", "to the bell, 48 h after the gun", R.fin && R.fin > cut ? "bad" : ""],
+  ];
+  $("tiles").innerHTML = tiles.map(([a, b, c, k]) => `<div class="tile ${k || ""}"><span>${a}</span><b>${b}</b><small>${c}</small></div>`).join("");
+  const ll0 = pointAt(CH[state.route], 0), ev = sunEvents(ll0, R.t0 - 4 * H, R.t0 + 40 * H), m = moonLit(R.t0 + 6 * H);
+  const ss = ev.find((e) => e.set), sr = ev.find((e) => !e.set && (!ss || e.t > ss.t));
+  $("res-note").innerHTML = `${state.mode === "target" && !P.hullCap ? `To finish in ${hm(state.target)} you need <b>${v.toFixed(2)} kn</b> through the water` : `At <b>${v.toFixed(2)} kn</b> through the water you finish in <b>${el ? hm(el) : "–"}</b>`} through Colvos Passage. Sunset ${ss ? fmtT.format(ss.t) : "–"}, sunrise ${sr ? fmtT.format(sr.t) : "–"}; moon ${Math.round(m.lit * 100)}% lit, ${m.waxing ? "waxing" : "waning"}.`;
+  if (P.hullCap) $("res-note").innerHTML += `<br><span class="warn">${state.mode === "target" ? `${hm(state.target)} needs` : `${(+state.speed).toFixed(2)} kn is`} more than the hull speed of a ${state.hullFt} ft waterline (${P.vH.toFixed(2)} kn). The plan uses ${v.toFixed(2)} kn, the quickest finish at or under hull speed.</span>`;
+  $("kcal-note").textContent = `Each paddler: about ${Math.round(paddlerW(v))} W at ${v.toFixed(2)} kn, ${kcal(kcalH(v))} kcal an hour paddling plus ${kcal(restKcalH())} resting. Plan on ${kcal((R.kcal + restKc) * 0.6)} to ${kcal(R.kcal + restKc)} kcal of food and drink each over the race: few eat all they burn.`;
+  renderMarks(); renderStops(); renderLog(); renderHeat(); renderCurve(); renderPast(); drawPlanLayers(); syncTime(); renderPics();
+}
+function renderMarks() {
+  const { R } = P;
+  const rows = ROUTE.marks.filter((m) => !m.route || m.route === state.route).map((m) => ({ m, along: markAlong(m) })).sort((a, b) => a.along - b.along);
+  $("marks-tbl").innerHTML = `<thead><tr><th>Mark</th><th class="n">nm</th><th class="n">Arrive</th><th class="n">Elapsed</th><th>Stream</th></tr></thead><tbody>` + rows.map(({ m, along }) => {
+    const t = m.key === "start" ? R.t0 : timeAt(R, along), st = nearestStation(along, "current", 2) || nearestStation(along, "tide", 2), s = t ? streamAt(state.route, along, t) : null;
+    return `<tr data-t="${t || ""}" title="${esc(m.note || "")}"><td>${m.kind === "checkpoint" ? "◆ " : ""}${esc(m.name)}</td><td class="n">${along.toFixed(1)}</td><td class="n">${t ? fmtDT.format(t) : "–"}</td><td class="n">${t ? hm((t - gunT()) / H) : "–"}</td>
+      <td>${s != null ? `<span class="${s >= 0 ? "with" : "against"}">${sgn(s)} kn</span>` : ""}${st && t ? `<br><span class="hint">${esc(st.name)}</span><br>${stationState(st, t)}` : ""}</td></tr>`;
+  }).join("") + "</tbody>";
+}
+const ICON = {
+  get full() { return this.rest; }, get aid() { return this.break; }, get tide() { return this.wait; },
+  rest: '<svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2 1 14h14z" fill="#b45309" stroke="#111827" stroke-width="1.2" stroke-linejoin="round"/><path d="M8 7l-2.6 7h5.2z" fill="#fde68a" stroke="#111827" stroke-width="1"/></svg>',
+  break: '<svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 6h9v4.5a3.5 3.5 0 0 1-3.5 3.5h-2a3.5 3.5 0 0 1-3.5-3.5z" fill="#7c2d12" stroke="#111827" stroke-width="1.1"/><path d="M11.5 7.2h1.2a1.8 1.8 0 0 1 0 3.6h-1.4" fill="none" stroke="#111827" stroke-width="1.1"/></svg>',
+  wait: '<svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6.2" fill="#ede9fe" stroke="#111827" stroke-width="1.2"/><path d="M8 4.5V8l2.5 1.6" fill="none" stroke="#111827" stroke-width="1.3" stroke-linecap="round"/></svg>',
+  shelter: '<svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 5c3 0 5-1 7-1s3 1 5 1M2 9c3 0 5-1 7-1s3 1 5 1M2 13c3 0 5-1 7-1s3 1 5 1" fill="none" stroke="#b91c1c" stroke-width="1.6" stroke-linecap="round"/></svg>',
+};
+const STOP_NAME = { break: "Break", full: "Full stop", aid: "Aid station", tide: "Wait for the tide", rest: "Long rest", wait: "Wait for the current", shelter: "Shelter from wind" };
+const shortDur = (h) => { const m = Math.round(h * 60); return m < 60 ? `${m}m` : `${Math.floor(m / 60)}h${m % 60 ? String(m % 60).padStart(2, "0") : ""}`; };
+function stopWhere(x) { return x.site ? `${x.site.name}, ${x.site.off.toFixed(2)} nm off` : `on the water ${placeAt(x.pos).replace(/^at /, "near ")}`; }
+function renderStops() {
+  const S = P.R.stops;
+  $("stops-tbl").innerHTML = S.length ? `<thead><tr><th>#</th><th>Stop</th><th class="n">Arrive</th><th class="n">Leave</th><th class="n">Ashore</th><th>Where</th><th class="n">nm</th></tr></thead><tbody>` + S.map((x, i) =>
+    `<tr data-t="${x.t}"><td>${i + 1}</td><td style="white-space:nowrap">${ICON[x.kind]} ${STOP_NAME[x.kind]}</td><td class="n">${fmtT.format(x.t)}</td><td class="n">${fmtT.format(x.until)}</td><td class="n">${x.onWater ? "–" : shortDur((x.until - x.t) / H)}</td><td>${esc(stopWhere(x))}${x.extraNm > 0.005 ? `<br><span class="hint">${x.extraNm.toFixed(2)} nm extra in and out</span>` : ""}${x.onWater && x.kind !== "break" ? `<br><span class="hint">no landing in reach</span>` : ""}</td><td class="n">${x.pos.toFixed(1)}</td></tr>`).join("") + "</tbody>"
+    : `<tbody><tr><td class="hint">No stops on this plan.</td></tr></tbody>`;
+}
+function placeAt(along) {
+  const ch = CH[state.route]; let best = null;
+  for (const m of ROUTE.marks) { if (m.route && m.route !== state.route) continue; const a = markAlong(m); const d = Math.abs(a - along); if (!best || d < best.d) best = { d, m, a }; }
+  const st = nearestStation(along), sa = st ? st.legs[state.route].along : Infinity;
+  if (st && Math.abs(sa - along) < best.d) return `near ${st.name.replace(/,.*$/, "")}`;
+  return `${best.d < 0.5 ? "at" : along < best.a ? `${best.d.toFixed(1)} nm before` : `${best.d.toFixed(1)} nm past`} ${best.m.name.replace(/ checkpoint|,.*$/g, "")}`;
+}
+function renderLog() {
+  const { R } = P, rows = [], end = R.fin || R.track[R.track.length - 1][0];
+  for (let t = R.t0; t <= end + 1; t += H) {
+    const pos = posAt(R, t), d = distAt(R, t), r = rowAt(R, t), ll = pointAt(CH[state.route], pos), next = Math.min(t + H, end);
+    const made = distAt(R, next) - d, dark = isDark(t, ll);
+    rows.push(`<tr data-t="${t}" class="${dark ? "dark" : ""}"><td>${fmtDT.format(t)}</td><td class="n">${d.toFixed(1)}</td><td>${esc(placeAt(pos))}</td><td class="n">${r[4] ? (r[4] === 2 ? "ashore" : "stopped") : r[2].toFixed(2)}</td><td class="n ${r[3] >= 0 ? "with" : "against"}">${sgn(r[3])}</td><td class="n">${next > t ? (made / ((next - t) / H)).toFixed(2) : "–"}</td></tr>`);
+  }
+  if (R.fin) rows.push(`<tr data-t="${R.fin}"><td><b>${fmtDT.format(R.fin)}</b></td><td class="n">${R.total.toFixed(1)}</td><td><b>Finish</b></td><td></td><td></td><td></td></tr>`);
+  $("log-tbl").innerHTML = `<thead><tr><th>Time</th><th class="n">nm</th><th>Where</th><th class="n">Thru water</th><th class="n">Stream</th><th class="n">Next hour over bottom</th></tr></thead><tbody>${rows.join("")}</tbody>`;
+}
+// heatmap: x = distance along, y = time from the gun
+let HEAT = null;
+function renderHeat() {
+  const cv = $("heat"), g = cv.getContext("2d"), W = cv.width, Hh = cv.height, padL = 86, padT = 14, padB = 44, padR = 12;
+  const ch = CH[state.route], key = state.route, { R, still } = P;
+  const t0 = gunT(), endH = Math.min(48, Math.max(24, Math.ceil((((R.fin || t0 + 30 * H) - t0) / H + 1) / 6) * 6)), t1 = t0 + endH * H;
+  const pw = W - padL - padR, ph = Hh - padT - padB;
+  g.fillStyle = getComputedStyle(document.documentElement).getPropertyValue("--panel").trim() || "#fff"; g.fillRect(0, 0, W, Hh);
+  const ck = `${key}|${t0}|${t1}|${pw}|${ph}`;
+  if (!renderHeat.cache || renderHeat.cache.k !== ck) {
+    const img = g.createImageData(pw, ph), ll0 = pointAt(ch, ch.total / 2);
+    for (let y = 0; y < ph; y++) {
+      const t = t0 + (y / ph) * (t1 - t0), night = isDark(t, ll0);
+      for (let x = 0; x < pw; x++) {
+        const s = streamAt(key, (x / pw) * ch.total, t), k = Math.min(1, Math.abs(s) / 2.5);
+        const base = s >= 0 ? [21, 128, 61] : [185, 28, 28], bg = [236, 240, 242];
+        let c = bg.map((b, i) => b + (base[i] - b) * k);
+        if (night) c = c.map((v) => v * 0.78);
+        const o = (y * pw + x) * 4; img.data[o] = c[0]; img.data[o + 1] = c[1]; img.data[o + 2] = c[2]; img.data[o + 3] = 255;
+      }
+    }
+    renderHeat.cache = { k: ck, img };
+  }
+  g.putImageData(renderHeat.cache.img, padL, padT);
+  const X = (pos) => padL + (pos / ch.total) * pw, Y = (t) => padT + ((t - t0) / (t1 - t0)) * ph;
+  const ink = getComputedStyle(document.documentElement).getPropertyValue("--muted").trim() || "#5b6f7c";
+  g.fillStyle = ink; g.font = "22px IBM Plex Mono, monospace"; g.textAlign = "right"; g.textBaseline = "middle";
+  for (let h = 0; h <= endH; h += endH > 30 ? 6 : 3) { const t = t0 + h * H; g.fillText(fmtT.format(t), padL - 4, Y(t)); }
+  g.textAlign = "center"; g.textBaseline = "top";
+  for (let n = 0; n <= ch.total; n += 10) g.fillText(`${n}${n ? "" : " nm"}`, X(n), Hh - padB + 8);
+  g.strokeStyle = "rgba(15,23,42,.35)"; g.setLineDash([2, 3]);
+  ROUTE.marks.filter((m) => m.kind === "checkpoint").forEach((m) => { const a = markAlong(m); g.beginPath(); g.moveTo(X(a), padT); g.lineTo(X(a), padT + ph); g.stroke(); });
+  const line = (Rr, col, dash, w) => { g.strokeStyle = col; g.lineWidth = w; g.setLineDash(dash); g.beginPath(); Rr.track.forEach((r, i) => { if (r[0] > t1) return; i ? g.lineTo(X(r[1]), Y(r[0])) : g.moveTo(X(r[1]), Y(r[0])); }); g.stroke(); };
+  line(still, "rgba(15,23,42,.75)", [5, 4], 1.5);
+  line(R, "#0f172a", [], 5); line(R, "#facc15", [], 3);
+  g.setLineDash([]); g.lineWidth = 1;
+  HEAT = { X, Y, t0, t1, padT, ph, padL, pw };
+  if (state.t) { g.strokeStyle = "#c2410c"; g.lineWidth = 2; g.beginPath(); g.moveTo(padL, Y(state.t)); g.lineTo(padL + pw, Y(state.t)); g.stroke(); g.lineWidth = 1; }
+}
+function renderCurve() {
+  const svg = $("curve"), hrs = []; for (let h = 12; h <= 30; h += 1.5) hrs.push(h);
+  const pts = { colvos: [] };
+  for (const k of ["colvos"]) for (const h of hrs) { const s = solveFor(k, h); if (s.v) pts[k].push([h, s.v]); }
+  const all = pts.colvos.map((p) => p[1]); if (!all.length) { svg.innerHTML = ""; return; }
+  const vmin = Math.floor(Math.min(...all) * 2) / 2, vmax = Math.ceil(Math.max(...all) * 2) / 2;
+  const L = 38, T = 10, Wd = 350, Hd = 180, X = (h) => L + ((h - 12) / 18) * Wd, Y = (v) => T + (1 - (v - vmin) / ((vmax - vmin) || 1)) * Hd;
+  let s = "";
+  for (let v = vmin; v <= vmax + 1e-9; v += 0.5) s += `<line x1="${L}" x2="${L + Wd}" y1="${Y(v)}" y2="${Y(v)}" stroke="var(--rule)"/><text x="${L - 4}" y="${Y(v) + 3}" text-anchor="end">${v.toFixed(1)}</text>`;
+  for (let h = 12; h <= 30; h += 3) s += `<text x="${X(h)}" y="${T + Hd + 14}" text-anchor="middle">${h} h</text>`;
+  const path = (p) => p.map((q, i) => `${i ? "L" : "M"}${X(q[0]).toFixed(1)},${Y(q[1]).toFixed(1)}`).join("");
+  s += `<path d="${path(pts.colvos)}" fill="none" stroke="var(--accent)" stroke-width="2.5"/>`;
+  if (P && P.R.fin) { const h = (P.R.fin - startT()) / H; if (h >= 12 && h <= 30) s += `<circle cx="${X(h)}" cy="${Y(P.v)}" r="5" fill="#facc15" stroke="#0f172a" stroke-width="1.5"/>`; }
+  s += `<text x="${L + Wd}" y="${T + 12}" text-anchor="end">kn through the water</text>`;
+  svg.innerHTML = s;
+}
+
+// ---------- map
+const NOAA_SVC = "https://gis.charttools.noaa.gov/arcgis/rest/services/MCS/NOAAChartDisplay/MapServer/exts/MaritimeChartService/MapServer";
+const chartUrl = (bbox, w, h) => `${NOAA_SVC}/export?${new URLSearchParams({ bbox: bbox.join(","), bboxSR: "3857", imageSR: "3857", size: `${w},${h}`, dpi: "192", format: "png32", transparent: "false", layers: "show:0,1,2,3,4,5,6,7", f: "image" })}`;
+const ChartLayer = L.TileLayer.extend({
+  getTileUrl(c) {
+    const s = this.getTileSize(), nw = c.scaleBy(s), se = nw.add(s), crs = this._map.options.crs;
+    const a = crs.project(this._map.unproject(nw, c.z)), b = crs.project(this._map.unproject(se, c.z));
+    return chartUrl([a.x, b.y, b.x, a.y], s.x * 2, s.y * 2).replace("transparent=false", "transparent=true");
+  }
+});
+let siteLayer, landLayer, planLayer, mini, miniRect, miniBoat;
+function initMap() {
+  map = L.map("map", { zoomSnap: 0.25 }).setView([47.69, -122.55], 10);
+  const imagery = L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}", { maxZoom: 19, maxNativeZoom: 18, attribution: "Imagery &copy; Esri, Maxar, Earthstar Geographics" });
+  const gray = L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}", { maxZoom: 19, maxNativeZoom: 16, attribution: "Esri" }).addTo(map);
+  const charts = new ChartLayer("", { maxZoom: 19, opacity: 0.9, attribution: "NOAA ENC" }).addTo(map);
+  const navLights = new LightLayer().addTo(map);
+  L.control.layers({ "Light gray": gray, "Satellite": imagery }, { "NOAA charts": charts, "Navigation lights (flashing)": navLights }, { position: "topleft", collapsed: true }).addTo(map);
+  const Op = L.Control.extend({ onAdd() { const d = L.DomUtil.create("div", "opacity-ctl"); d.innerHTML = `<label>Charts <input type="range" min="0" max="1" step="0.05" value="0.9" aria-label="Chart opacity"></label>`; L.DomEvent.disableClickPropagation(d); d.querySelector("input").addEventListener("input", (e) => charts.setOpacity(+e.target.value)); return d; } });
+  new Op({ position: "bottomright" }).addTo(map);
+  const PlayBar = L.Control.extend({ onAdd() {
+    const d = L.DomUtil.create("div", "playbar");
+    d.innerHTML = `<div class="prog"><input id="progress" type="range" min="0" max="1" step="60000" value="0" aria-label="Progress through the plan"></div>
+      <button type="button" id="play-reset" aria-label="Back to the start" title="Back to the start">&#9198;</button>
+      <button type="button" id="play" aria-label="Play">&#9654;</button>
+      <select id="play-speed" aria-label="Playback speed"><option value="0.0833333">5 min/s</option><option value="0.1666667">10 min/s</option><option value="0.25">15 min/s</option><option value="0.5" selected>30 min/s</option><option value="1">1 h/s</option><option value="2">2 h/s</option></select>
+      <select id="play-zoom" aria-label="Map width" title="How much water the map shows across while following the boat"><option value="0">Course</option><option value="1">1 nm</option><option value="2">2 nm</option><option value="5">5 nm</option><option value="10" selected>10 nm</option><option value="20">20 nm</option></select>
+      <label class="follow"><input type="checkbox" id="follow" checked> Follow</label>
+      <div class="pb"><span>Time</span><b id="pb-time"></b><span>Elapsed</span><b id="pb-el"></b><span>Distance</span><b id="pb-dist"></b><span>Thru water</span><b id="pb-stw"></b><span>Stream</span><b id="pb-cur"></b><span>Over bottom</span><b id="pb-sog"></b><span>Light</span><b id="pb-sun"></b></div>`;
+    L.DomEvent.disableClickPropagation(d); L.DomEvent.disableScrollPropagation(d);
+    d.querySelector("#play").addEventListener("click", () => (playTimer ? stopPlay() : startPlay()));
+    d.querySelector("#play-reset").addEventListener("click", () => { stopPlay(); if (P && P.R) { setTime(P.R.t0); applyZoom(); } });
+    // the speed and map width from last time, if they are still on the list
+    [["#play-speed", PLAY.speed], ["#play-zoom", PLAY.zoom]].forEach(([q, v]) => { const el = d.querySelector(q); if (v != null && [...el.options].some((o) => o.value === String(v))) el.value = String(v); });
+    d.querySelector("#play-zoom").addEventListener("change", () => { applyZoom(); save(); });
+    d.querySelector("#play-speed").addEventListener("change", save);
+    d.querySelector("#progress").addEventListener("input", (e) => setTime(+e.target.value));
+    return d;
+  } });
+  new PlayBar({ position: "bottomleft" }).addTo(map);
+  // overview inset: the whole course, the boat and the area the big map shows
+  const Mini = L.Control.extend({ onAdd() { const d = L.DomUtil.create("div", "mini"); L.DomEvent.disableClickPropagation(d); L.DomEvent.disableScrollPropagation(d); return d; } });
+  const mc = new Mini({ position: "topright" }).addTo(map);
+  const Tides = L.Control.extend({ onAdd() { const d = L.DomUtil.create("div", `tides${state.tidesOn ? "" : " shut"}`); d.id = "tides";
+    d.innerHTML = `<button type="button" aria-expanded="${state.tidesOn}">Tidal stream (NOAA)</button><div class="tc" id="tc-boat"></div><div class="tc" id="tc-pnp"></div><div class="tc" id="tc-canal"></div>`;
+    d.querySelector("button").addEventListener("click", (e) => { state.tidesOn = !state.tidesOn; d.classList.toggle("shut", !state.tidesOn); e.currentTarget.setAttribute("aria-expanded", String(state.tidesOn)); save(); drawTides(state.t); });
+    L.DomEvent.disableClickPropagation(d); L.DomEvent.disableScrollPropagation(d); return d; } });
+  new Tides({ position: "topright" }).addTo(map);
+  mini = L.map(mc.getContainer(), { zoomControl: false, attributionControl: false, dragging: false, scrollWheelZoom: false, doubleClickZoom: false, boxZoom: false, keyboard: false, touchZoom: false, zoomSnap: 0 });
+  L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}", { maxZoom: 16 }).addTo(mini);
+  mini.on("click", (e) => { $("follow").checked = false; map.panTo(e.latlng); });
+  map.on("moveend", () => { if (miniRect) miniRect.setBounds(map.getBounds()); });
+  map.on("dragstart", () => { const f = $("follow"); if (f && playTimer) f.checked = false; });
+  siteLayer = L.layerGroup().addTo(map); landLayer = L.layerGroup().addTo(map); planLayer = L.layerGroup().addTo(map);
+}
+// ---------- navigation lights (as in the R2AK 2028 planner): flashed on their real rhythm in real time (always lit, whatever the map time), from
+// data/lights.json (NOAA charts, scripts/fetch_lights.py). A light's phases are built from its exact sequence where mapped ("0.5+(3.5)":
+// on 0.5 s, off 3.5 s), otherwise from its IALA characteristic, group and period.
+const LIGHT_COL = { white: "#fffbe6", red: "#ff3b30", green: "#34d058", yellow: "#ffd60a", orange: "#ff9f0a", blue: "#4dabf7", violet: "#c084fc", amber: "#ffbf00" };
+function lightPhases(sec) {
+  const per = sec.per, cols = String(sec.col || "white").toLowerCase().split(/[;,]/).map((c) => c.trim()).filter(Boolean);
+  const ch = String(sec.ch || "F").replace(/\s+/g, ""), alt = /^Al/i.test(ch);
+  const base = ch.replace(/^Al\.?/i, "").replace(/\(.*$/, "").replace(/\+.*$/, "");
+  const grpTxt = sec.grp || (ch.match(/\(([^)]*)\)/) || [])[1] || "";
+  const groups = grpTxt.split("+").map((g) => parseInt(g, 10)).filter((n) => n > 0);
+  const ph = [];   // [seconds, colour index or -1 for dark]
+  const on = (d) => ph.push([d, 0]), off = (d) => ph.push([d, -1]);
+  if (sec.seq) {
+    String(sec.seq).split(/[,+]/).forEach((tok) => { const m = tok.match(/(\()?\s*([\d.]+)/); if (m) (m[1] ? off : on)(+m[2]); });
+    if (ph.length) return alternate({ ph, cols });
+  }
+  const fill = (P) => { const used = ph.reduce((a, q) => a + q[0], 0); if (P && P > used + 0.05) off(P - used); };
+  const flashes = (n, fl, gap) => { for (let i = 0; i < n; i++) { on(fl); if (i < n - 1) off(gap); } };
+  if (/^Mo/i.test(ch)) {
+    const MORSE = { A: ".-", B: "-...", C: "-.-.", D: "-..", E: ".", I: "..", K: "-.-", N: "-.", O: "---", R: ".-.", S: "...", T: "-", U: "..-", W: ".--", X: "-..-", Y: "-.--" };
+    const code = MORSE[(ch.match(/\(([A-Z])\)/i) || [, "A"])[1].toUpperCase()] || ".-";
+    [...code].forEach((c, i) => { on(c === "." ? 0.5 : 1.5); if (i < code.length - 1) off(0.5); }); off(0.5); fill(per || 8);
+  } else if (/^(F|FW|FR|FG)$/i.test(base) && !/Fl/i.test(ch)) {
+    on(1); return { ph, cols, fixed: true };
+  } else if (/^Iso/i.test(base)) {
+    const P = per || 4; on(P / 2); off(P / 2);
+  } else if (/^Oc/i.test(base)) {
+    const n = groups[0] || 1, P = per || 4; for (let i = 0; i < n; i++) { off(1); if (i < n - 1) on(1); }
+    const used = ph.reduce((a, q) => a + q[0], 0); on(Math.max(0.5, P - used));
+  } else if (/^(UQ|IUQ)/i.test(base)) {
+    if (groups.length) { flashes(groups[0], 0.1, 0.15); fill(per); } else { on(0.1); off(0.15); }
+  } else if (/^(VQ|IVQ)/i.test(base)) {
+    if (groups.length) { flashes(groups[0], 0.2, 0.3); if (/LFl/i.test(ch)) { off(0.3); on(2); } fill(per); } else { on(0.2); off(0.3); }
+  } else if (/^(Q|IQ)/i.test(base)) {
+    if (groups.length) { flashes(groups[0], 0.3, 0.7); if (/LFl/i.test(ch)) { off(0.7); on(2); } fill(per); } else { on(0.3); off(0.7); }
+  } else if (/^LFl/i.test(base)) {
+    flashes(groups[0] || 1, 2, 2); fill(per || 10);
+  } else {   // Fl, Fl(n), Fl(n+m), FFl
+    const P = per || 4, fl = P <= 2.5 ? 0.3 : 0.5;
+    if (groups.length > 1) groups.forEach((n, gi) => { flashes(n, fl, 1); if (gi < groups.length - 1) off(2); });
+    else flashes(groups[0] || 1, fl, 1);
+    fill(P);
+    if (/^FFl/i.test(ch)) return { ph, cols, fixedUnder: true };
+  }
+  return alternate({ ph, cols });
+  // Al: successive flashes take the colours in turn, so repeat the cycle until each flash has had each colour
+  function alternate(r) {
+    if (!alt || r.cols.length < 2) return r;
+    let k = 0; const ph2 = [];
+    for (let i = 0; i < r.cols.length; i++) r.ph.forEach(([d, c]) => ph2.push([d, c < 0 ? -1 : k++ % r.cols.length]));
+    return { ph: ph2, cols: r.cols };
+  }
+}
+function navLightAt(L0, ms) {   // colour now, or null for dark
+  const r = L0.r;
+  if (r.fixed) return r.cols[0];
+  const T = r.T || (r.T = r.ph.reduce((a, q) => a + q[0], 0)); if (!T) return r.cols[0];
+  let x = ((ms / 1000) % T + T) % T;
+  for (const [d, c] of r.ph) { if (x < d) return c < 0 ? (r.fixedUnder ? r.cols[0] + "|dim" : null) : r.cols[c] || r.cols[0]; x -= d; }
+  return null;
+}
+const LightLayer = L.Layer.extend({
+  onAdd(map) {
+    this.map = map;
+    if (!map.getPane("lightPane")) { const p = map.createPane("lightPane"); p.style.zIndex = 395; p.style.pointerEvents = "none"; }
+    this.canvas = L.DomUtil.create("canvas"); this.canvas.style.pointerEvents = "none";
+    map.getPane("lightPane").appendChild(this.canvas);
+    map.on("moveend zoomend resize", this._reset, this); map.on("movestart zoomstart", this._hide, this); map.on("click", this._click, this);
+    this.running = true;
+    (this.dataP ||= fetch("data/lights.json", { cache: "no-cache" }).then((r) => r.ok ? r.json() : { lights: [] }).catch(() => ({ lights: [] }))).then((d) => {
+      // each sector its own rhythm; a light shows the sector facing our boat (or its first)
+      this.lights = (d.lights || []).map((l) => ({ ...l, rs: l.s.map(lightPhases) }));
+      if (this.running) { this._reset(); this._loop(); }
+    });
+  },
+  onRemove(map) {
+    this.running = false; cancelAnimationFrame(this.raf);
+    map.off("moveend zoomend resize", this._reset, this); map.off("movestart zoomstart", this._hide, this); map.off("click", this._click, this);
+    this.canvas.remove();
+  },
+  _hide() { this.hidden = true; if (this.ctx) this.ctx.clearRect(0, 0, this.w, this.h); },
+  _reset() {
+    if (!this.lights) return;
+    const map = this.map, size = map.getSize(), dpr = window.devicePixelRatio || 1;
+    this.w = size.x; this.h = size.y; this.canvas.width = size.x * dpr; this.canvas.height = size.y * dpr;
+    this.canvas.style.width = size.x + "px"; this.canvas.style.height = size.y + "px";
+    L.DomUtil.setPosition(this.canvas, map.containerPointToLayerPoint([0, 0]));
+    this.ctx = this.canvas.getContext("2d"); this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const b = map.getBounds().pad(0.05), z = map.getZoom();
+    this.vis = z < 8 ? [] : this.lights.filter((l) => b.contains([l.lat, l.lon])).map((l) => ({ l, p: map.latLngToContainerPoint([l.lat, l.lon]) }));
+    this.rad = z >= 13 ? 1.4 : z >= 11 ? 1.15 : 0.9;
+    this.hidden = false;
+  },
+  _loop() { const go = () => { if (!this.running) return; this._draw(); this.raf = requestAnimationFrame(go); }; this.raf = requestAnimationFrame(go); },
+  _sector(l) {
+    if (l.s.length < 2) return 0;
+    if (!P || !P.R || state.t == null) return 0;
+    const b = { ll: boatLL(P.R, state.t) };
+    const brg = (Math.atan2((l.lon - b.ll[1]) * Math.cos(l.lat * Math.PI / 180), l.lat - b.ll[0]) * 180 / Math.PI + 360) % 360;   // boat to light
+    const i = l.s.findIndex((s) => s.s0 != null && s.s1 != null && (s.s0 <= s.s1 ? brg >= s.s0 && brg <= s.s1 : brg >= s.s0 || brg <= s.s1));
+    return i < 0 ? 0 : i;
+  },
+  _draw() {
+    if (this.hidden || !this.ctx || !this.vis) return;
+    const ctx = this.ctx, now = Date.now(), k = this.rad;
+    ctx.clearRect(0, 0, this.w, this.h);
+    if (this._secT !== state.t) { this._secT = state.t; this.vis.forEach((v) => { v.si = this._sector(v.l); }); }
+    this.vis.forEach((v) => {
+      const sec = v.l.s[v.si || 0];
+      let c = navLightAt({ r: v.l.rs[v.si || 0] }, now); const dim = c && c.endsWith("|dim"); if (dim) c = c.slice(0, -4);
+      const hex = LIGHT_COL[(c || sec.col.split(/[;,]/)[0] || "white").trim().toLowerCase()] || "#fffbe6", { x, y } = v.p;
+      // the beacon itself: a small ringed dot in its colour, lit or not
+      ctx.beginPath(); ctx.arc(x, y, 2.6 * k, 0, 7); ctx.fillStyle = "#111827"; ctx.fill(); ctx.lineWidth = 1.2; ctx.strokeStyle = hex; ctx.stroke();
+      if (!c) return;
+      const R = (dim ? 7 : 13) * k, g = ctx.createRadialGradient(x, y, 0, x, y, R);
+      g.addColorStop(0, "#ffffff"); g.addColorStop(0.18, hex); g.addColorStop(1, hex + "00");
+      ctx.globalAlpha = dim ? 0.55 : 1; ctx.beginPath(); ctx.arc(x, y, R, 0, 7); ctx.fillStyle = g; ctx.fill(); ctx.globalAlpha = 1;
+    });
+  },
+  _click(e) {
+    if (!this.vis) return;
+    const p = this.map.latLngToContainerPoint(e.latlng), v = this.vis.find((v) => v.p.distanceTo(p) < 9); if (!v) return;
+    const txt = v.l.s.map((s) => `${esc(s.ch)}${s.grp && !/\(/.test(s.ch) ? `(${esc(s.grp)})` : ""} ${esc(s.col)}${s.per ? ` ${s.per} s` : ""}${s.seq ? ` [${esc(s.seq)}]` : ""}${s.s0 != null ? ` (${s.s0}°–${s.s1}°)` : ""}`).join("<br>");
+    L.popup().setLatLng([v.l.lat, v.l.lon]).setContent(`<b>${esc(v.l.name || "Light")}</b><br>${txt}`).openOn(this.map);
+  },
+});
+// the Vessel Traffic Lanes: entering one disqualifies the team (race packet). From OpenStreetMap seamarks (scripts/fetch_lanes.py).
+function drawLanes(d) {
+  if (!d || !d.features) return;
+  if (d.scheme) L.polygon(d.scheme, { color: "#dc2626", weight: 1.5, fillColor: "#dc2626", fillOpacity: 0.12, interactive: true })
+    .bindTooltip("Vessel Traffic Lanes (the Puget Sound traffic separation scheme): entering disqualifies the team", { sticky: true }).addTo(map).bringToBack();
+  const sty = { separation_lane: { color: "#991b1b", weight: 1.5, dashArray: "8 6", opacity: 0.8 }, separation_zone: { color: "#f97316", fillColor: "#f97316", fillOpacity: 0.12, weight: 1, dashArray: "4 3" }, precautionary_area: { color: "#eab308", fillColor: "#eab308", fillOpacity: 0.08, weight: 1, dashArray: "2 4" } };
+  for (const f of d.features) {
+    const st = sty[f.type] || { color: "#dc2626", weight: 1.5, dashArray: "6 4" };
+    if (f.type === "separation_boundary" && !f.closed) continue;   // part of the scheme outline
+    const label = f.type === "separation_lane" ? "Traffic lane direction line" : f.type === "separation_boundary" ? "Precautionary area" : f.type.replace(/_/g, " ");
+    (f.closed ? L.polygon(f.pts, st) : L.polyline(f.pts, st)).bindTooltip(label, { sticky: true }).addTo(map).bringToBack();
+  }
+}
+function drawStatic() {
+  for (const l of ROUTE.legs) {
+    routeLines[l.key] = L.polyline(l.points, { color: l.key === "colvos" ? "#c2410c" : "#0369a1", weight: 3 })
+      .bindTooltip(`${l.name}: ${CH[l.key].total.toFixed(1)} nm`, { sticky: true }).on("click", () => { state.route = l.key; changed(); }).addTo(map);
+    L.polyline(l.points, { color: l.key === "colvos" ? "#c2410c" : "#0369a1", weight: 2, opacity: l.key === "colvos" ? 1 : 0.6, interactive: false }).addTo(mini);
+  }
+  mini.fitBounds(L.latLngBounds(ROUTE.legs.flatMap((l) => l.points)), { padding: [6, 6] });
+  miniRect = L.rectangle(map.getBounds(), { color: "#c2410c", weight: 1.5, fill: false, interactive: false }).addTo(mini);
+  miniBoat = L.circleMarker([0, 0], { radius: 4, color: "#0f172a", fillColor: "#facc15", fillOpacity: 1, weight: 1.5, interactive: false }).addTo(mini);
+  for (const m of ROUTE.marks) L.marker([m.lat, m.lon], { icon: L.divIcon({ className: `mark-ico ${m.kind}`, html: "<i></i>", iconSize: [22, 22], iconAnchor: [11, 11] }) })
+    .bindTooltip(`<b>${esc(m.name)}</b>${m.note ? "<br>" + esc(m.note) : ""}`).addTo(map);
+  for (const s of STATIONS) {
+    const mk = L.marker([s.lat, s.lon], { icon: stnIcon(s, null) }).bindTooltip("", { className: "stn" }).on("click", () => { state.selected = s.key; renderDetail(); });
+    mk.addTo(map); stnMarkers[s.key] = mk;
+  }
+  boatMarker = L.marker([0, 0], { icon: L.divIcon({ className: "boat", html: boatSvg(0), iconSize: [30, 30], iconAnchor: [15, 15] }), zIndexOffset: 1000 }).addTo(map);
+  map.fitBounds(routeLines.colvos.getBounds(), { padding: [20, 20] });
+}
+function drawSites() {
+  siteLayer.clearLayers(); landLayer.clearLayers();
+  if (state.sitesOn) STOPSITES.forEach((s) => { const r = 4 + Math.min(8, Math.sqrt(s.teams) * 1.2);
+    L.marker([s.lat, s.lon], { icon: L.divIcon({ className: "site-dot", iconSize: [2 * r, 2 * r], iconAnchor: [r, r] }) })
+      .bindTooltip(`<b>Past stop</b>: ${s.teams} team${s.teams > 1 ? "s" : ""} (${s.years.join(", ")}), median ${s.median_min} min<br>${s.who.slice(0, 6).map(esc).join("<br>")}${s.who.length > 6 ? "<br>…" : ""}`).addTo(siteLayer); });
+  if (state.landOn) LANDINGS.forEach((x) => L.marker([x.lat, x.lon], { icon: L.divIcon({ className: "land-dot", iconSize: [10, 10], iconAnchor: [5, 5] }) })
+    .bindTooltip(`<b>${esc(LAND_KIND[x.kind] || x.kind)}</b>${x.name ? " " + esc(x.name) : ""}${x.also ? `<br>also ${esc(x.also.join(", "))}` : ""}<br>OpenStreetMap ${esc(x.osm)}`).addTo(landLayer));
+}
+function drawPlanLayers() {
+  planLayer.clearLayers();
+  P.R.stops.forEach((x, i) => {
+    const ll = x.site ? x.site.ll : pointAt(CH[state.route], x.pos), d = shortDur((x.until - x.t) / H);
+    if (x.bend) L.polyline(bendPath(CH[state.route], x.bend), { color: "#dc2626", weight: 3, dashArray: "5 4", interactive: false }).addTo(planLayer);
+    L.marker(ll, { icon: L.divIcon({ className: `stop ${x.kind}`, html: `${ICON[x.kind]}<b>${i + 1}</b><i class="dur">${d}</i>`, iconSize: [36 + 6 * d.length, 17], iconAnchor: [10, 8] }), zIndexOffset: 500 })
+      .bindTooltip(`<b>${i + 1}. ${STOP_NAME[x.kind]}</b> ${fmtT.format(x.t)} to ${fmtT.format(x.until)}<br>${esc(stopWhere(x))}${x.why ? "<br>" + esc(x.why) : ""}`).on("click", () => setTime(x.t)).addTo(planLayer);
+  });
+}
+const boatSvg = (hd) => `<svg width="30" height="30" viewBox="-15 -15 30 30" style="transform:rotate(${hd}deg)"><path d="M0-12 C4-6 4 6 2.5 11 L-2.5 11 C-4 6 -4-6 0-12Z" fill="#facc15" stroke="#0f172a" stroke-width="1.6"/></svg>`;
+function stnIcon(s, v) {
+  if (s.kind === "tide") return L.divIcon({ className: "stn-ico", html: `<svg width="14" height="14" viewBox="-7 -7 14 14"><circle r="5" fill="#fff" stroke="#0e7490" stroke-width="2.5"/></svg>`, iconSize: [14, 14], iconAnchor: [7, 7] });
+  const slack = v == null || Math.abs(v) < SLACK_KN, col = slack ? "#64748b" : v > 0 ? "#0f766e" : "#b45309";
+  const dir = v == null ? 0 : v >= 0 ? (s.flood_dir ?? 180) : (s.ebb_dir ?? 0), len = slack ? 0 : Math.min(26, 9 + Math.abs(v) * 6);
+  const arrow = slack ? `<circle r="5" fill="${col}" stroke="#fff" stroke-width="1.5"/>` : `<g transform="rotate(${dir})"><path d="M0 ${len / 2} L0 ${-len / 2}" stroke="${col}" stroke-width="4"/><path d="M-6 ${-len / 2 + 6} L0 ${-len / 2 - 2} L6 ${-len / 2 + 6}Z" fill="${col}"/></g><circle r="3" fill="#fff" stroke="${col}" stroke-width="1.5"/>`;
+  return L.divIcon({ className: "stn-ico", html: `<svg width="40" height="40" viewBox="-20 -20 40 40">${arrow}</svg>`, iconSize: [40, 40], iconAnchor: [20, 20] });
+}
+
+// ---------- time
+function setTime(t) {
+  if (!P || P.impossible) return;
+  const R = P.R, lo = gunT() - 2 * H, hi = (R.fin || R.track[R.track.length - 1][0]) + 2 * H;
+  state.t = Math.max(lo, Math.min(hi, t));
+  syncTime();
+}
+function lightAt(t, ll) {   // day, twilight, night, by the sun's altitude at the boat
+  const a = sunAlt(t, ll[0], ll[1]);
+  return a > -0.833 ? { k: "Day", b: 1 } : a > -6 ? { k: "Civil twilight", b: 0.75 } : a > -12 ? { k: "Nautical twilight", b: 0.55 } : { k: "Night", b: 0.42 };
+}
+// ---------- ferries: WSF sailings (data/ferries.json, scripts/fetch_ferries.py) for the weekday of the map time, moved along
+// their route between terminals. Stay 100 yards clear of them; they make about 18 kn.
+let FERRY = null, ferryLayer = null;
+const fmtWD = new Intl.DateTimeFormat("en-US", { timeZone: TZ, weekday: "short", hour: "numeric", minute: "numeric", second: "numeric", hourCycle: "h23" });
+function localDay(t) {   // ["fri", seconds after local midnight]
+  const p = Object.fromEntries(fmtWD.formatToParts(t).map((x) => [x.type, x.value]));
+  return [p.weekday.toLowerCase(), +p.hour * 3600 + +p.minute * 60 + +p.second];
+}
+const FERRY_ICON = (hd) => L.divIcon({ className: "ferry", iconSize: [26, 26], iconAnchor: [13, 13],
+  html: `<svg viewBox="-13 -13 26 26" width="26" height="26" style="transform:rotate(${hd.toFixed(0)}deg)" aria-hidden="true"><path d="M0-11 5-4V9H-5V-4Z" fill="#fff" stroke="#065f46" stroke-width="1.6" stroke-linejoin="round"/><rect x="-3" y="-2" width="6" height="7" rx="1" fill="#10b981"/></svg>` });
+function ferryPath(trip, a, b) {   // the shape between two stops, or the straight line
+  const A = FERRY.stops[a], B = FERRY.stops[b], sh = trip.shape && FERRY.shapes[trip.shape];
+  if (!A || !B) return null;
+  if (!sh) return [[A.lat, A.lon], [B.lat, B.lon]];
+  const near = (q) => { let k = 0, d = Infinity; sh.forEach((p, i) => { const e = nmBetween(p, q); if (e < d) { d = e; k = i; } }); return k; };
+  const i = near([A.lat, A.lon]), j = near([B.lat, B.lon]);
+  const seg = i <= j ? sh.slice(i, j + 1) : sh.slice(j, i + 1).reverse();
+  return seg.length > 1 ? seg : [[A.lat, A.lon], [B.lat, B.lon]];
+}
+function drawFerries(t) {
+  if (!FERRY || !map) return;
+  if (!ferryLayer) ferryLayer = L.layerGroup().addTo(map);
+  ferryLayer.clearLayers();
+  if (!state.ferriesOn) return;
+  const [wd, sec] = localDay(t), prev = { sat: "fri", sun: "sat", mon: "sun", fri: "thu" }[wd];
+  const cands = [];
+  for (const [day, off] of [[wd, 0], [prev, 86400]]) { const D = FERRY.days[day]; if (D) D.trips.forEach((tr) => cands.push([tr, sec + off])); }
+  for (const [tr, s] of cands) {
+    const st = tr.st; if (s < st[0][2] || s > st[st.length - 1][1]) continue;
+    let k = 0; while (k < st.length - 1 && st[k + 1][1] <= s) k++;
+    if (k >= st.length - 1 || s < st[k][2]) continue;   // at a terminal, loading
+    const path = ferryPath(tr, st[k][0], st[k + 1][0]); if (!path) continue;
+    const ch = chain(path), f = (s - st[k][2]) / Math.max(60, st[k + 1][1] - st[k][2]);
+    const ll = pointAt(ch, f * ch.total), hd = headingAt(ch, f * ch.total);
+    L.marker(ll, { icon: FERRY_ICON(hd), keyboard: false, zIndexOffset: 500 })
+      .bindTooltip(`${esc(tr.route)}<br>${esc(FERRY.stops[st[k][0]].name)} ${hmClock(st[k][2])} to ${esc(FERRY.stops[st[k + 1][0]].name)} ${hmClock(st[k + 1][1])}`).addTo(ferryLayer);
+  }
+}
+const hmClock = (s) => `${String(Math.floor(s / 3600) % 24).padStart(2, "0")}:${String(Math.floor(s / 60) % 60).padStart(2, "0")}`;
+function syncTime() {
+  if (!P || P.impossible) return;
+  const R = P.R, lo = gunT() - 2 * H, hi = (R.fin || R.track[R.track.length - 1][0]) + 2 * H;
+  if (state.t == null || state.t < lo || state.t > hi) state.t = R.t0;
+  const t = state.t;
+  for (const id of ["time", "progress"]) { const e = $(id); if (!e) continue; e.min = lo; e.max = hi; e.value = t; }
+  $("clock").textContent = fmt.format(t);
+  drawFerries(t); drawTides(t);
+  for (const s of STATIONS) {
+    const v = valueAt(s, t), mk = stnMarkers[s.key]; if (!mk) continue;
+    mk.setIcon(stnIcon(s, s.kind === "current" ? v : null));
+    mk.setTooltipContent(s.kind === "current" ? `${esc(s.name)}<br>${v == null ? "no data" : Math.abs(v) < SLACK_KN ? "slack" : `${v > 0 ? "flood" : "ebb"} ${Math.abs(v).toFixed(1)} kn`}` : `${esc(s.name)} tide<br>${v ? `${v.ft.toFixed(1)} ft, ${v.rising ? "rising" : "falling"}` : "no data"}`);
+  }
+  const ch = CH[state.route], pos = posAt(R, t), ll = boatLL(R, t), r = rowAt(R, t), light = lightAt(t, ll);
+  boatMarker.setLatLng(ll); boatMarker.setIcon(L.divIcon({ className: `boat${light.b < 1 ? " lit" : ""}`, html: boatSvg(headingAt(ch, pos)), iconSize: [30, 30], iconAnchor: [15, 15] }));
+  if (miniBoat) miniBoat.setLatLng(ll);
+  map.getPane("tilePane").style.filter = light.b < 1 ? `brightness(${light.b}) saturate(${0.5 + light.b / 2})` : "";
+  const before = t < R.t0, after = R.fin && t > R.fin;
+  if ($("pb-time")) {
+    $("pb-time").textContent = fmtDT.format(t); $("pb-el").textContent = t >= gunT() ? hm((t - gunT()) / H) : "before the gun";
+    $("pb-dist").textContent = `${distAt(R, t).toFixed(1)} of ${R.total.toFixed(1)} nm`;
+    $("pb-stw").textContent = before || after ? "–" : r[4] ? (r[4] === 2 ? "ashore" : "stopped") : `${r[2].toFixed(2)} kn`;
+    const s = streamAt(state.route, pos, t); $("pb-cur").textContent = `${sgn(s)} kn`;
+    $("pb-sog").textContent = before || after || r[4] === 2 ? "–" : `${((r[4] ? (state.drift ? s : 0) : r[2] + s)).toFixed(2)} kn`;
+    $("pb-sun").textContent = light.k;
+  }
+  if (playTimer && $("follow") && $("follow").checked) map.panTo(ll, { animate: false });
+  document.querySelectorAll("aside tr[data-t]").forEach((tr) => tr.classList.toggle("on", Math.abs(+tr.dataset.t - t) < 30 * MIN));
+  if (HEAT) renderHeatCursor();
+  if (state.selected) renderDetail();
+}
+function renderHeatCursor() { clearTimeout(renderHeatCursor.tm); renderHeatCursor.tm = setTimeout(renderHeat, 80); }
+// the zoom picked on the play bar: the whole course, or a fixed zoom on the boat
+// the zoom that shows w nm across the map's width at the boat's latitude (Web Mercator: 156543 m per pixel at zoom 0)
+function zoomForNm(w, lat) {
+  const px = map.getSize().x || 800;
+  return Math.log2(px * 156543.03 * Math.cos(lat * Math.PI / 180) / (w * 1852));
+}
+function applyZoom() {
+  if (!P || !P.R || !map) return;
+  const w = +$("play-zoom").value, ll = boatLL(P.R, state.t), z = w && zoomForNm(w, ll.lat ?? ll[0]);
+  if (!w) { $("follow").checked = false; map.fitBounds(routeLines[state.route].getBounds(), { padding: [20, 20], animate: false }); }
+  else { $("follow").checked = true; map.setView(ll, z, { animate: false }); }
+}
+function startPlay() {
+  const R = P.R; if (state.t >= (R.fin || 0)) state.t = R.t0;
+  $("play").innerHTML = "&#10074;&#10074;"; $("play").setAttribute("aria-label", "Pause");
+  if ($("follow").checked) { const ll = boatLL(R, state.t), w = +$("play-zoom").value; map.setView(ll, w ? zoomForNm(w, ll.lat ?? ll[0]) : Math.max(map.getZoom(), 12)); }
+  playTimer = setInterval(() => { const sp = +$("play-speed").value; setTime(state.t + sp * H / 10); if (state.t >= (P.R.fin || Infinity)) stopPlay(); }, 100);
+}
+function stopPlay() { clearInterval(playTimer); playTimer = null; $("play").innerHTML = "&#9654;"; $("play").setAttribute("aria-label", "Play"); }
+
+// station detail: the stream over the race window
+function renderDetail() {
+  const s = STATIONS.find((x) => x.key === state.selected), el = $("detail");
+  if (!s) { el.hidden = true; return; }
+  el.hidden = false;
+  const t0 = gunT() - 3 * H, t1 = gunT() + 30 * H, n = 200, vals = [];
+  for (let i = 0; i <= n; i++) { const t = t0 + (i / n) * (t1 - t0), v = valueAt(s, t); vals.push(v == null ? null : s.kind === "current" ? v : v.ft); }
+  const ok = vals.filter((v) => v != null), mx = Math.max(1, ...ok.map(Math.abs)), mn = s.kind === "current" ? -mx : Math.min(...ok), MX = s.kind === "current" ? mx : Math.max(...ok);
+  const W = 380, Hd = 130, X = (i) => 30 + (i / n) * (W - 34), Y = (v) => 8 + (1 - (v - mn) / ((MX - mn) || 1)) * (Hd - 24), XT = (t) => 30 + ((t - t0) / (t1 - t0)) * (W - 34);
+  let svg = `<svg class="chart" viewBox="0 0 ${W} ${Hd}" role="img" aria-label="${esc(s.name)} over the race">`;
+  if (s.kind === "current") svg += `<line x1="30" x2="${W - 4}" y1="${Y(0)}" y2="${Y(0)}" stroke="var(--rule)"/>`;
+  svg += `<path d="${vals.map((v, i) => v == null ? "" : `${i && vals[i - 1] != null ? "L" : "M"}${X(i).toFixed(1)},${Y(v).toFixed(1)}`).join("")}" fill="none" stroke="var(--accent)" stroke-width="2"/>`;
+  for (let h = 0; h <= 33; h += 6) { const t = t0 + h * H; svg += `<text x="${XT(t)}" y="${Hd - 4}" text-anchor="middle">${fmtT.format(t)}</text>`; }
+  svg += `<text x="26" y="${Y(MX) + 4}" text-anchor="end">${MX.toFixed(1)}</text><text x="26" y="${Y(mn) + 4}" text-anchor="end">${mn.toFixed(1)}</text>`;
+  if (state.t >= t0 && state.t <= t1) svg += `<line x1="${XT(state.t)}" x2="${XT(state.t)}" y1="6" y2="${Hd - 16}" stroke="#facc15" stroke-width="2"/>`;
+  if (P && P.R && s.legs[state.route]) { const ta = timeAt(P.R, s.legs[state.route].along); if (ta && ta >= t0 && ta <= t1) svg += `<line x1="${XT(ta)}" x2="${XT(ta)}" y1="6" y2="${Hd - 16}" stroke="var(--ink)" stroke-dasharray="3 3"/><text x="${XT(ta) + 3}" y="16">you</text>`; }
+  svg += "</svg>";
+  const l = s.legs[state.route];
+  el.innerHTML = `<div class="detail-head"><h3>${esc(s.name)}</h3><button class="close" id="close">Close</button></div>
+    <p class="hint">NOAA ${esc(s.id)}${s.kind === "current" ? `, ${s.type === "S" ? "subordinate" : "harmonic"} station${s.depth != null ? `, ${s.depth} ft depth` : ""}. Flood sets ${s.flood_dir ?? "?"}°, ebb ${s.ebb_dir ?? "?"}°` : ", tide (feet above MLLW)"}${l ? `. ${l.along.toFixed(1)} nm along your course, ${l.offset.toFixed(2)} nm off the line.` : ". Not near your course line."}</p>
+    ${svg}<p class="hint">${s.kind === "current" ? "Knots, + flood, − ebb. " : ""}Yellow: map time. Dashed: when your plan passes.</p>`;
+  $("close").onclick = () => { state.selected = null; el.hidden = true; };
+}
+
+// ---------- stop close-ups: each stop ashore on a quarter kilometre of satellite imagery
+let PICS = [], picObs = null;
+function renderPics() {
+  PICS.forEach((m) => m.remove()); PICS = []; if (picObs) picObs.disconnect();
+  const list = P.R.stops.map((x, i) => ({ x, n: i + 1 })).filter((p) => p.x.site), box = $("pics");
+  if (!list.length) { box.innerHTML = `<p class="hint">No stops ashore on this plan.</p>`; return; }
+  box.innerHTML = list.map((p, i) => `<figure class="pic" data-i="${i}" data-t="${p.x.t}"><div class="pm"></div><figcaption><b>${p.n}. ${STOP_NAME[p.x.kind]}</b> ${shortDur((p.x.until - p.x.t) / H)}, ${fmtT.format(p.x.t)}<br>${esc(p.x.site.name)}</figcaption></figure>`).join("");
+  const route = CH[state.route].points, tracks = PAST.flatMap((r) => r.teams.map((t) => t.track.map((q) => [q[1], q[2]])));
+  const build = (fig) => {
+    const p = list[+fig.dataset.i], ll = p.x.site.ll, el = fig.querySelector(".pm");
+    const dLa = 0.125 / 111.32, dLo = dLa / Math.cos(ll[0] * Math.PI / 180), bb = L.latLngBounds([ll[0] - dLa, ll[1] - dLo], [ll[0] + dLa, ll[1] + dLo]);
+    const m = L.map(el, { zoomControl: false, attributionControl: false, dragging: false, scrollWheelZoom: false, doubleClickZoom: false, boxZoom: false, keyboard: false, touchZoom: false, zoomSnap: 0 });
+    m.fitBounds(bb, { padding: [0, 0], animate: false });
+    L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}", { maxZoom: 19, maxNativeZoom: 18 }).addTo(m);
+    const near = bb.pad(4);
+    tracks.forEach((tr) => { let cur = null; for (let k = 1; k < tr.length; k++) { if (near.contains(tr[k]) || near.contains(tr[k - 1])) { if (!cur) { cur = [tr[k - 1]]; } cur.push(tr[k]); } else if (cur) { L.polyline(cur, { color: "#c084fc", weight: 1.5, opacity: 0.7, interactive: false }).addTo(m); cur = null; } } if (cur) L.polyline(cur, { color: "#c084fc", weight: 1.5, opacity: 0.7, interactive: false }).addTo(m); });
+    L.polyline(route, { color: "#facc15", weight: 3, interactive: false }).addTo(m);
+    L.polyline([pointAt(CH[state.route], p.x.site.along), ll], { color: "#facc15", weight: 2, dashArray: "4 4", interactive: false }).addTo(m);
+    L.circleMarker(ll, { radius: 6, color: "#111827", fillColor: "#fde68a", fillOpacity: 1, weight: 2, interactive: false }).addTo(m);
+    L.control.scale({ imperial: false, metric: true, position: "bottomleft", maxWidth: 60 }).addTo(m);
+    PICS.push(m);
+  };
+  picObs = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { picObs.unobserve(e.target); build(e.target); } }), { rootMargin: "300px" });
+  box.querySelectorAll(".pic").forEach((f) => { picObs.observe(f); f.onclick = () => setTime(+f.dataset.t); });
+}
+
+// ---------- past races: official results (data/results, from the seventy48.com recaps) and YB tracks (data/tracks, 2024 on)
+let PAST = [], RESULTS = {}, pastLayer = null, pastYear = null;
+function sideOf(track) {   // which side of Vashon a track went
+  let c = 0, e = 0;
+  for (const [, la, lo] of track) if (la > 47.36 && la < 47.48) { if (lo < -122.5) c++; else if (lo > -122.43) e++; }
+  return c > e ? "colvos" : e > c ? "east" : null;
+}
+const normClass = (c) => { c = (c || "").toLowerCase(); return /row/.test(c) ? "Rowboat" : /ski/.test(c) ? "Surfski" : /outrigger|oc\d|^oc/.test(c) ? "Outrigger" : /canoe/.test(c) ? "Canoe" : /sup|paddle ?board|paddleboard/.test(c) ? "SUP" : /kayak/.test(c) ? "Kayak" : /pedal/.test(c) ? "Pedal" : c ? "Other" : ""; };
+// every finisher's track, faint, coloured by year: the course line is their median (scripts/build_average_route.py)
+let allTracks = null;
+const YEAR_COL = { 2024: "#a855f7", 2025: "#0ea5e9", 2026: "#f59e0b" };
+function drawAllTracks() {
+  if (!allTracks) {
+    allTracks = L.layerGroup();
+    PAST.forEach((r) => r.teams.filter((t) => /finish/i.test(t.status || "") && t.track && t.track.length > 1).forEach((t) =>
+      L.polyline(t.track.map((q) => [q[1], q[2]]), { color: YEAR_COL[r.year] || "#64748b", weight: 1, opacity: 0.35, interactive: false }).addTo(allTracks)));
+  }
+  if (state.tracksOn) { allTracks.addTo(map); allTracks.eachLayer((l) => l.bringToBack()); } else map.removeLayer(allTracks);
+}
+async function loadPast() {
+  const get = (u) => fetch(u).then((r) => (r.ok ? r.json() : null)).catch(() => null);
+  const [idx, res] = await Promise.all([get("data/tracks/index.json"), get("data/results/index.json")]);
+  if (idx && idx.races) PAST = (await Promise.all(idx.races.map((r) => get(`data/tracks/${r.key}.json`)))).filter(Boolean);
+  PAST.forEach((r) => { r.year = new Date(r.start * 1000).getUTCFullYear(); r.teams.forEach((t) => { t.side = sideOf(t.track); t.cls = normClass(t.class); }); });
+  drawAllTracks();
+  // one list per year: the official results, with the YB track joined on by team name where there is one
+  const years = new Set([...Object.keys((res && res.years) || {}).map(Number), ...PAST.map((r) => r.year)]);
+  const key = (s) => (s || "").toLowerCase().replace(/[^a-z0-9]/g, "");
+  for (const y of years) {
+    const R = res && res.years[y], T = PAST.find((r) => r.year === y), byName = new Map((T ? T.teams : []).map((t) => [key(t.name), t]));
+    const teams = R ? R.teams.map((t) => { const tr = byName.get(key(t.team)); return { name: t.team, cls: normClass(t.class) || (tr && tr.cls), elapsed_h: t.elapsed_h, track: tr ? tr.track : null, side: tr ? tr.side : null, boat: tr ? tr.boat : "" }; })
+      : T.teams.map((t) => ({ name: t.name, cls: t.cls, elapsed_h: t.elapsed_h, track: t.track, side: t.side, boat: t.boat }));
+    RESULTS[y] = { year: y, src: R ? "results" : "tracks", tracks: !!T, teams };
+  }
+  const classes = [...new Set(Object.values(RESULTS).flatMap((r) => r.teams.map((t) => t.cls).filter(Boolean)))].sort();
+  $("past-class").innerHTML = `<option value="">All classes</option>` + classes.map((c) => `<option>${esc(c)}</option>`).join("");
+  $("past-class").addEventListener("change", renderPast);
+  const ys = Object.keys(RESULTS).map(Number).sort((a, b) => b - a);
+  $("past-years").innerHTML = ys.map((y) => `<button type="button" data-y="${y}">${y}</button>`).join("");
+  $("past-years").querySelectorAll("button").forEach((b) => b.addEventListener("click", () => { pastYear = +b.dataset.y; renderPast(); }));
+  pastYear = ys[0];
+  if (P && !P.impossible) { renderPast(); renderPics(); }
+}
+function renderPast() {
+  const ys = Object.keys(RESULTS).map(Number).sort((a, b) => b - a); if (!ys.length) { $("past-hint").textContent = "No past results loaded."; return; }
+  const cls = $("past-class").value, mine = P && P.R && P.R.fin ? (P.R.fin - gunT()) / H : null;
+  const lines = ys.map((y) => {
+    const r = RESULTS[y], fin = r.teams.filter((t) => t.elapsed_h && (!cls || t.cls === cls)).sort((a, b) => a.elapsed_h - b.elapsed_h), all = r.teams.filter((t) => !cls || t.cls === cls).length;
+    const ahead = fin.filter((t) => t.elapsed_h < mine).length;
+    return `<tr><td>${y}</td><td class="n">${fin.length} of ${all}</td><td class="n">${mine && fin.length ? `${ahead + 1}` : "–"}</td><td class="n">${fin.length ? hm(fin[0].elapsed_h) : "–"}</td><td class="n">${fin.length ? hm(fin[Math.floor(fin.length / 2)].elapsed_h) : "–"}</td></tr>`;
+  });
+  $("past-hint").innerHTML = `Official results 2018 to 2026 (no race in 2020) and YB tracks from 2024. Your ${mine ? hm(mine) : "–"} finish against each year's finishers${cls ? ` (${esc(cls)})` : ""}:`;
+  $("past-sum").innerHTML = `<thead><tr><th>Year</th><th class="n">Finished</th><th class="n">You'd place</th><th class="n">First</th><th class="n">Median</th></tr></thead><tbody>${lines.join("")}</tbody>`;
+  const r = RESULTS[pastYear];
+  $("past-years").querySelectorAll("button").forEach((b) => b.setAttribute("aria-pressed", String(+b.dataset.y === pastYear)));
+  const teams = r.teams.filter((t) => !cls || t.cls === cls), fin = teams.filter((t) => t.elapsed_h).sort((a, b) => a.elapsed_h - b.elapsed_h), dnf = teams.filter((t) => !t.elapsed_h);
+  const near = (t) => mine && t.elapsed_h && Math.abs(t.elapsed_h - mine) <= 1;
+  const list = fin.concat(dnf);
+  $("past-list").innerHTML = list.map((t, i) => `<div class="past-row${near(t) ? " near" : ""}" data-i="${i}"><span class="t">${t.elapsed_h ? hm(t.elapsed_h) : "DNF"}</span><span>${esc(t.name || "")}<br><span class="c">${esc([t.cls, t.boat, t.track ? "track" : ""].filter(Boolean).join(" · "))}</span></span></div>`).join("");
+  $("past-list").querySelectorAll(".past-row").forEach((row) => row.addEventListener("click", () => {
+    const t = list[+row.dataset.i];
+    if (pastLayer) { map.removeLayer(pastLayer); pastLayer = null; }
+    $("past-list").querySelectorAll(".past-row").forEach((x) => x.classList.toggle("on", x === row));
+    if (t && t.track && t.track.length) {
+      pastLayer = L.polyline(t.track.map((p) => [p[1], p[2]]), { color: "#7c3aed", weight: 2.5 }).bindTooltip(`${esc(t.name)} ${pastYear}${t.elapsed_h ? ", " + hm(t.elapsed_h) : ""}`, { sticky: true }).addTo(map);
+      map.fitBounds(pastLayer.getBounds(), { padding: [20, 20] });
+    }
+  }));
+}
+
+
+// ---------- output: leg sheets and chart strips, to print or save as PDF
+const merc = (ll) => { const R = 6378137, r = Math.PI / 180; return [R * ll[1] * r, R * Math.log(Math.tan(Math.PI / 4 + ll[0] * r / 2))]; };
+function printSheets() {
+  if (!P || P.impossible) return;
+  const w = window.open("", "_blank"); if (!w) { alert("Allow pop-ups for this page to open the sheets."); return; }
+  const { R, v } = P, key = state.route, ch = CH[key], kn = (x) => sgn(x);
+  const el = R.fin ? (R.fin - gunT()) / H : null;
+  const planLine = `Plan: Colvos Passage · gun ${fmt.format(gunT())} · ${v.toFixed(2)} kn through the water · finish ${R.fin ? fmt.format(R.fin) : "–"}${el ? ` (${hm(el)})` : ""} · breaks ${state.brkMin} min every ${state.brkEvery} h`;
+  // legs: between the checkpoints and waypoints on this course (the Colvos south entrance joins the Owen Beach leg)
+  const marks = ROUTE.marks.filter((m) => (!m.route || m.route === key) && m.key !== "colvos-s").map((m) => ({ m, a: markAlong(m) })).sort((a, b) => a.a - b.a);
+  const sites = sitesFor(key, 1.5), pages = [], strips = [];
+  let landNo = 0; const landN = new Map(); sites.forEach((s) => landN.set(s, ++landNo));
+  for (let i = 1; i < marks.length; i++) {
+    const A = marks[i - 1], B = marks[i], t0 = A.m.key === "start" ? R.t0 : timeAt(R, A.a), t1 = timeAt(R, B.a) || (R.fin || R.track[R.track.length - 1][0]);
+    if (t0 == null) break;
+    const ev = [{ t: t0, k: A.m.key === "start" ? "Start" : "Pass", w: A.m.name, p: A.a, n: A.m.note || "" }];
+    R.stops.forEach((x, j) => { if (x.t >= t0 && x.t < t1) ev.push({ t: x.t, k: `${j + 1}. ${STOP_NAME[x.kind]} ${shortDur((x.until - x.t) / H)}`, w: stopWhere(x), p: x.pos, n: `leave ${fmtT.format(x.until)}${x.why ? "; " + x.why : ""}` }); });
+    STATIONS.filter((s) => s.kind === "current" && s.legs[key] && s.legs[key].offset < 0.8 && s.legs[key].along > A.a && s.legs[key].along <= B.a).forEach((s) => {
+      const t = timeAt(R, s.legs[key].along); if (!t) return; const val = valueAt(s, t), ns = nextSlack(s, t);
+      ev.push({ t, k: "Current", w: s.name, p: s.legs[key].along, n: `${val == null ? "" : Math.abs(val) < SLACK_KN ? "slack" : (val > 0 ? "flood " : "ebb ") + Math.abs(val).toFixed(1) + " kn"}; along you ${kn(streamAt(key, s.legs[key].along, t))} kn${ns ? `; turns ${fmtT.format(ns)}` : ""}` });
+    });
+    ev.push({ t: t1, k: B.m.key === "finish" ? "Finish" : "Pass", w: B.m.name, p: B.a, n: B.m.note || "" });
+    ev.sort((a, b) => a.t - b.t);
+    const hrs = [];
+    for (let t = Math.ceil(t0 / (30 * MIN)) * 30 * MIN; t < t1; t += 30 * MIN) { const p = posAt(R, t), r = rowAt(R, t), s = streamAt(key, p, t);
+      hrs.push(`<tr><td>${fmtT.format(t)}</td><td class="n">${distAt(R, t).toFixed(1)}</td><td class="n">${kn(s)}</td><td class="n">${r[4] ? (r[4] === 2 ? "ashore" : "stop") : r[2].toFixed(1)}</td><td class="n">${r[4] === 2 ? "–" : (r[2] + s).toFixed(1)}</td><td>${lightAt(t, pointAt(ch, p)).k}</td></tr>`); }
+    const land = sites.filter((s) => s.along >= A.a - 0.5 && s.along <= B.a + 0.5).sort((a, b) => a.along - b.along);
+    const rowH = R.track.filter((r) => r[0] >= t0 && r[0] < t1 && !r[4]).length / 60;
+    pages.push(`<section><header><p class="plan">${esc(planLine)}</p><h1>Leg ${i}: ${esc(A.m.name.replace(/,.*$/, ""))} &rarr; ${esc(B.m.name.replace(/,.*$/, ""))}</h1>
+      <p>${fmt.format(t0)} to ${fmt.format(t1)} · ${(distAt(R, t1) - distAt(R, t0)).toFixed(1)} nm (${((distAt(R, t1) - distAt(R, t0)) * NM_MI).toFixed(1)} mi, stops ashore included) · paddling ${hm(rowH)} · ${v.toFixed(2)} kn through the water · ${hm((t1 - gunT()) / H)} from the gun at the end</p></header>
+      <h2>Plan</h2><table><thead><tr><th>Time</th><th>What</th><th>Where</th><th class="n">nm</th><th>Notes</th></tr></thead><tbody>${ev.map((e) => `<tr><td>${fmtT.format(e.t)}</td><td><b>${esc(e.k)}</b></td><td>${esc(e.w)}</td><td class="n">${e.p.toFixed(1)}</td><td>${esc(e.n)}</td></tr>`).join("")}</tbody></table>
+      <div class="cols"><div><h2>Every half hour</h2><table class="sm"><thead><tr><th>Time</th><th class="n">nm</th><th class="n">Stream</th><th class="n">Thru water</th><th class="n">Over ground</th><th>Light</th></tr></thead><tbody>${hrs.join("")}</tbody></table><p class="k">Stream in knots along the course, + with you, − against.</p></div>
+      <div><h2>Landings on this leg (bail-outs)</h2><table class="sm"><thead><tr><th class="n">#</th><th class="n">nm</th><th class="n">Off</th><th>Place</th></tr></thead><tbody>${land.map((s) => `<tr><td class="n">${landN.get(s)}</td><td class="n">${s.along.toFixed(1)}</td><td class="n">${s.off.toFixed(1)}</td><td>${esc(s.name)}</td></tr>`).join("") || `<tr><td colspan="4">None mapped</td></tr>`}</tbody></table>
+      <h2>Notes</h2><div class="lines"></div></div></div></section>`);
+  }
+  // chart strips: the course in boxes about 6 nm long, NOAA charts under the plan (times every 30 min), stops and landings
+  const BOX = 6;
+  for (let a = 0, n = 1; a < ch.total - 0.2; a += BOX, n++) {
+    const b = Math.min(ch.total, a + BOX), pts = []; for (let x = a; x <= b + 1e-6; x += 0.1) pts.push(pointAt(ch, x));
+    const ms = pts.map(merc), pad = 0.9 * 1852 / Math.cos(pts[0][0] * Math.PI / 180);
+    let x0 = Math.min(...ms.map((p) => p[0])) - pad, x1 = Math.max(...ms.map((p) => p[0])) + pad, y0 = Math.min(...ms.map((p) => p[1])) - pad, y1 = Math.max(...ms.map((p) => p[1])) + pad;
+    const asp = 0.75;   // width / height on the page
+    if ((x1 - x0) / (y1 - y0) < asp) { const c = (x0 + x1) / 2, h = (y1 - y0) * asp / 2; x0 = c - h; x1 = c + h; } else { const c = (y0 + y1) / 2, h = (x1 - x0) / asp / 2; y0 = c - h; y1 = c + h; }
+    const W = 1500, Hh = Math.round(W / asp), X = (ll) => ((merc(ll)[0] - x0) / (x1 - x0)) * W, Y = (ll) => ((y1 - merc(ll)[1]) / (y1 - y0)) * Hh;
+    const inBox = (ll) => { const m = merc(ll); return m[0] >= x0 && m[0] <= x1 && m[1] >= y0 && m[1] <= y1; };
+    let svg = `<polyline points="${ch.points.map((p) => `${X(p).toFixed(1)},${Y(p).toFixed(1)}`).join(" ")}" fill="none" stroke="#c2410c" stroke-width="5" opacity=".85"/>`;
+    for (let t = Math.ceil(R.t0 / (30 * MIN)) * 30 * MIN; t <= (R.fin || R.t0); t += 30 * MIN) { const ll = boatLL(R, t); if (!inBox(ll)) continue;
+      svg += `<circle cx="${X(ll)}" cy="${Y(ll)}" r="6" fill="#facc15" stroke="#111" stroke-width="2"/><text x="${X(ll) + 10}" y="${Y(ll) + 8}" class="tk">${fmtT.format(t)}</text>`; }
+    sites.forEach((s) => { if (!inBox(s.ll)) return; svg += `<g transform="translate(${X(s.ll)},${Y(s.ll)})"><rect x="-11" y="-11" width="22" height="22" rx="4" fill="${s.kind === "past" ? "#22c55e" : "#c084fc"}" stroke="#111" stroke-width="1.5"/><text y="6" text-anchor="middle" class="ln">${landN.get(s)}</text></g>`; });
+    R.stops.forEach((x) => { if (x.bend) svg += `<polyline points="${bendPath(ch, x.bend).map((p) => `${X(p).toFixed(1)},${Y(p).toFixed(1)}`).join(" ")}" fill="none" stroke="#dc2626" stroke-width="4" stroke-dasharray="10 7"/>`; });
+    R.stops.forEach((x, j) => { const ll = x.site ? x.site.ll : pointAt(ch, x.pos); if (!inBox(ll)) return; svg += `<g transform="translate(${X(ll)},${Y(ll)})"><circle r="16" fill="#fde68a" stroke="#111" stroke-width="2.5"/><text y="7" text-anchor="middle" class="ln">${j + 1}</text></g>`; });
+    STATIONS.filter((s) => s.kind === "current" && inBox([s.lat, s.lon])).forEach((s) => { const t = s.legs[key] ? timeAt(R, s.legs[key].along) : null, val = t ? valueAt(s, t) : null;
+      svg += `<g transform="translate(${X([s.lat, s.lon])},${Y([s.lat, s.lon])})"><path d="M-9 0L9 0M0-9L0 9" stroke="#0e7490" stroke-width="3"/><text x="12" y="-8" class="st">${esc(s.name.replace(/,.*$/, ""))}${t && val != null ? `: ${Math.abs(val) < SLACK_KN ? "slack" : (val > 0 ? "flood " : "ebb ") + Math.abs(val).toFixed(1)} at ${fmtT.format(t)}` : ""}</text></g>`; });
+    ROUTE.marks.filter((m) => inBox([m.lat, m.lon])).forEach((m) => { svg += `<g transform="translate(${X([m.lat, m.lon])},${Y([m.lat, m.lon])})"><rect x="-9" y="-9" width="18" height="18" transform="rotate(45)" fill="#facc15" stroke="#111" stroke-width="2"/><text x="14" y="22" class="mk">${esc(m.name)}</text></g>`; });
+    strips.push(`<section class="strip"><header><p class="plan">${esc(planLine)}</p><h2 class="ch">Chart ${n}: nm ${a.toFixed(0)} to ${b.toFixed(0)} · north up · NOAA ENC</h2></header>
+      <div class="cv"><img src="${chartUrl([x0, y0, x1, y1], Math.round(W * 0.8), Math.round(Hh * 0.8))}" alt=""><svg viewBox="0 0 ${W} ${Hh}">${svg}</svg></div>
+      <p class="k">Yellow dots: where your plan puts you every 30 minutes. Numbered circles: your stops. Squares: landings (green past stops, purple mapped), numbered as on the leg sheets. Crosses: NOAA current stations, with the stream as you pass.</p></section>`);
+  }
+  const css = `@page { size: letter portrait; margin: 12mm; } body { font: 11px/1.35 "IBM Plex Sans Condensed", Arial, sans-serif; color: #111; margin: 0; }
+    section { page-break-after: always; } h1 { font-size: 18px; margin: 2px 0 4px; } h2 { font-size: 12px; text-transform: uppercase; letter-spacing: .06em; margin: 10px 0 4px; color: #333; }
+    .plan { font-size: 9.5px; color: #555; border-bottom: 1px solid #999; padding-bottom: 2px; margin: 0 0 4px; } p { margin: 2px 0; }
+    table { border-collapse: collapse; width: 100%; font: 10.5px "IBM Plex Mono", monospace; } th, td { border-bottom: 1px solid #ccc; padding: 2px 5px 2px 0; text-align: left; vertical-align: top; } th { font: 600 9px Arial; text-transform: uppercase; }
+    .n { text-align: right; } .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; } .sm { font-size: 10px; } .k { font-size: 9.5px; color: #555; }
+    .lines { height: 150px; background: repeating-linear-gradient(#fff 0 21px, #bbb 21px 22px); }
+    .cv { position: relative; width: 100%; aspect-ratio: 0.75; border: 1px solid #333; } .cv img, .cv svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .tk { font: 700 22px Arial; fill: #111; paint-order: stroke; stroke: #fff; stroke-width: 5px; } .ln { font: 700 15px Arial; fill: #111; }
+    .st { font: 600 17px Arial; fill: #0e7490; paint-order: stroke; stroke: #fff; stroke-width: 5px; } .mk { font: 700 19px Arial; fill: #111; paint-order: stroke; stroke: #fde047; stroke-width: 6px; }
+    .cover td { font-size: 12px; } @media screen { body { max-width: 820px; margin: 20px auto; } section { border-bottom: 3px dashed #999; padding-bottom: 24px; margin-bottom: 24px; } }`;
+  const cover = `<section class="cover"><p class="plan">${esc(planLine)}</p><h1>Seventy48 2027: race plan</h1>
+    <table><tbody>${$("tiles").innerText ? [...document.querySelectorAll("#tiles .tile")].map((t) => `<tr><td>${esc(t.children[0].textContent)}</td><td><b>${esc(t.children[1].textContent)}</b></td><td>${esc(t.children[2].textContent)}</td></tr>`).join("") : ""}</tbody></table>
+    <h2>Checkpoints and waypoints</h2><table>${$("marks-tbl").innerHTML.replace(/<br>/g, " · ")}</table>
+    <h2>Stops</h2><table>${$("stops-tbl").innerHTML.replace(/<svg[\s\S]*?<\/svg>/g, "").replace(/<br>/g, " · ")}</table>
+    <p class="k">Stream and times from NOAA predictions (${esc($("data-status").textContent)}). Planning aid, not for navigation: use official NOAA tables and current charts aboard.</p></section>`;
+  w.document.open();
+  w.document.write(`<!doctype html><html><head><meta charset="utf-8"><title>Seventy48 2027 plan sheets</title><style>${css}</style></head><body>${cover}${pages.join("")}${strips.join("")}<script>window.onload=()=>setTimeout(()=>{},0)<\/script></body></html>`);
+  w.document.close();
+}
+
+// ---------- storm contingency: Monte Carlo of the plan against wind
+const SM = { ctl: { mode: "hist", jit: 14, scale: true, k: 1, kn: 22, hrs: 6, dir: "n", shelter: 20, resume: 15, reach: 3, head: 15, tail: 5, chop: 10, n: 1000, seed: 48 }, run: null, res: null, map: null };
+try { Object.assign(SM.ctl, JSON.parse(localStorage.getItem("s48-27storm") || "{}")); } catch (e) {}
+let WH = null;   // wind history: data/storm_history/wind.json and summary.json
+async function smLoadHist() {
+  if (WH) return WH;
+  const get = (p) => fetch(p).then((r) => (r.ok ? r.json() : null)).catch(() => null);
+  const [w, s] = await Promise.all([get("data/storm_history/wind.json"), get("data/storm_history/summary.json")]);
+  WH = { w, s };
+  if (w) w.areas.forEach((a) => { a.legs = {}; for (const k in CH) a.legs[k] = { along: project(CH[k], [a.lat, a.lon]).along }; });
+  if (!w) { SM.ctl.mode = "fixed"; $("sm-mode").querySelector('[value="hist"]').disabled = true; smSync(); }
+  smAreaTable(); return WH;
+}
+function mulberry32(a) { return () => { a |= 0; a = (a + 0x6d2b79f5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
+const smEnv = (c) => ({ shelterKn: c.shelter, resumeKn: Math.min(c.resume, c.shelter - 1), shelterNm: c.reach, headPct: c.head, tailPct: c.tail, chopPct: c.chop });
+// the wind on the boat in one history scenario: year index yi, and the hour in that year's window when the gun goes
+function histWind(key, yi, h0, scale) {
+  const A = WH.w.areas.map((a, i) => ({ a, i, along: a.legs[key].along })).sort((p, q) => p.along - q.along);
+  const at = (i, h) => { const row = WH.w.era5[i][yi]; const x = row && row[Math.max(0, Math.min(row.length - 1, h))]; return x ? { kn: x[0] * (scale ? WH.w.areas[i].scale : 1), from: x[1] } : null; };
+  return (pos, t) => {
+    const h = h0 + Math.floor((t - gunT()) / H);
+    let j = A.findIndex((z) => z.along >= pos); if (j < 0) j = A.length - 1;
+    const b = A[j], a = A[Math.max(0, j - 1)], f = a === b ? 0 : Math.max(0, Math.min(1, (pos - a.along) / (b.along - a.along)));
+    const wa = at(a.i, h) || at(b.i, h), wb = at(b.i, h) || wa; if (!wa) return { kn: 0, from: 0 };
+    const vx = (w) => w.kn * Math.sin(w.from * Math.PI / 180), vy = (w) => w.kn * Math.cos(w.from * Math.PI / 180);
+    const x = vx(wa) * (1 - f) + vx(wb) * f, y = vy(wa) * (1 - f) + vy(wb) * f;
+    return { kn: wa.kn * (1 - f) + wb.kn * f, from: (Math.atan2(x, y) * 180 / Math.PI + 360) % 360 };
+  };
+}
+function fixedWind(key, blows) {
+  const ch = CH[key];
+  return (pos, t) => { const b = blows.find((x) => t >= x.t && t < x.end); if (!b) return { kn: 0, from: 0 }; const hd = headingAt(ch, pos); return { kn: b.kn, from: b.dir === "n" ? hd : (hd + 180) % 360 }; };
+}
+function smSync() {
+  const c = SM.ctl;
+  for (const k of ["jit", "k", "kn", "hrs", "shelter", "resume", "reach", "head", "tail", "chop", "n"]) $("sm-" + k).value = c[k];
+  $("sm-mode").value = c.mode; $("sm-dir").value = c.dir; $("sm-scale").checked = c.scale; $("sm-seed").value = c.seed;
+  $("sm-hist-ctl").hidden = c.mode !== "hist"; $("sm-fixed-ctl").hidden = c.mode !== "fixed";
+  $("sm-jit-v").textContent = `${c.jit} day${c.jit === 1 ? "" : "s"}`; $("sm-k-v").textContent = c.k; $("sm-kn-v").textContent = `${c.kn} kn`; $("sm-hrs-v").textContent = `${c.hrs} h`;
+  $("sm-shelter-v").textContent = `${c.shelter} kn`; $("sm-resume-v").textContent = `${Math.min(c.resume, c.shelter - 1)} kn`; $("sm-reach-v").textContent = `${c.reach} nm`;
+  $("sm-head-v").textContent = `${c.head}%`; $("sm-tail-v").textContent = `${c.tail}%`; $("sm-chop-v").textContent = `${c.chop}%`; $("sm-n-v").textContent = c.n.toLocaleString("en-US");
+}
+function smInit() {
+  smSync();
+  const upd = (k, v) => { SM.ctl[k] = v; try { localStorage.setItem("s48-27storm", JSON.stringify(SM.ctl)); } catch (e) {} smSync(); if (SM.res) { $("sm-results").classList.add("stale"); $("sm-status").textContent = "Settings changed: run again to update the results."; } };
+  for (const k of ["jit", "k", "kn", "hrs", "shelter", "resume", "reach", "head", "tail", "chop", "n"]) $("sm-" + k).addEventListener("input", (e) => upd(k, +e.target.value));
+  $("sm-mode").addEventListener("change", (e) => upd("mode", e.target.value)); $("sm-dir").addEventListener("change", (e) => upd("dir", e.target.value));
+  $("sm-scale").addEventListener("change", (e) => upd("scale", e.target.checked)); $("sm-seed").addEventListener("change", (e) => upd("seed", +e.target.value || 1));
+  $("sm-run").addEventListener("click", smRun); $("sm-stop").addEventListener("click", () => { if (SM.run) SM.run.stop = true; }); $("sm-csv").addEventListener("click", smCsv);
+}
+function smRun() {
+  if (!P || P.impossible || SM.run) return;
+  const c = { ...SM.ctl }, key = state.route, v = P.v, env = smEnv(c), rnd = mulberry32(c.seed);
+  if (c.mode === "hist" && !(WH && WH.w)) return;
+  const win = WH && WH.w ? WH.w.window : null, wStart = win ? Date.parse(`${state.sd.slice(0, 4)}-${String(win.month).padStart(2, "0")}-${String(win.day).padStart(2, "0")}T00:00:00-07:00`) : 0;
+  const day0 = win ? Math.round((gunT() - wStart) / 864e5 - (+state.st.slice(0, 2) + state.st.slice(3) / 60) / 24) : 0, gunH = +state.st.slice(0, 2);
+  const R = SM.run = { c, key, v, base: P.R, i: 0, rows: [], sites: new Map(), gaps: new Map(), stop: false, t0: performance.now() };
+  $("sm-run").disabled = true; $("sm-stop").disabled = false; $("sm-csv").disabled = true; $("sm-results").classList.remove("stale");
+  const chunk = () => {
+    const until = performance.now() + 80;
+    while (R.i < c.n && performance.now() < until && !R.stop) {
+      let wind, label, yr = null, dIdx = null;
+      if (c.mode === "hist") {
+        const yi = Math.floor(rnd() * WH.w.years.length); dIdx = Math.max(0, Math.min(win.hours / 24 - 3, day0 + Math.round((rnd() * 2 - 1) * c.jit)));
+        yr = WH.w.years[yi]; wind = histWind(key, yi, dIdx * 24 + gunH, c.scale);
+        const d = new Date(Date.UTC(yr, win.month - 1, win.day + dIdx)); label = `${yr}-${String(d.getUTCMonth() + 1).padStart(2, "0")}-${String(d.getUTCDate()).padStart(2, "0")}`;
+      } else {
+        const span = Math.max(4, ((P.R.fin || gunT() + 30 * H) - gunT()) / H), blows = [];
+        for (let k = 0; k < c.k; k++) { const t = gunT() + rnd() * span * H; blows.push({ t, end: t + c.hrs * H, kn: c.kn, dir: c.dir === "r" ? (rnd() < 0.5 ? "n" : "s") : c.dir }); }
+        wind = fixedWind(key, blows); label = blows.map((b) => `${fmtT.format(b.t)} ${b.dir === "n" ? "head" : "tail"}`).join(", ");
+      }
+      const r = simulate(key, v, { wind, env });
+      let peak = 0; for (let k = 0; k < r.track.length; k += 15) { const w = wind(r.track[k][1], r.track[k][0]); if (w.kn > peak) peak = w.kn; }
+      let ashore = 0, water = 0;
+      r.stops.filter((x) => x.kind === "shelter").forEach((x) => {
+        const h = (x.until - x.t) / H;
+        if (x.site) { ashore += h; const k = x.site.ll.join(","); let e = R.sites.get(k); if (!e) R.sites.set(k, e = { site: x.site, n: 0, scn: new Set(), h: 0 }); e.n++; e.scn.add(R.i); e.h += h; }
+        else { water += h; const k = Math.floor(x.pos / 5); let e = R.gaps.get(k); if (!e) R.gaps.set(k, e = { k, n: 0, h: 0 }); e.n++; e.h += h; }
+      });
+      R.rows.push({ i: R.i, label, yr, fin: r.fin ? (r.fin - gunT()) / H : null, ashore, water, peak: Math.round(peak), shelters: r.stops.filter((x) => x.kind === "shelter").length });
+      R.i++;
+    }
+    $("sm-prog").value = R.i / c.n;
+    const secs = (performance.now() - R.t0) / 1000;
+    $("sm-status").textContent = `${R.i.toLocaleString("en-US")} of ${c.n.toLocaleString("en-US")} scenarios, ${secs.toFixed(0)} s` + (R.i < c.n && !R.stop ? `, about ${Math.ceil(secs / R.i * (c.n - R.i))} s to go` : "");
+    if (R.i % 200 < 20 || R.i >= c.n || R.stop) { SM.res = R; smRender(); }
+    if (R.i < c.n && !R.stop) setTimeout(chunk, 0);
+    else { SM.res = R; SM.run = null; smRender(); $("sm-run").disabled = false; $("sm-stop").disabled = true; $("sm-csv").disabled = false; if (R.stop) $("sm-status").textContent += " (stopped)"; }
+  };
+  setTimeout(chunk, 0);
+}
+function smRender() {
+  const R = SM.res; if (!R || !R.i) return;
+  smAreaTable();
+  const n = R.rows.length, fins = R.rows.map((r) => (r.fin == null ? Infinity : r.fin)).sort((a, b) => a - b), q = (p) => fins[Math.min(n - 1, Math.floor(p * n))];
+  const plan = R.base.fin ? (R.base.fin - gunT()) / H : null, pct = (x) => `${(100 * x / n).toFixed(x && x < n / 100 ? 1 : 0)}%`, fh = (x) => (isFinite(x) ? hm(x) : "DNF");
+  const late = fins.filter((x) => x > LIMIT_H).length, onPlan = fins.filter((x) => plan && x <= plan + 1).length, anyS = R.rows.filter((r) => r.shelters).length, wet = R.rows.filter((r) => r.water > 0).length;
+  const tiles = [["Plan, no wind", plan ? hm(plan) : "–", `${R.v.toFixed(2)} kn through the water`], ["Median", fh(q(0.5)), "half the scenarios finish by"], ["1 in 10 worse than", fh(q(0.9)), "90th percentile"],
+    ["Within an hour of plan", pct(onPlan), "of scenarios"], ["Miss the 48 h cutoff", pct(late), "or never finish", late ? "bad" : "good"], ["Sheltered", pct(anyS), `mean ${hm(R.rows.reduce((a, r) => a + r.ashore, 0) / n)} ashore per race`], ["Rode it out on the water", pct(wet), "no landing in reach", wet ? "bad" : ""]];
+  $("sm-tiles").innerHTML = tiles.map(([a, b, c, k]) => `<div class="tile ${k || ""}"><span>${a}</span><b>${b}</b><small>${c}</small></div>`).join("");
+  // histogram of finish times in half hours
+  const ok = fins.filter((x) => isFinite(x) && x <= LIMIT_H), lo = Math.floor(Math.min(...ok, plan || 99) * 2) / 2, hi = Math.ceil(Math.max(...ok, (plan || 0) + 1) * 2) / 2;
+  const nb = Math.max(1, Math.round((hi - lo) * 2)), bins = new Array(nb + 1).fill(0); ok.forEach((x) => bins[Math.min(nb - 1, Math.floor((x - lo) * 2))]++); bins[nb] = n - ok.length;
+  const mx = Math.max(...bins, 1), W = 640, Hd = 180, bw = (W - 50) / (nb + 1.5);
+  let s = `<svg viewBox="0 0 ${W} ${Hd + 30}" role="img" aria-label="Finish times">`;
+  bins.forEach((c, i) => { const x = 40 + (i + (i === nb ? 0.5 : 0)) * bw, h = (c / mx) * Hd; s += `<rect x="${x}" y="${Hd - h}" width="${bw - 1}" height="${h}" fill="${i === nb ? "var(--bad)" : "var(--accent)"}" opacity=".85"><title>${i === nb ? "Over 48 h" : hm(lo + i / 2)}: ${c}</title></rect>`; });
+  for (let h = Math.ceil(lo); h <= hi; h += Math.max(1, Math.round((hi - lo) / 8))) s += `<text x="${40 + (h - lo) * 2 * bw}" y="${Hd + 14}" text-anchor="middle">${h} h</text>`;
+  s += `<text x="${40 + (nb + 0.5) * bw + bw / 2}" y="${Hd + 14}" text-anchor="middle">&gt;48</text>`;
+  if (plan) s += `<line x1="${40 + (plan - lo) * 2 * bw}" x2="${40 + (plan - lo) * 2 * bw}" y1="0" y2="${Hd}" stroke="var(--ink)" stroke-dasharray="4 3"/><text x="${42 + (plan - lo) * 2 * bw}" y="12">plan</text>`;
+  $("sm-hist").innerHTML = s + "</svg>";
+  $("sm-hist-note").textContent = `${n.toLocaleString("en-US")} scenarios, ${R.c.mode === "hist" ? `each a past year's wind (1976 to 2025) on a day within ${R.c.jit} days of the race date, with the 2027 tides` : `${R.c.k} blow${R.c.k > 1 ? "s" : ""} of ${R.c.kn} kn for ${R.c.hrs} h at a random time`}. Ashore at ${R.c.shelter} kn, off again under ${Math.min(R.c.resume, R.c.shelter - 1)} kn.`;
+  // shelters
+  const sh = [...R.sites.values()].sort((a, b) => b.n - a.n).slice(0, 20);
+  $("sm-shel").innerHTML = `<thead><tr><th>Shelter</th><th class="n">nm</th><th class="n">Used</th><th class="n">Scenarios</th><th class="n">Mean stay</th></tr></thead><tbody>` + (sh.map((e, i) => `<tr data-i="${i}"><td>${esc(e.site.name)}<br><small class="hint">${esc(placeAt(e.site.along))}</small></td><td class="n">${e.site.along.toFixed(1)}</td><td class="n">${e.n}</td><td class="n">${pct(e.scn.size)}</td><td class="n">${hm(e.h / e.n)}</td></tr>`).join("") || `<tr><td colspan="5">None needed</td></tr>`) + "</tbody>";
+  if (!SM.map) { SM.map = L.map("sm-map", { zoomSnap: 0.25 }); L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}", { maxZoom: 16, attribution: "Esri" }).addTo(SM.map); SM.layer = L.layerGroup().addTo(SM.map); SM.map.fitBounds(L.latLngBounds(CH[R.key].points), { padding: [10, 10] }); }
+  SM.layer.clearLayers(); L.polyline(CH[R.key].points, { color: "#c2410c", weight: 3 }).addTo(SM.layer);
+  sh.forEach((e) => L.circleMarker(e.site.ll, { radius: 5 + Math.sqrt(e.n), color: "#7f1d1d", fillColor: "#f87171", fillOpacity: 0.8, weight: 1.5 }).bindTooltip(`${esc(e.site.name)}: ${e.n} times`).addTo(SM.layer));
+  $("sm-shel").querySelectorAll("tr[data-i]").forEach((tr) => tr.onclick = () => SM.map.setView(sh[+tr.dataset.i].site.ll, 14));
+  const gp = [...R.gaps.values()].sort((a, b) => a.k - b.k);
+  $("sm-gaps").innerHTML = `<thead><tr><th>Stretch</th><th class="n">Times</th><th class="n">Mean</th></tr></thead><tbody>` + (gp.map((e) => `<tr><td>nm ${e.k * 5} to ${e.k * 5 + 5}: ${esc(placeAt(e.k * 5 + 2.5))}</td><td class="n">${e.n}</td><td class="n">${hm(e.h / e.n)}</td></tr>`).join("") || `<tr><td colspan="3">None: a landing was always in reach</td></tr>`) + "</tbody>";
+  const seen = new Set(), worst = R.rows.slice().sort((a, b) => (b.fin ?? 99) - (a.fin ?? 99)).filter((r) => !seen.has(r.label) && seen.add(r.label)).slice(0, 12);
+  $("sm-worst").innerHTML = `<thead><tr><th>${R.c.mode === "hist" ? "Weather of" : "Blows"}</th><th class="n">Finish</th><th class="n">Ashore</th><th class="n">On the water</th><th class="n">Peak wind</th></tr></thead><tbody>` + worst.map((r) => `<tr><td>${esc(r.label)}</td><td class="n">${r.fin ? hm(r.fin) : "DNF"}</td><td class="n">${hm(r.ashore)}</td><td class="n">${hm(r.water)}</td><td class="n">${r.peak} kn</td></tr>`).join("") + "</tbody>";
+}
+function smAreaTable() {
+  if (!WH) return;
+  if (!WH.s || !WH.w) { $("sm-area-note").textContent = "The wind history has not been built yet (data/storm_history/)."; return; }
+  const zy = (z) => { const e = WH.w.nws && WH.w.nws[z]; if (!e) return null; const sc = e.filter((x) => x[3] >= 1).length; return sc / 21; };
+  $("sm-area-note").innerHTML = `ERA5 hourly wind at a point on the course in each stretch, ${WH.s.window_days} days from 10 May each year, scaled to the observed wind where an NDBC station is close (West Point, Port Townsend, Tacoma). Small craft advisory: 21 kn. <b>South / north</b>: the share of hours at 15 kn or more blowing from the south (behind you) and from the north (on the nose). Advisories: small craft advisories and gale warnings the NWS issued for the zone in the window, a year on average since 2005.`;
+  $("sm-area").innerHTML = `<thead><tr><th>Stretch</th><th class="n">Scale</th><th class="n">Days 15 kn+</th><th class="n">Days 21 kn+</th><th class="n">Days gale</th><th class="n">Hours 15 kn+ south / north</th><th class="n">Advisories a year</th></tr></thead><tbody>` +
+    WH.s.areas.map((a, i) => { const A = WH.w.areas[i], z = zy(A.zone); return `<tr><td>${esc(a.name)}<div class="hint">${A.obs ? `observed ${esc(A.obs.station)}, ${A.obs.years.length} years` : "ERA5 only"} · ${esc(A.zone)}</div></td><td class="n">×${a.scale.toFixed(2)}</td><td class="n">${a.days_15.toFixed(1)}</td><td class="n">${a.days_sca.toFixed(1)}</td><td class="n">${a.days_gale.toFixed(2)}</td><td class="n">${(100 * a.hours_15_south).toFixed(1)}% / ${(100 * a.hours_15_north).toFixed(1)}%</td><td class="n">${z == null ? "–" : z.toFixed(1)}</td></tr>`; }).join("") + "</tbody>";
+}
+function smCsv() {
+  const R = SM.res; if (!R) return;
+  const lines = ["scenario,weather,finish_h,ashore_h,on_water_h,shelters,peak_wind_kn", ...R.rows.map((r) => [r.i + 1, `"${r.label}"`, r.fin == null ? "" : r.fin.toFixed(2), r.ashore.toFixed(2), r.water.toFixed(2), r.shelters, r.peak].join(","))];
+  const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([lines.join("\n")], { type: "text/csv" })); a.download = "seventy48-2027-storm-scenarios.csv"; a.click();
+}
+function showPage() {
+  const storms = location.hash === "#storms";
+  $("app").hidden = storms; $("storm-page").hidden = !storms;
+  if (storms) {
+    smLoadHist();
+    $("sm-plan").textContent = P && !P.impossible ? `Your plan: ${P.v.toFixed(2)} kn through the water, ${P.R.fin ? `finishing in ${hm((P.R.fin - gunT()) / H)}` : "not finishing"} with no wind. Each scenario runs the same plan with wind on the course: a headwind slows you, a tailwind helps, and over the shelter strength the crew goes ashore at the nearest landing and waits it out.` : "";
+    if (SM.map) setTimeout(() => SM.map.invalidateSize(), 50);
+  } else if (map) setTimeout(() => map.invalidateSize(), 50);
+}
+
+// ---------- wiring
+let rt;
+function changed() { save(); clearTimeout(rt); rt = setTimeout(render, 40); }
+const NUM = ["delay", "target", "speed", "brkEvery", "brkMin", "ashoreMin", "blakeH", "aidMin", "tideKn", "restEvery", "restH", "headKn", "nightPct", "fade", "crew", "kg", "shellX"];
+function syncInputs() {
+  ["sd", "st", ...NUM].forEach((k) => { $(k).value = state[k]; });
+  ["drift", "sitesOn", "landOn"].forEach((k) => { $(k).checked = state[k]; });
+  ["fayOn", "pnpOn", "fayAid"].forEach((k) => { $(k).checked = state[k]; });
+  $("hullFt").value = $("hullFt-r").value = state.hullFt; $("tracksOn").checked = state.tracksOn; $("ferriesOn").checked = state.ferriesOn;
+}
+async function main() {
+  initMap(); syncInputs(); smInit();
+  const get = (u) => fetch(u).then((r) => (r.ok ? r.json() : null)).catch(() => null);
+  const [route, st, pr, stops, land, lanes, ferries] = await Promise.all(["data/route.json", "data/stations.json", "data/predictions.json", "data/stops.json", "data/landings.json", "data/lanes.json", "data/ferries.json"].map(get));
+  FERRY = ferries;
+  $("ferry-note").textContent = ferries ? `WSF sailings from the ${ferries.days.fri ? ferries.days.fri.date.slice(0, 4) : ""} schedule for the same weekday (the spring 2027 schedule isn't out yet). Hover a ferry for its sailing.` : "Ferry schedule not loaded yet.";
+  if (!route) { $("res-note").innerHTML = '<span class="warn">Could not load data/route.json. Serve the folder over HTTP (python3 -m http.server) rather than opening the file directly.</span>'; return; }
+  ROUTE = route; STATIONS = (st && st.stations) || []; PRED = pr || { stations: {} };
+  STOPSITES = (stops && stops.sites) || []; LANDINGS = (land && land.landings) || [];
+  // Colvos Passage is mandatory: only the west-of-Vashon line is planned
+  ROUTE.legs = ROUTE.legs.filter((l) => l.key === "colvos"); ROUTE.marks = ROUTE.marks.filter((m) => !m.route || m.route === "colvos"); state.route = "colvos";
+  ROUTE.legs.forEach((l) => { CH[l.key] = chain(l.points); });
+  const relegs = (x) => { x.legs = {}; for (const k in CH) { const pr = project(CH[k], [x.lat, x.lon]); x.legs[k] = { along: +pr.along.toFixed(2), offset: +pr.d.toFixed(2) }; } };
+  STATIONS = STATIONS.filter((x) => { relegs(x); return x.kind === "tide" || x.legs.colvos.offset <= 1.2; }); STOPSITES.forEach(relegs); LANDINGS.forEach(relegs);
+  const nc = STATIONS.filter((s) => s.kind === "current").length;
+  $("data-status").textContent = `${pr ? `${nc} NOAA current stations and ${STATIONS.length - nc} tide stations, ${st.window[0]} to ${st.window[1]}` : "No predictions loaded: the plan is in still water"}; ${STOPSITES.length} past stop sites; ${LANDINGS.length} mapped landings.`;
+  drawStatic(); drawLanes(lanes); drawSites();
+  $("mode-seg").addEventListener("click", (e) => {
+    const b = e.target.closest("button"); if (!b) return;
+    if (b.dataset.mode === "speed" && P && P.v) state.speed = Math.round(P.v * 20) / 20;
+    if (b.dataset.mode === "target" && P && P.R && P.R.fin) state.target = Math.round(((P.R.fin - startT()) / H) * 4) / 4;
+    state.mode = b.dataset.mode; syncInputs(); changed();
+  });
+  for (const k of ["sd", "st"]) $(k).addEventListener("change", (e) => { state[k] = e.target.value; state.t = null; changed(); });
+  for (const k of NUM) $(k).addEventListener("input", (e) => { const v = parseFloat(e.target.value); if (!isNaN(v)) { state[k] = v; if (k === "target") $("target-out").textContent = hm(v); if (k === "blakeH") $("blakeH-out").textContent = hm(v); if (k === "speed") $("speed-out").textContent = `${v.toFixed(2)} kn`; changed(); } });
+  $("drift").addEventListener("change", (e) => { state.drift = e.target.checked; changed(); });
+  $("ferriesOn").addEventListener("change", (e) => { state.ferriesOn = e.target.checked; save(); if (state.t) drawFerries(state.t); });
+  $("tracksOn").addEventListener("change", (e) => { state.tracksOn = e.target.checked; save(); if (PAST.length) drawAllTracks(); });
+  ["hullFt", "hullFt-r"].forEach((id) => $(id).addEventListener("input", (e) => {
+    const v = parseFloat(e.target.value); if (isNaN(v)) return;
+    state.hullFt = v; $(id === "hullFt" ? "hullFt-r" : "hullFt").value = v; changed();
+  }));
+  for (const k of ["fayOn", "pnpOn", "fayAid"]) $(k).addEventListener("change", (e) => { state[k] = e.target.checked; changed(); });
+  for (const k of ["sitesOn", "landOn"]) $(k).addEventListener("change", (e) => { state[k] = e.target.checked; drawSites(); changed(); });
+  $("time").addEventListener("input", (e) => setTime(+e.target.value));
+  $("print").addEventListener("click", printSheets);
+  document.addEventListener("click", (e) => { const tr = e.target.closest("aside tr[data-t]"); if (tr && tr.dataset.t) setTime(+tr.dataset.t); });
+  $("heat").addEventListener("click", (e) => {
+    if (!HEAT) return; const r = e.target.getBoundingClientRect(), y = (e.clientY - r.top) * (e.target.height / r.height);
+    setTime(HEAT.t0 + ((y - HEAT.padT) / HEAT.ph) * (HEAT.t1 - HEAT.t0));
+  });
+  window.addEventListener("hashchange", showPage);
+  render(); loadPast(); showPage();
+}
+main();
+
+</script>
+</body>
+</html>
