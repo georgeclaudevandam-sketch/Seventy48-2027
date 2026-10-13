@@ -102,7 +102,8 @@ tr.dark td:first-child { box-shadow: inset 3px 0 0 #475569; }
 .playbar .pb { flex: 1 0 100%; display: grid; grid-template-columns: auto 1fr; gap: 0 8px; }
 .playbar .pb span { color: #94a3b8; } .playbar .pb b { font-weight: 600; color: #f8fafc; }
 .playbar label.follow { display: flex; flex-direction: row; align-items: center; gap: 3px; color: #e2e8f0; font-size: 10px; }
-@media (max-width: 760px) { .playbar { width: 170px; font-size: 10px; } }
+.playbar { width: 260px; }
+@media (max-width: 760px) { .playbar { width: 190px; font-size: 10px; } }
 .stn-ico { background: none; border: none; }
 .stn-ico svg { overflow: visible; filter: drop-shadow(0 0 1.5px rgba(0,0,0,.8)); }
 .mark-ico { background: none; border: none; }
@@ -851,12 +852,16 @@ function initMap() {
   const PlayBar = L.Control.extend({ onAdd() {
     const d = L.DomUtil.create("div", "playbar");
     d.innerHTML = `<div class="prog"><input id="progress" type="range" min="0" max="1" step="60000" value="0" aria-label="Progress through the plan"></div>
+      <button type="button" id="play-reset" aria-label="Back to the start" title="Back to the start">&#9198;</button>
       <button type="button" id="play" aria-label="Play">&#9654;</button>
-      <select id="play-speed" aria-label="Playback speed"><option value="0.25">15 min/s</option><option value="0.5" selected>30 min/s</option><option value="1">1 h/s</option><option value="2">2 h/s</option></select>
+      <select id="play-speed" aria-label="Playback speed"><option value="0.0833333">5 min/s</option><option value="0.1666667">10 min/s</option><option value="0.25">15 min/s</option><option value="0.5" selected>30 min/s</option><option value="1">1 h/s</option><option value="2">2 h/s</option></select>
+      <select id="play-zoom" aria-label="Map zoom" title="Map zoom while following the boat"><option value="0">Course</option><option value="11">Zoom 11</option><option value="12" selected>Zoom 12</option><option value="13">Zoom 13</option><option value="14">Zoom 14</option><option value="15">Zoom 15</option></select>
       <label class="follow"><input type="checkbox" id="follow" checked> Follow</label>
       <div class="pb"><span>Time</span><b id="pb-time"></b><span>Elapsed</span><b id="pb-el"></b><span>Distance</span><b id="pb-dist"></b><span>Thru water</span><b id="pb-stw"></b><span>Stream</span><b id="pb-cur"></b><span>Over bottom</span><b id="pb-sog"></b><span>Light</span><b id="pb-sun"></b></div>`;
     L.DomEvent.disableClickPropagation(d); L.DomEvent.disableScrollPropagation(d);
     d.querySelector("#play").addEventListener("click", () => (playTimer ? stopPlay() : startPlay()));
+    d.querySelector("#play-reset").addEventListener("click", () => { stopPlay(); if (P && P.R) { setTime(P.R.t0); applyZoom(); } });
+    d.querySelector("#play-zoom").addEventListener("change", applyZoom);
     d.querySelector("#progress").addEventListener("input", (e) => setTime(+e.target.value));
     return d;
   } });
@@ -1010,10 +1015,17 @@ function syncTime() {
   if (state.selected) renderDetail();
 }
 function renderHeatCursor() { clearTimeout(renderHeatCursor.tm); renderHeatCursor.tm = setTimeout(renderHeat, 80); }
+// the zoom picked on the play bar: the whole course, or a fixed zoom on the boat
+function applyZoom() {
+  if (!P || !P.R || !map) return;
+  const z = +$("play-zoom").value;
+  if (!z) { $("follow").checked = false; map.fitBounds(routeLines[state.route].getBounds(), { padding: [20, 20], animate: false }); }
+  else { $("follow").checked = true; map.setView(boatLL(P.R, state.t), z, { animate: false }); }
+}
 function startPlay() {
   const R = P.R; if (state.t >= (R.fin || 0)) state.t = R.t0;
   $("play").innerHTML = "&#10074;&#10074;"; $("play").setAttribute("aria-label", "Pause");
-  if ($("follow").checked) map.setView(boatLL(R, state.t), Math.max(map.getZoom(), 12));
+  if ($("follow").checked) map.setView(boatLL(R, state.t), +$("play-zoom").value || Math.max(map.getZoom(), 12));
   playTimer = setInterval(() => { const sp = +$("play-speed").value; setTime(state.t + sp * H / 10); if (state.t >= (P.R.fin || Infinity)) stopPlay(); }, 100);
 }
 function stopPlay() { clearInterval(playTimer); playTimer = null; $("play").innerHTML = "&#9654;"; $("play").setAttribute("aria-label", "Play"); }
