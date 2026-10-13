@@ -136,6 +136,7 @@ button.genout:hover { filter: brightness(1.08); }
 .mini .leaflet-control-attribution { display: none; }
 @media (max-width: 760px) { .mini { width: 120px; height: 150px; } }
 #map .leaflet-tile-pane { transition: filter .4s; }
+.ferry { background: none; border: 0; }
 .boat.lit svg { filter: drop-shadow(0 0 3px #fef08a) drop-shadow(0 0 2px rgba(0,0,0,.8)); }
 /* storm page */
 .app[hidden], #storm-page[hidden] { display: none !important; }
@@ -205,8 +206,8 @@ progress { width: 100%; height: 8px; accent-color: var(--accent); }
       <label class="check" for="drift" title="On a break on the water the boat drifts with the stream. Untick if you hold position."><input id="drift" type="checkbox" checked> Drift with the stream on breaks on the water</label>
       <div class="row">
       </div>
-      <label for="blakeH" title="The first full stop, at the state park campground on Blake Island, off the north end of Colvos Passage. At least 3 hours.">Full stop at Blake Island: <b class="clock" id="blakeH-out"></b>
-        <input id="blakeH" type="range" min="3" max="10" step="0.25" value="3"></label>
+      <label for="blakeH" title="The first full stop, at the state park campground on Blake Island, off the north end of Colvos Passage.">Full stop at Blake Island: <b class="clock" id="blakeH-out"></b>
+        <input id="blakeH" type="range" min="0.5" max="10" step="0.25" value="3"></label>
       <div class="layers">
         <label class="check" for="fayOn" title="If the stream is against you when you reach Fay Bainbridge Park, go ashore until it turns"><input id="fayOn" type="checkbox" checked> Wait out a foul tide at Fay Bainbridge</label>
         <label class="check" for="pnpOn" title="If the stream is against you when you reach Point No Point, go ashore until it turns"><input id="pnpOn" type="checkbox" checked> and at Point No Point</label>
@@ -236,6 +237,11 @@ progress { width: 100%; height: 8px; accent-color: var(--accent); }
         <label for="kg">Each (kg)<input id="kg" type="number" min="40" max="140" step="1" value="80"></label>
         <label for="shellX" title="Power each paddler needs at a given speed, as a multiple of a racing single scull at the same speed">Watts vs a racing shell (×)<input id="shellX" type="number" min="1" max="8" step="0.1" value="3"></label>
       </div>
+      <div class="row">
+        <label for="hullFt-r" style="flex:1">Hull length (waterline, ft)<input id="hullFt-r" type="range" min="10" max="40" step="0.5" value="20"></label>
+        <label for="hullFt">ft<input id="hullFt" type="number" min="10" max="40" step="0.5" value="20" style="width:70px"></label>
+      </div>
+      <p class="hint">Hull speed <b class="clock" id="hull-v"></b> (1.34 × √waterline in ft): the plan never asks for more speed through the water than this.</p>
       <p class="hint" id="kcal-note"></p>
     </section>
 
@@ -279,11 +285,14 @@ progress { width: 100%; height: 8px; accent-color: var(--accent); }
         <span><i style="background:var(--flood)"></i>Flood</span><span><i style="background:var(--ebb)"></i>Ebb</span><span><i style="background:var(--slack)"></i>Slack (&lt;0.3 kn)</span>
         <span>Arrows point where the stream sets; click a station for its curve.</span>
       </div>
+      <label class="check" for="ferriesOn"><input id="ferriesOn" type="checkbox" checked> Ferries on their schedule (stay 100 yards clear)</label>
+      <p class="hint" id="ferry-note"></p>
     </section>
 
     <section aria-labelledby="h-past">
       <h2 id="h-past">Past races</h2>
       <p class="hint" id="past-hint">Loading past results.</p>
+      <label class="check" for="tracksOn" title="Every finisher's YB track, 2024 to 2026. The course line is their average."><input id="tracksOn" type="checkbox" checked> Show every finisher's track on the map (2024 to 2026)</label>
       <div class="tbl-wrap"><table id="past-sum"></table></div>
       <div class="row"><div class="chips" id="past-years"></div><label for="past-class">Class<select id="past-class" style="width:auto"></select></label></div>
       <p class="hint" id="past-list-hint">Highlighted: finished within an hour of your plan. Click a team with a track to see it on the map.</p>
@@ -372,10 +381,10 @@ const hm = (h) => { const m = Math.round(h * 60); return `${Math.floor(m / 60)} 
 const sgn = (v, d = 1) => (v >= 0 ? "+" : "−") + Math.abs(v).toFixed(d);
 
 let ROUTE, STATIONS = [], PRED = { stations: {} }, map, CH = {}, routeLines = {}, stnMarkers = {}, boatMarker, P = null, playTimer = null;
-const KEEP = ["sd", "st", "delay", "mode", "target", "speed", "brkEvery", "brkMin", "ashoreMin", "drift", "blakeH", "fayOn", "pnpOn", "tideKn", "restEvery", "restH", "headKn", "sitesOn", "landOn", "nightPct", "fade", "crew", "kg", "shellX"];
-const state = { route: "colvos", sd: "2027-05-28", st: "19:00", delay: 0, mode: "target", target: 18, speed: 3.5, brkEvery: 2, brkMin: 10, ashoreMin: 20, drift: true, blakeH: 3, fayOn: true, pnpOn: true, tideKn: 0.5, restEvery: 0, restH: 2, headKn: 0, sitesOn: true, landOn: true, nightPct: 100, fade: 0, crew: 1, kg: 80, shellX: 3, t: null, selected: null };
-try { const s = JSON.parse(localStorage.getItem("s48-27v5") || "{}"); KEEP.forEach((k) => { if (k in s) state[k] = s[k]; }); } catch (e) {}
-function save() { try { localStorage.setItem("s48-27v5", JSON.stringify(Object.fromEntries(KEEP.map((k) => [k, state[k]])))); } catch (e) {} }
+const KEEP = ["sd", "st", "delay", "mode", "target", "speed", "brkEvery", "brkMin", "ashoreMin", "drift", "blakeH", "fayOn", "pnpOn", "tideKn", "restEvery", "restH", "headKn", "sitesOn", "landOn", "nightPct", "fade", "crew", "kg", "shellX", "hullFt", "tracksOn", "ferriesOn"];
+const state = { route: "colvos", sd: "2027-05-28", st: "19:00", delay: 0, mode: "target", target: 18, speed: 3.5, brkEvery: 2, brkMin: 10, ashoreMin: 20, drift: true, blakeH: 3, fayOn: true, pnpOn: true, tideKn: 0.5, restEvery: 0, restH: 2, headKn: 0, sitesOn: true, landOn: true, nightPct: 100, fade: 0, crew: 1, kg: 80, shellX: 3, hullFt: 20, tracksOn: true, ferriesOn: true, t: null, selected: null };
+try { const s = JSON.parse(localStorage.getItem("s48-27v6") || "{}"); KEEP.forEach((k) => { if (k in s) state[k] = s[k]; }); } catch (e) {}
+function save() { try { localStorage.setItem("s48-27v6", JSON.stringify(Object.fromEntries(KEEP.map((k) => [k, state[k]])))); } catch (e) {} }
 const startT = () => Date.parse(`${state.sd}T${state.st}:00-07:00`) + state.delay * MIN;
 const gunT = () => Date.parse(`${state.sd}T${state.st}:00-07:00`);
 
@@ -552,7 +561,7 @@ function simulate(key, v0, opt = {}) {
   const ch = CH[key], t0 = startT(), still = !!opt.still, W = opt.wind || null, E = opt.env || {};
   const night = state.nightPct / 100, fade = state.fade / 100, brkEvery = state.brkEvery * H, brkLen = state.brkMin * MIN;
   const restEvery = state.restEvery * H, restLen = state.restH * H, headKn = state.headKn;
-  // Planned stops at fixed places: the full stop at Blake Island (at least 3 hours), then Fay Bainbridge Park and Point No Point,
+  // Planned stops at fixed places: the full stop at Blake Island (30 minutes or more), then Fay Bainbridge Park and Point No Point,
   // where the crew goes ashore only if the tide is foul. The way in and out is the extra distance of bending the line to the
   // landing over 3 nm either side, not straight in and back.
   const fixed = (key) => { const m = ROUTE.marks.find((x) => x.key === key); if (!m) return null; const pr = project(ch, [m.lat, m.lon]);
@@ -594,7 +603,7 @@ function simulate(key, v0, opt = {}) {
     const nextP = plannedStops[0];
     if (nextP && pos >= nextP.site.along) {
       plannedStops.shift();
-      if (nextP.key === "blake") { sinceBrk = 0; sinceRest = 0; pending = null; begin("full", nextP.site, { len: Math.max(3, state.blakeH) * H, why: "planned full stop" }); continue; }
+      if (nextP.key === "blake") { sinceBrk = 0; sinceRest = 0; pending = null; begin("full", nextP.site, { len: Math.max(0.5, state.blakeH) * H, why: "planned full stop" }); continue; }
       const a = still ? 0 : aheadStream(pos, t);
       if (a < -tideKn) { sinceBrk = 0; pending = null; begin("tide", nextP.site, { cond: "tide", min: 30 * MIN, why: `stream ${sgn(a)} kn over the next 4 nm` }); continue; }
     }
@@ -657,12 +666,21 @@ function boatLL(R, t) {
 }
 
 // ---------- plan and render
+// a displacement hull can't be driven much past 1.34 x sqrt(waterline length in ft) knots through the water
+const hullSpeed = (ft) => 1.34 * Math.sqrt(ft);
 function plan() {
-  let v = state.speed;
+  let v = state.speed, hullCap = false;
+  const vH = hullSpeed(state.hullFt);
   if (state.mode === "target") v = solveFor(state.route, state.target).v;
-  if (v == null) return { impossible: true };
+  if (v == null || v > vH) {
+    // a slightly slower boat can catch a fairer tide and finish sooner, so take the quickest finish at or under hull speed
+    let best = null;
+    for (let u = vH; u >= vH * 0.85; u -= 0.02) { const f = simulate(state.route, u).fin; if (f && (!best || f < best.f - MIN)) best = { u, f }; }
+    if (!best) return { impossible: true };
+    v = best.u; hullCap = true;
+  }
   const R = simulate(state.route, v), still = simulate(state.route, v, { still: true });
-  return { R, still, v };
+  return { R, still, v, hullCap, vH };
 }
 function nearestStation(along, kind = "current", maxNm = Infinity) {
   let best = null;
@@ -680,7 +698,7 @@ function markAlong(m, key = state.route) { const ch = CH[key]; return m.key === 
 function render() {
   $("mode-seg").querySelectorAll("button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.mode === state.mode)));
   $("target-l").hidden = state.mode !== "target"; $("speed-l").hidden = state.mode !== "speed";
-  $("target-out").textContent = hm(state.target); $("blakeH-out").textContent = hm(state.blakeH); $("speed-out").textContent = `${(+state.speed).toFixed(2)} kn`;
+  $("target-out").textContent = hm(state.target); $("blakeH-out").textContent = hm(state.blakeH); $("hull-v").textContent = `${hullSpeed(state.hullFt).toFixed(2)} kn`; $("speed-out").textContent = `${(+state.speed).toFixed(2)} kn`;
   P = plan();
   if (P.impossible) { $("tiles").innerHTML = ""; $("res-note").innerHTML = `<span class="warn">No speed under 12 kn makes that finish.</span>`; return; }
   const { R, still, v } = P, el = R.fin ? (R.fin - gunT()) / H : null;
@@ -702,7 +720,8 @@ function render() {
   $("tiles").innerHTML = tiles.map(([a, b, c, k]) => `<div class="tile ${k || ""}"><span>${a}</span><b>${b}</b><small>${c}</small></div>`).join("");
   const ll0 = pointAt(CH[state.route], 0), ev = sunEvents(ll0, R.t0 - 4 * H, R.t0 + 40 * H), m = moonLit(R.t0 + 6 * H);
   const ss = ev.find((e) => e.set), sr = ev.find((e) => !e.set && (!ss || e.t > ss.t));
-  $("res-note").innerHTML = `${state.mode === "target" ? `To finish in ${hm(state.target)} you need <b>${v.toFixed(2)} kn</b> through the water` : `At <b>${v.toFixed(2)} kn</b> through the water you finish in <b>${el ? hm(el) : "–"}</b>`} through Colvos Passage. Sunset ${ss ? fmtT.format(ss.t) : "–"}, sunrise ${sr ? fmtT.format(sr.t) : "–"}; moon ${Math.round(m.lit * 100)}% lit, ${m.waxing ? "waxing" : "waning"}.`;
+  $("res-note").innerHTML = `${state.mode === "target" && !P.hullCap ? `To finish in ${hm(state.target)} you need <b>${v.toFixed(2)} kn</b> through the water` : `At <b>${v.toFixed(2)} kn</b> through the water you finish in <b>${el ? hm(el) : "–"}</b>`} through Colvos Passage. Sunset ${ss ? fmtT.format(ss.t) : "–"}, sunrise ${sr ? fmtT.format(sr.t) : "–"}; moon ${Math.round(m.lit * 100)}% lit, ${m.waxing ? "waxing" : "waning"}.`;
+  if (P.hullCap) $("res-note").innerHTML += `<br><span class="warn">${state.mode === "target" ? `${hm(state.target)} needs` : `${(+state.speed).toFixed(2)} kn is`} more than the hull speed of a ${state.hullFt} ft waterline (${P.vH.toFixed(2)} kn). The plan uses ${v.toFixed(2)} kn, the quickest finish at or under hull speed.</span>`;
   $("kcal-note").textContent = `Each paddler: about ${Math.round(paddlerW(v))} W at ${v.toFixed(2)} kn, ${kcal(kcalH(v))} kcal an hour paddling plus ${kcal(restKcalH())} resting. Plan on ${kcal((R.kcal + restKc) * 0.6)} to ${kcal(R.kcal + restKc)} kcal of food and drink each over the race: few eat all they burn.`;
   renderMarks(); renderStops(); renderLog(); renderHeat(); renderCurve(); renderPast(); drawPlanLayers(); syncTime(); renderPics();
 }
@@ -846,6 +865,19 @@ function initMap() {
   map.on("dragstart", () => { const f = $("follow"); if (f && playTimer) f.checked = false; });
   siteLayer = L.layerGroup().addTo(map); landLayer = L.layerGroup().addTo(map); planLayer = L.layerGroup().addTo(map);
 }
+// the Vessel Traffic Lanes: entering one disqualifies the team (race packet). From OpenStreetMap seamarks (scripts/fetch_lanes.py).
+function drawLanes(d) {
+  if (!d || !d.features) return;
+  if (d.scheme) L.polygon(d.scheme, { color: "#dc2626", weight: 1.5, fillColor: "#dc2626", fillOpacity: 0.12, interactive: true })
+    .bindTooltip("Vessel Traffic Lanes (the Puget Sound traffic separation scheme): entering disqualifies the team", { sticky: true }).addTo(map).bringToBack();
+  const sty = { separation_lane: { color: "#991b1b", weight: 1.5, dashArray: "8 6", opacity: 0.8 }, separation_zone: { color: "#f97316", fillColor: "#f97316", fillOpacity: 0.12, weight: 1, dashArray: "4 3" }, precautionary_area: { color: "#eab308", fillColor: "#eab308", fillOpacity: 0.08, weight: 1, dashArray: "2 4" } };
+  for (const f of d.features) {
+    const st = sty[f.type] || { color: "#dc2626", weight: 1.5, dashArray: "6 4" };
+    if (f.type === "separation_boundary" && !f.closed) continue;   // part of the scheme outline
+    const label = f.type === "separation_lane" ? "Traffic lane direction line" : f.type === "separation_boundary" ? "Precautionary area" : f.type.replace(/_/g, " ");
+    (f.closed ? L.polygon(f.pts, st) : L.polyline(f.pts, st)).bindTooltip(label, { sticky: true }).addTo(map).bringToBack();
+  }
+}
 function drawStatic() {
   for (const l of ROUTE.legs) {
     routeLines[l.key] = L.polyline(l.points, { color: l.key === "colvos" ? "#c2410c" : "#0369a1", weight: 3 })
@@ -901,6 +933,45 @@ function lightAt(t, ll) {   // day, twilight, night, by the sun's altitude at th
   const a = sunAlt(t, ll[0], ll[1]);
   return a > -0.833 ? { k: "Day", b: 1 } : a > -6 ? { k: "Civil twilight", b: 0.75 } : a > -12 ? { k: "Nautical twilight", b: 0.55 } : { k: "Night", b: 0.42 };
 }
+// ---------- ferries: WSF sailings (data/ferries.json, scripts/fetch_ferries.py) for the weekday of the map time, moved along
+// their route between terminals. Stay 100 yards clear of them; they make about 18 kn.
+let FERRY = null, ferryLayer = null;
+const fmtWD = new Intl.DateTimeFormat("en-US", { timeZone: TZ, weekday: "short", hour: "numeric", minute: "numeric", second: "numeric", hourCycle: "h23" });
+function localDay(t) {   // ["fri", seconds after local midnight]
+  const p = Object.fromEntries(fmtWD.formatToParts(t).map((x) => [x.type, x.value]));
+  return [p.weekday.toLowerCase(), +p.hour * 3600 + +p.minute * 60 + +p.second];
+}
+const FERRY_ICON = (hd) => L.divIcon({ className: "ferry", iconSize: [26, 26], iconAnchor: [13, 13],
+  html: `<svg viewBox="-13 -13 26 26" width="26" height="26" style="transform:rotate(${hd.toFixed(0)}deg)" aria-hidden="true"><path d="M0-11 5-4V9H-5V-4Z" fill="#fff" stroke="#065f46" stroke-width="1.6" stroke-linejoin="round"/><rect x="-3" y="-2" width="6" height="7" rx="1" fill="#10b981"/></svg>` });
+function ferryPath(trip, a, b) {   // the shape between two stops, or the straight line
+  const A = FERRY.stops[a], B = FERRY.stops[b], sh = trip.shape && FERRY.shapes[trip.shape];
+  if (!A || !B) return null;
+  if (!sh) return [[A.lat, A.lon], [B.lat, B.lon]];
+  const near = (q) => { let k = 0, d = Infinity; sh.forEach((p, i) => { const e = nmBetween(p, q); if (e < d) { d = e; k = i; } }); return k; };
+  const i = near([A.lat, A.lon]), j = near([B.lat, B.lon]);
+  const seg = i <= j ? sh.slice(i, j + 1) : sh.slice(j, i + 1).reverse();
+  return seg.length > 1 ? seg : [[A.lat, A.lon], [B.lat, B.lon]];
+}
+function drawFerries(t) {
+  if (!FERRY || !map) return;
+  if (!ferryLayer) ferryLayer = L.layerGroup().addTo(map);
+  ferryLayer.clearLayers();
+  if (!state.ferriesOn) return;
+  const [wd, sec] = localDay(t), prev = { sat: "fri", sun: "sat", mon: "sun", fri: "thu" }[wd];
+  const cands = [];
+  for (const [day, off] of [[wd, 0], [prev, 86400]]) { const D = FERRY.days[day]; if (D) D.trips.forEach((tr) => cands.push([tr, sec + off])); }
+  for (const [tr, s] of cands) {
+    const st = tr.st; if (s < st[0][2] || s > st[st.length - 1][1]) continue;
+    let k = 0; while (k < st.length - 1 && st[k + 1][1] <= s) k++;
+    if (k >= st.length - 1 || s < st[k][2]) continue;   // at a terminal, loading
+    const path = ferryPath(tr, st[k][0], st[k + 1][0]); if (!path) continue;
+    const ch = chain(path), f = (s - st[k][2]) / Math.max(60, st[k + 1][1] - st[k][2]);
+    const ll = pointAt(ch, f * ch.total), hd = headingAt(ch, f * ch.total);
+    L.marker(ll, { icon: FERRY_ICON(hd), keyboard: false, zIndexOffset: 500 })
+      .bindTooltip(`${esc(tr.route)}<br>${esc(FERRY.stops[st[k][0]].name)} ${hmClock(st[k][2])} to ${esc(FERRY.stops[st[k + 1][0]].name)} ${hmClock(st[k + 1][1])}`).addTo(ferryLayer);
+  }
+}
+const hmClock = (s) => `${String(Math.floor(s / 3600) % 24).padStart(2, "0")}:${String(Math.floor(s / 60) % 60).padStart(2, "0")}`;
 function syncTime() {
   if (!P || P.impossible) return;
   const R = P.R, lo = gunT() - 2 * H, hi = (R.fin || R.track[R.track.length - 1][0]) + 2 * H;
@@ -908,6 +979,7 @@ function syncTime() {
   const t = state.t;
   for (const id of ["time", "progress"]) { const e = $(id); if (!e) continue; e.min = lo; e.max = hi; e.value = t; }
   $("clock").textContent = fmt.format(t);
+  drawFerries(t);
   for (const s of STATIONS) {
     const v = valueAt(s, t), mk = stnMarkers[s.key]; if (!mk) continue;
     mk.setIcon(stnIcon(s, s.kind === "current" ? v : null));
@@ -998,11 +1070,23 @@ function sideOf(track) {   // which side of Vashon a track went
   return c > e ? "colvos" : e > c ? "east" : null;
 }
 const normClass = (c) => { c = (c || "").toLowerCase(); return /row/.test(c) ? "Rowboat" : /ski/.test(c) ? "Surfski" : /outrigger|oc\d|^oc/.test(c) ? "Outrigger" : /canoe/.test(c) ? "Canoe" : /sup|paddle ?board|paddleboard/.test(c) ? "SUP" : /kayak/.test(c) ? "Kayak" : /pedal/.test(c) ? "Pedal" : c ? "Other" : ""; };
+// every finisher's track, faint, coloured by year: the course line is their median (scripts/build_average_route.py)
+let allTracks = null;
+const YEAR_COL = { 2024: "#a855f7", 2025: "#0ea5e9", 2026: "#f59e0b" };
+function drawAllTracks() {
+  if (!allTracks) {
+    allTracks = L.layerGroup();
+    PAST.forEach((r) => r.teams.filter((t) => /finish/i.test(t.status || "") && t.track && t.track.length > 1).forEach((t) =>
+      L.polyline(t.track.map((q) => [q[1], q[2]]), { color: YEAR_COL[r.year] || "#64748b", weight: 1, opacity: 0.35, interactive: false }).addTo(allTracks)));
+  }
+  if (state.tracksOn) { allTracks.addTo(map); allTracks.eachLayer((l) => l.bringToBack()); } else map.removeLayer(allTracks);
+}
 async function loadPast() {
   const get = (u) => fetch(u).then((r) => (r.ok ? r.json() : null)).catch(() => null);
   const [idx, res] = await Promise.all([get("data/tracks/index.json"), get("data/results/index.json")]);
   if (idx && idx.races) PAST = (await Promise.all(idx.races.map((r) => get(`data/tracks/${r.key}.json`)))).filter(Boolean);
   PAST.forEach((r) => { r.year = new Date(r.start * 1000).getUTCFullYear(); r.teams.forEach((t) => { t.side = sideOf(t.track); t.cls = normClass(t.class); }); });
+  drawAllTracks();
   // one list per year: the official results, with the YB track joined on by team name where there is one
   const years = new Set([...Object.keys((res && res.years) || {}).map(Number), ...PAST.map((r) => r.year)]);
   const key = (s) => (s || "").toLowerCase().replace(/[^a-z0-9]/g, "");
@@ -1135,6 +1219,7 @@ async function smLoadHist() {
   const get = (p) => fetch(p).then((r) => (r.ok ? r.json() : null)).catch(() => null);
   const [w, s] = await Promise.all([get("data/storm_history/wind.json"), get("data/storm_history/summary.json")]);
   WH = { w, s };
+  if (w) w.areas.forEach((a) => { a.legs = {}; for (const k in CH) a.legs[k] = { along: project(CH[k], [a.lat, a.lon]).along }; });
   if (!w) { SM.ctl.mode = "fixed"; $("sm-mode").querySelector('[value="hist"]').disabled = true; smSync(); }
   smAreaTable(); return WH;
 }
@@ -1279,20 +1364,25 @@ function syncInputs() {
   ["sd", "st", ...NUM].forEach((k) => { $(k).value = state[k]; });
   ["drift", "sitesOn", "landOn"].forEach((k) => { $(k).checked = state[k]; });
   ["fayOn", "pnpOn"].forEach((k) => { $(k).checked = state[k]; });
+  $("hullFt").value = $("hullFt-r").value = state.hullFt; $("tracksOn").checked = state.tracksOn; $("ferriesOn").checked = state.ferriesOn;
 }
 async function main() {
   initMap(); syncInputs(); smInit();
   const get = (u) => fetch(u).then((r) => (r.ok ? r.json() : null)).catch(() => null);
-  const [route, st, pr, stops, land] = await Promise.all(["data/route.json", "data/stations.json", "data/predictions.json", "data/stops.json", "data/landings.json"].map(get));
+  const [route, st, pr, stops, land, lanes, ferries] = await Promise.all(["data/route.json", "data/stations.json", "data/predictions.json", "data/stops.json", "data/landings.json", "data/lanes.json", "data/ferries.json"].map(get));
+  FERRY = ferries;
+  $("ferry-note").textContent = ferries ? `WSF sailings from the ${ferries.days.fri ? ferries.days.fri.date.slice(0, 4) : ""} schedule for the same weekday (the spring 2027 schedule isn't out yet). Hover a ferry for its sailing.` : "Ferry schedule not loaded yet.";
   if (!route) { $("res-note").innerHTML = '<span class="warn">Could not load data/route.json. Serve the folder over HTTP (python3 -m http.server) rather than opening the file directly.</span>'; return; }
   ROUTE = route; STATIONS = (st && st.stations) || []; PRED = pr || { stations: {} };
   STOPSITES = (stops && stops.sites) || []; LANDINGS = (land && land.landings) || [];
   // Colvos Passage is mandatory: only the west-of-Vashon line is planned
   ROUTE.legs = ROUTE.legs.filter((l) => l.key === "colvos"); ROUTE.marks = ROUTE.marks.filter((m) => !m.route || m.route === "colvos"); state.route = "colvos";
   ROUTE.legs.forEach((l) => { CH[l.key] = chain(l.points); });
+  const relegs = (x) => { x.legs = {}; for (const k in CH) { const pr = project(CH[k], [x.lat, x.lon]); x.legs[k] = { along: +pr.along.toFixed(2), offset: +pr.d.toFixed(2) }; } };
+  STATIONS = STATIONS.filter((x) => { relegs(x); return x.kind === "tide" || x.legs.colvos.offset <= 1.2; }); STOPSITES.forEach(relegs); LANDINGS.forEach(relegs);
   const nc = STATIONS.filter((s) => s.kind === "current").length;
   $("data-status").textContent = `${pr ? `${nc} NOAA current stations and ${STATIONS.length - nc} tide stations, ${st.window[0]} to ${st.window[1]}` : "No predictions loaded: the plan is in still water"}; ${STOPSITES.length} past stop sites; ${LANDINGS.length} mapped landings.`;
-  drawStatic(); drawSites();
+  drawStatic(); drawLanes(lanes); drawSites();
   $("mode-seg").addEventListener("click", (e) => {
     const b = e.target.closest("button"); if (!b) return;
     if (b.dataset.mode === "speed" && P && P.v) state.speed = Math.round(P.v * 20) / 20;
@@ -1302,6 +1392,12 @@ async function main() {
   for (const k of ["sd", "st"]) $(k).addEventListener("change", (e) => { state[k] = e.target.value; state.t = null; changed(); });
   for (const k of NUM) $(k).addEventListener("input", (e) => { const v = parseFloat(e.target.value); if (!isNaN(v)) { state[k] = v; if (k === "target") $("target-out").textContent = hm(v); if (k === "blakeH") $("blakeH-out").textContent = hm(v); if (k === "speed") $("speed-out").textContent = `${v.toFixed(2)} kn`; changed(); } });
   $("drift").addEventListener("change", (e) => { state.drift = e.target.checked; changed(); });
+  $("ferriesOn").addEventListener("change", (e) => { state.ferriesOn = e.target.checked; save(); if (state.t) drawFerries(state.t); });
+  $("tracksOn").addEventListener("change", (e) => { state.tracksOn = e.target.checked; save(); if (PAST.length) drawAllTracks(); });
+  ["hullFt", "hullFt-r"].forEach((id) => $(id).addEventListener("input", (e) => {
+    const v = parseFloat(e.target.value); if (isNaN(v)) return;
+    state.hullFt = v; $(id === "hullFt" ? "hullFt-r" : "hullFt").value = v; changed();
+  }));
   for (const k of ["fayOn", "pnpOn"]) $(k).addEventListener("change", (e) => { state[k] = e.target.checked; changed(); });
   for (const k of ["sitesOn", "landOn"]) $(k).addEventListener("change", (e) => { state[k] = e.target.checked; drawSites(); changed(); });
   $("time").addEventListener("input", (e) => setTime(+e.target.value));

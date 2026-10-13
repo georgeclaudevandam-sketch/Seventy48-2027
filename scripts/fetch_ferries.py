@@ -2,7 +2,7 @@
 """Washington State Ferries sailings on and across the course, for animating the ferries in the planner (data/ferries.json).
 
 From the WSF GTFS feed. The 2027 spring schedule isn't published yet, so this takes the sailings in the current feed for a
-Friday, a Saturday and a Sunday (the race runs Friday evening to Sunday evening), preferring the latest dates the feed covers,
+Friday, a Saturday and a Sunday (the race runs Friday evening to Sunday evening), the first such dates the feed covers,
 for every route with a terminal near the course: Point Defiance-Tahlequah, Fauntleroy-Vashon-Southworth, Seattle-Bremerton,
 Seattle-Bainbridge, Edmonds-Kingston, Mukilteo-Clinton and Port Townsend-Coupeville. Times are seconds after local midnight.
 Re-run when WSF publishes the spring 2027 schedule.
@@ -78,14 +78,14 @@ def main():
     used_shapes, used_stops, days = set(), set(), {}
     for name, wd in (("fri", 4), ("sat", 5), ("sun", 6)):
         best = None
-        d = d1
-        while d >= d0:   # the latest date with this weekday that has sailings near the course
+        d = d0
+        while d <= d1:   # the first date with this weekday that has sailings near the course (later ones may be holidays)
             if d.weekday() == wd:
                 sv = active(d)
                 n = sum(1 for t in trips.values() if t["service_id"] in sv and any(x[1] in near for x in st.get(t["trip_id"], [])))
                 if n:
                     best = (d, sv); break
-            d -= timedelta(days=1)
+            d += timedelta(days=1)
         if not best:
             log(f"{name}: no sailings"); continue
         d, sv = best; out = []
