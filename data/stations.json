@@ -39,7 +39,7 @@
    "legs": {
     "colvos": {
      "along": 5.68,
-     "offset": 0.2
+     "offset": 0.19
     },
     "east": {
      "along": 6.17,
@@ -61,8 +61,8 @@
    "depth": 44.0,
    "legs": {
     "colvos": {
-     "along": 8.78,
-     "offset": 0.06
+     "along": 8.77,
+     "offset": 0.02
     }
    },
    "key": "PUG1519",
@@ -99,8 +99,8 @@
    "depth": 35.0,
    "legs": {
     "colvos": {
-     "along": 12.57,
-     "offset": 0.37
+     "along": 12.53,
+     "offset": 0.36
     }
    },
    "key": "PUG1518",
@@ -118,8 +118,8 @@
    "depth": 44.0,
    "legs": {
     "colvos": {
-     "along": 17.64,
-     "offset": 0.04
+     "along": 17.59,
+     "offset": 0.05
     }
    },
    "key": "PUG1517",
@@ -137,7 +137,7 @@
    "depth": 22.0,
    "legs": {
     "colvos": {
-     "along": 21.26,
+     "along": 21.17,
      "offset": 0.44
     },
     "east": {
@@ -160,7 +160,7 @@
    "depth": 76.0,
    "legs": {
     "colvos": {
-     "along": 21.51,
+     "along": 21.44,
      "offset": 1.11
     },
     "east": {
@@ -202,8 +202,8 @@
    "depth": 9.0,
    "legs": {
     "colvos": {
-     "along": 23.73,
-     "offset": 0.31
+     "along": 23.65,
+     "offset": 0.34
     }
    },
    "key": "PUG1505",
@@ -240,7 +240,7 @@
    "depth": 19.0,
    "legs": {
     "colvos": {
-     "along": 31.62,
+     "along": 31.43,
      "offset": 0.26
     },
     "east": {
@@ -320,7 +320,7 @@
    "depth": 69.0,
    "legs": {
     "colvos": {
-     "along": 41.94,
+     "along": 41.59,
      "offset": 0.89
     },
     "east": {
@@ -343,8 +343,8 @@
    "depth": 20.0,
    "legs": {
     "colvos": {
-     "along": 45.38,
-     "offset": 1.1
+     "along": 44.98,
+     "offset": 1.05
     },
     "east": {
      "along": 51.87,
@@ -385,8 +385,8 @@
    "depth": 20.0,
    "legs": {
     "colvos": {
-     "along": 48.48,
-     "offset": 0.46
+     "along": 48.13,
+     "offset": 0.49
     },
     "east": {
      "along": 55.63,
@@ -408,7 +408,7 @@
    "depth": 5.0,
    "legs": {
     "colvos": {
-     "along": 53.9,
+     "along": 52.9,
      "offset": 0.0
     },
     "east": {
@@ -448,8 +448,8 @@
    "lon": -122.3393,
    "legs": {
     "colvos": {
-     "along": 21.82,
-     "offset": 5.73
+     "along": 21.68,
+     "offset": 5.77
     },
     "east": {
      "along": 27.41,
@@ -466,8 +466,8 @@
    "lon": -122.7597,
    "legs": {
     "colvos": {
-     "along": 58.82,
-     "offset": 0.29
+     "along": 57.77,
+     "offset": 0.3
     },
     "east": {
      "along": 66.22,
