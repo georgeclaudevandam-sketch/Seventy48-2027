@@ -8,6 +8,7 @@ Planning tools for a Seventy48 2027 entry: Tacoma to Port Townsend, 70 miles, hu
 
 - NOAA ENC charts over a light gray or satellite base map, with an opacity slider.
 - Navigation lights within 3 nm of the course (142 from the NOAA charts), flashing on their charted characteristic and colour, showing the sector that faces the boat.
+- A tidal stream inset on the map: the NOAA current station nearest the boat (it changes as you go), and fixed charts at Point No Point and the Port Townsend Canal marking when the plan passes, each from 3 h before the map time to 9 h after.
 - Play controls: reset, speeds from 5 min/s, and a map width while following the boat (1 to 20 nm across, or the whole course).
 - The course line through Colvos Passage, which is mandatory: the median of the 255 finishers' YB tracks in 2024 to 2026 (`scripts/build_average_route.py`), smoothed along the course (a Gaussian over about a mile, then relaxed where it meets the shore) so it does not zigzag where the tracks spread wide across Admiralty Inlet: about 58 nm (67 statute miles). It is kept off the land and out of the Vessel Traffic Lanes: the race packet disqualifies any team that enters them. Every finisher's track can be shown on the map, coloured by year. `data/route.json` also keeps an older East Passage line, which the planner does not use.
 - The traffic separation scheme is drawn on the map (`data/lanes.json`, from OpenStreetMap seamarks by `scripts/fetch_lanes.py`, which also checks the course line against it).

@@ -135,6 +135,13 @@ button.genout:hover { filter: brightness(1.08); }
 .pic figcaption { font-size: 11px; color: var(--muted); padding-top: 3px; line-height: 1.3; }
 .mini { width: 200px; height: 240px; border-radius: 8px; overflow: hidden; border: 2px solid #f8fafc; box-shadow: 0 1px 6px rgba(0,0,0,.45); background: #0a2533; cursor: pointer; }
 .mini .leaflet-control-attribution { display: none; }
+.tides { width: 200px; background: rgba(10,37,51,.92); color: #e2e8f0; border: 2px solid #f8fafc; border-radius: 8px; box-shadow: 0 1px 6px rgba(0,0,0,.45); font: 11px/1.3 system-ui, sans-serif; }
+.tides > button { all: unset; display: block; width: 100%; box-sizing: border-box; padding: 4px 8px; font-weight: 600; cursor: pointer; }
+.tides > button::after { content: " \25BE"; } .tides.shut > button::after { content: " \25B8"; } .tides.shut .tc { display: none; }
+.tc { padding: 2px 6px 4px; border-top: 1px solid rgba(248,250,252,.2); }
+.tc b { display: block; font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } .tc small { color: #94a3b8; }
+.tc svg { display: block; width: 100%; height: 56px; }
+@media (max-width: 760px) { .tides { width: 150px; } .tc svg { height: 40px; } }
 @media (max-width: 760px) { .mini { width: 120px; height: 150px; } }
 #map .leaflet-tile-pane { transition: filter .4s; }
 .ferry { background: none; border: 0; }
@@ -386,8 +393,8 @@ const hm = (h) => { const m = Math.round(h * 60); return `${Math.floor(m / 60)} 
 const sgn = (v, d = 1) => (v >= 0 ? "+" : "−") + Math.abs(v).toFixed(d);
 
 let ROUTE, STATIONS = [], PRED = { stations: {} }, map, CH = {}, routeLines = {}, stnMarkers = {}, boatMarker, P = null, playTimer = null;
-const KEEP = ["sd", "st", "delay", "mode", "target", "speed", "brkEvery", "brkMin", "ashoreMin", "drift", "blakeH", "fayOn", "pnpOn", "fayAid", "aidMin", "tideKn", "restEvery", "restH", "headKn", "sitesOn", "landOn", "nightPct", "fade", "crew", "kg", "shellX", "hullFt", "tracksOn", "ferriesOn"];
-const state = { route: "colvos", sd: "2027-05-28", st: "19:00", delay: 0, mode: "target", target: 18, speed: 3.5, brkEvery: 2, brkMin: 10, ashoreMin: 5, drift: true, blakeH: 3, fayOn: true, pnpOn: true, fayAid: true, aidMin: 20, tideKn: 0.5, restEvery: 0, restH: 2, headKn: 0, sitesOn: true, landOn: true, nightPct: 100, fade: 0, crew: 1, kg: 80, shellX: 3, hullFt: 20, tracksOn: true, ferriesOn: true, t: null, selected: null };
+const KEEP = ["sd", "st", "delay", "mode", "target", "speed", "brkEvery", "brkMin", "ashoreMin", "drift", "blakeH", "fayOn", "pnpOn", "fayAid", "aidMin", "tideKn", "restEvery", "restH", "headKn", "sitesOn", "landOn", "nightPct", "fade", "crew", "kg", "shellX", "hullFt", "tracksOn", "ferriesOn", "tidesOn"];
+const state = { route: "colvos", sd: "2027-05-28", st: "19:00", delay: 0, mode: "target", target: 18, speed: 3.5, brkEvery: 2, brkMin: 10, ashoreMin: 5, drift: true, blakeH: 3, fayOn: true, pnpOn: true, fayAid: true, aidMin: 20, tideKn: 0.5, restEvery: 0, restH: 2, headKn: 0, sitesOn: true, landOn: true, nightPct: 100, fade: 0, crew: 1, kg: 80, shellX: 3, hullFt: 20, tracksOn: true, ferriesOn: true, tidesOn: true, t: null, selected: null };
 // Your settings are kept in this browser under one key that new versions of the page keep reading. Settings saved by older
 // versions (s48-27v1 to v8) are carried over, newest last; a setting a version added starts at its default, and a value of the
 // wrong type is ignored. The play bar's speed and map width are kept too.
@@ -753,6 +760,36 @@ function nearestStation(along, kind = "current", maxNm = Infinity) {
     const d = Math.abs(l.along - along) + l.offset; if (!best || d < best.d) best = { s, d }; }
   return best && best.d <= maxNm ? best.s : null;
 }
+// map inset: the stream at the current station nearest the boat (it changes as the boat moves on), and fixed charts at Point No
+// Point and the Port Townsend Canal. Each runs from 3 h before the map time to 9 h after: flood above the line (teal), ebb below
+// (amber), the map time in yellow and, at the fixed stations, when the plan passes in red.
+function tideChart(st, t, eta, title) {
+  const t0 = t - 3 * H, t1 = t + 9 * H, n = 96, W = 188, Hh = 56, vals = [];
+  for (let i = 0; i <= n; i++) { const v = valueAt(st, t0 + (i / n) * (t1 - t0)); vals.push(v == null ? 0 : v); }
+  const m = Math.max(1.5, ...vals.map(Math.abs)), X = (tt) => ((tt - t0) / (t1 - t0)) * W, Y = (v) => Hh / 2 - (v / m) * (Hh / 2 - 3);
+  const line = vals.map((v, i) => `${((i / n) * W).toFixed(1)},${Y(v).toFixed(1)}`).join(" ");
+  let svg = `<svg viewBox="0 0 ${W} ${Hh}" preserveAspectRatio="none" aria-hidden="true"><defs><clipPath id="up-${st.key}"><rect width="${W}" height="${Hh / 2}"/></clipPath><clipPath id="dn-${st.key}"><rect y="${Hh / 2}" width="${W}" height="${Hh / 2}"/></clipPath></defs>`;
+  svg += `<polygon points="0,${Hh / 2} ${line} ${W},${Hh / 2}" fill="#0f766e" clip-path="url(#up-${st.key})"/><polygon points="0,${Hh / 2} ${line} ${W},${Hh / 2}" fill="#b45309" clip-path="url(#dn-${st.key})"/>`;
+  svg += `<line x1="0" x2="${W}" y1="${Hh / 2}" y2="${Hh / 2}" stroke="#94a3b8" stroke-width=".6"/>`;
+  for (let h = Math.ceil(t0 / (3 * H)) * 3 * H; h <= t1; h += 3 * H) svg += `<line x1="${X(h)}" x2="${X(h)}" y1="0" y2="${Hh}" stroke="#475569" stroke-width=".5"/>`;
+  if (eta && eta > t0 && eta < t1) svg += `<line x1="${X(eta)}" x2="${X(eta)}" y1="0" y2="${Hh}" stroke="#ef4444" stroke-width="2" stroke-dasharray="3 2"/>`;
+  svg += `<line x1="${X(t)}" x2="${X(t)}" y1="0" y2="${Hh}" stroke="#facc15" stroke-width="2"/></svg>`;
+  const v = valueAt(st, t), ns = nextSlack(st, t);
+  const l = st.legs[state.route], al = v == null || !l ? null : alongStream(st, v, headingAt(CH[state.route], l.along));
+  const now = v == null ? "no data" : Math.abs(v) < SLACK_KN ? "slack" : `${v > 0 ? "flood" : "ebb"} ${Math.abs(v).toFixed(1)} kn${al == null ? "" : al >= 0 ? " with you" : " against"}`;
+  return `<b title="${esc(st.name)}">${esc(title)}</b>${svg}<small>${now}${ns ? `, turns ${fmtT.format(ns)}` : ""}${eta ? ` · <span style="color:#fca5a5">you pass ${fmtT.format(eta)}</span>` : ""} · ±${m.toFixed(1)} kn</small>`;
+}
+function drawTides(t) {
+  const el = $("tc-boat"); if (!el || !state.tidesOn || !P || !P.R) return;
+  const R = P.R, pos = posAt(R, t), here = nearestStation(pos);
+  el.innerHTML = here ? tideChart(here, t, null, `Near you: ${here.name.replace(/,.*$/, "")}`) : "";
+  [["tc-pnp", "PUG1606", "Point No Point"], ["tc-canal", "PUG1614", "Port Townsend Canal"]].forEach(([id, k, name]) => {
+    const st = STATIONS.find((x) => x.key === k), box = $(id); if (!box) return;
+    if (!st || !PRED.stations[k]) { box.innerHTML = ""; return; }
+    const l = st.legs[state.route], eta = l ? timeAt(R, l.along) : null;
+    box.innerHTML = tideChart(st, t, eta, name);
+  });
+}
 function stationState(st, t) {
   const v = valueAt(st, t); if (v == null) return "";
   if (st.kind === "tide") return `<span class="pill">Tide ${v.ft.toFixed(1)} ft, ${v.rising ? "rising" : "falling"}</span>`;
@@ -931,6 +968,11 @@ function initMap() {
   // overview inset: the whole course, the boat and the area the big map shows
   const Mini = L.Control.extend({ onAdd() { const d = L.DomUtil.create("div", "mini"); L.DomEvent.disableClickPropagation(d); L.DomEvent.disableScrollPropagation(d); return d; } });
   const mc = new Mini({ position: "topright" }).addTo(map);
+  const Tides = L.Control.extend({ onAdd() { const d = L.DomUtil.create("div", `tides${state.tidesOn ? "" : " shut"}`); d.id = "tides";
+    d.innerHTML = `<button type="button" aria-expanded="${state.tidesOn}">Tidal stream (NOAA)</button><div class="tc" id="tc-boat"></div><div class="tc" id="tc-pnp"></div><div class="tc" id="tc-canal"></div>`;
+    d.querySelector("button").addEventListener("click", (e) => { state.tidesOn = !state.tidesOn; d.classList.toggle("shut", !state.tidesOn); e.currentTarget.setAttribute("aria-expanded", String(state.tidesOn)); save(); drawTides(state.t); });
+    L.DomEvent.disableClickPropagation(d); L.DomEvent.disableScrollPropagation(d); return d; } });
+  new Tides({ position: "topright" }).addTo(map);
   mini = L.map(mc.getContainer(), { zoomControl: false, attributionControl: false, dragging: false, scrollWheelZoom: false, doubleClickZoom: false, boxZoom: false, keyboard: false, touchZoom: false, zoomSnap: 0 });
   L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}", { maxZoom: 16 }).addTo(mini);
   mini.on("click", (e) => { $("follow").checked = false; map.panTo(e.latlng); });
@@ -1178,7 +1220,7 @@ function syncTime() {
   const t = state.t;
   for (const id of ["time", "progress"]) { const e = $(id); if (!e) continue; e.min = lo; e.max = hi; e.value = t; }
   $("clock").textContent = fmt.format(t);
-  drawFerries(t);
+  drawFerries(t); drawTides(t);
   for (const s of STATIONS) {
     const v = valueAt(s, t), mk = stnMarkers[s.key]; if (!mk) continue;
     mk.setIcon(stnIcon(s, s.kind === "current" ? v : null));
