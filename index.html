@@ -388,8 +388,20 @@ const sgn = (v, d = 1) => (v >= 0 ? "+" : "−") + Math.abs(v).toFixed(d);
 let ROUTE, STATIONS = [], PRED = { stations: {} }, map, CH = {}, routeLines = {}, stnMarkers = {}, boatMarker, P = null, playTimer = null;
 const KEEP = ["sd", "st", "delay", "mode", "target", "speed", "brkEvery", "brkMin", "ashoreMin", "drift", "blakeH", "fayOn", "pnpOn", "fayAid", "aidMin", "tideKn", "restEvery", "restH", "headKn", "sitesOn", "landOn", "nightPct", "fade", "crew", "kg", "shellX", "hullFt", "tracksOn", "ferriesOn"];
 const state = { route: "colvos", sd: "2027-05-28", st: "19:00", delay: 0, mode: "target", target: 18, speed: 3.5, brkEvery: 2, brkMin: 10, ashoreMin: 5, drift: true, blakeH: 3, fayOn: true, pnpOn: true, fayAid: true, aidMin: 20, tideKn: 0.5, restEvery: 0, restH: 2, headKn: 0, sitesOn: true, landOn: true, nightPct: 100, fade: 0, crew: 1, kg: 80, shellX: 3, hullFt: 20, tracksOn: true, ferriesOn: true, t: null, selected: null };
-try { const s = JSON.parse(localStorage.getItem("s48-27v8") || "{}"); KEEP.forEach((k) => { if (k in s) state[k] = s[k]; }); } catch (e) {}
-function save() { try { localStorage.setItem("s48-27v8", JSON.stringify(Object.fromEntries(KEEP.map((k) => [k, state[k]])))); } catch (e) {} }
+// Your settings are kept in this browser under one key that new versions of the page keep reading. Settings saved by older
+// versions (s48-27v1 to v8) are carried over, newest last; a setting a version added starts at its default, and a value of the
+// wrong type is ignored. The play bar's speed and map width are kept too.
+const SAVE_KEY = "s48-27", DEFAULTS = { ...state }, PLAY = {};
+try {
+  const keys = [...Array.from({ length: 8 }, (_, i) => `s48-27v${i + 1}`), SAVE_KEY];
+  keys.forEach((key) => { const s = JSON.parse(localStorage.getItem(key) || "{}");
+    KEEP.forEach((k) => { if (k in s && typeof s[k] === typeof DEFAULTS[k]) state[k] = s[k]; });
+    if (s.play) Object.assign(PLAY, s.play); });
+} catch (e) {}
+function save() {
+  const play = typeof document !== "undefined" && document.getElementById("play-speed") ? { speed: $("play-speed").value, zoom: $("play-zoom").value } : PLAY;
+  try { localStorage.setItem(SAVE_KEY, JSON.stringify({ ...Object.fromEntries(KEEP.map((k) => [k, state[k]])), play })); } catch (e) {}
+}
 const startT = () => Date.parse(`${state.sd}T${state.st}:00-07:00`) + state.delay * MIN;
 const gunT = () => Date.parse(`${state.sd}T${state.st}:00-07:00`);
 
@@ -877,7 +889,10 @@ function initMap() {
     L.DomEvent.disableClickPropagation(d); L.DomEvent.disableScrollPropagation(d);
     d.querySelector("#play").addEventListener("click", () => (playTimer ? stopPlay() : startPlay()));
     d.querySelector("#play-reset").addEventListener("click", () => { stopPlay(); if (P && P.R) { setTime(P.R.t0); applyZoom(); } });
-    d.querySelector("#play-zoom").addEventListener("change", applyZoom);
+    // the speed and map width from last time, if they are still on the list
+    [["#play-speed", PLAY.speed], ["#play-zoom", PLAY.zoom]].forEach(([q, v]) => { const el = d.querySelector(q); if (v != null && [...el.options].some((o) => o.value === String(v))) el.value = String(v); });
+    d.querySelector("#play-zoom").addEventListener("change", () => { applyZoom(); save(); });
+    d.querySelector("#play-speed").addEventListener("change", save);
     d.querySelector("#progress").addEventListener("input", (e) => setTime(+e.target.value));
     return d;
   } });
