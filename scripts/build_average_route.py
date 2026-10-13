@@ -18,7 +18,7 @@ from shapely.geometry import LineString
 ROOT = Path(__file__).resolve().parent.parent
 KEY = sys.argv[sys.argv.index("--key") + 1] if "--key" in sys.argv else "colvos"
 ITER = int(sys.argv[sys.argv.index("--iterations") + 1]) if "--iterations" in sys.argv else 3
-BIN, SMOOTH_NM, MIN_TRACKS = 0.2, 0.5, 30
+BIN, SMOOTH_NM, MIN_TRACKS, SIGMA_NM = 0.2, 0.5, 30, 0.6
 K = math.cos(math.radians(47.7))
 
 
@@ -44,6 +44,25 @@ def project_all(ref, cum, P):
     j = d.argmin(axis=1); r = np.arange(len(P))
     c = np.array(cum)
     return d[r, j], c[j] + (c[j + 1] - c[j]) * f[r, j]
+
+
+def resample(pts, step):
+    c = np.array(chain(pts)); a = np.array(pts); x = np.arange(0, c[-1], step)
+    x = np.append(x, c[-1])
+    return np.c_[np.interp(x, c, a[:, 0]), np.interp(x, c, a[:, 1])], x
+
+
+def smooth(ref, marks):
+    a, x = resample(ref, 0.1)
+    w = int(3 * SIGMA_NM / 0.1); k = np.exp(-0.5 * (np.arange(-w, w + 1) * 0.1 / SIGMA_NM) ** 2)
+    pad = np.r_[np.repeat(a[:1], w, 0), a, np.repeat(a[-1:], w, 0)]
+    sm = np.c_[np.convolve(pad[:, 0], k / k.sum(), "valid"), np.convolve(pad[:, 1], k / k.sum(), "valid")]
+    # keep: 1 in the Foss Waterway (first 1.4 nm) and within 0.6 nm of the canal, blending to 0 over the next mile,
+    # and at the Owen Beach checkpoint, which teams pass close inshore of the mark
+    dist = lambda k: np.array([nm(p, (marks[k]["lat"], marks[k]["lon"])) for p in a]) if k in marks else np.full(len(a), 99.0)
+    keep = np.maximum.reduce([np.clip((2.4 - x) / 1.0, 0, 1), np.clip((1.6 - dist("canal")) / 1.0, 0, 1), np.clip((1.6 - dist("owen")) / 1.0, 0, 1)])
+    out = a * keep[:, None] + sm * (1 - keep[:, None])
+    return [tuple(p) for p in out]
 
 
 def untangle(pts):
@@ -130,6 +149,11 @@ def main():
         sm = [tuple(np.mean(med[max(0, i - w):i + w + 1], axis=0)) for i in range(len(med))]
         ref = untangle([ref[0]] + sm + [ref[-1]])
         print(f"iteration {it + 1}: {chain(ref)[-1]:.2f} nm, {sum(1 for x in med if x is not None)} bins", file=sys.stderr)
+    # smooth the line: resample every 0.1 nm and take a Gaussian average along the course (sigma SIGMA_NM). Where the tracks
+    # spread wide (across Admiralty Inlet) the median in each bin wanders from side to side; this takes the zigzag out. The Foss
+    # Waterway and the Port Townsend Canal keep their shape (they are narrow), with a blend over a mile either side.
+    ref = smooth(ref, marks)
+    print(f"smoothed: {chain(ref)[-1]:.2f} nm", file=sys.stderr)
     # take out hairpins (a bin or two where the median doubles back): any point where the line turns more than 100 degrees
     def turn(a, b, c):
         h1 = math.atan2((b[1] - a[1]) * K, b[0] - a[0]); h2 = math.atan2((c[1] - b[1]) * K, c[0] - b[0])
@@ -142,7 +166,7 @@ def main():
                 del ref[i]; changed = True; break
     # stay out of the Vessel Traffic Lanes (entering one disqualifies the team): a point inside the traffic separation scheme
     # (data/lanes.json, scripts/fetch_lanes.py) goes to the nearest point 0.1 nm outside it
-    lanes = ROOT / "data/lanes.json"
+    lanes = ROOT / "data/lanes.json"; sch = None
     if lanes.exists() and json.loads(lanes.read_text()).get("scheme"):
         from shapely.geometry import Point, Polygon
         from shapely.ops import nearest_points
@@ -178,6 +202,18 @@ def main():
                 if not skip(a_, cum[i - 1]) and wet.intersects(LineString([(a_[1], a_[0]), (b_[1], b_[0])])):
                     ref.insert(i, ((a_[0] + b_[0]) / 2, (a_[1] + b_[1]) / 2))
         print(f"moved {moved} points off the land", file=sys.stderr)
+        # moving points onto the shore leaves kinks: relax the line (each point towards the middle of its neighbours) wherever
+        # that keeps it and its two segments off the land and out of the traffic lanes
+        bad = wet if sch is None else prep(land.buffer(0.0004).union(sch))
+        cum = chain(ref)
+        for _ in range(150):
+            for i in range(1, len(ref) - 1):
+                if skip(ref[i], cum[i]) or ("owen" in marks and nm(ref[i], (marks["owen"]["lat"], marks["owen"]["lon"])) < 1.0):
+                    continue
+                p, a_, b_ = ref[i], ref[i - 1], ref[i + 1]
+                q = (0.5 * p[0] + 0.25 * (a_[0] + b_[0]), 0.5 * p[1] + 0.25 * (a_[1] + b_[1]))
+                if not bad.intersects(LineString([(a_[1], a_[0]), (q[1], q[0]), (b_[1], b_[0])])):
+                    ref[i] = q
     leg["points"] = [[round(p[0], 5), round(p[1], 5)] for p in ref]
     leg["nm"] = round(chain(ref)[-1], 2)
     leg["source"] = f"median of {n} finished YB tracks 2024-2026 (scripts/build_average_route.py)"
