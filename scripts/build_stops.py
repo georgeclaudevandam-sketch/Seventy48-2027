@@ -73,9 +73,12 @@ def main():
         if not on:
             continue
         teams = sorted({(s["year"], s["team"]) for s in g["m"]})
+        mins = {}   # each team's time ashore here, all its stops added up
+        for s in g["m"]:
+            mins[(s["year"], s["team"])] = mins.get((s["year"], s["team"]), 0) + s["min"]
         out.append({"lat": round(g["ll"][0], 4), "lon": round(g["ll"][1], 4), "teams": len(teams), "stops": len(g["m"]),
                     "median_min": round(median(s["min"] for s in g["m"])), "years": sorted({s["year"] for s in g["m"]}),
-                    "who": [f"{y} {n}" for y, n in teams][:12], "legs": on})
+                    "who": [f"{y} {n} ({round(mins[(y, n)])} min)" for y, n in teams], "legs": on})
     out.sort(key=lambda x: min(v["along"] for v in x["legs"].values()))
     (ROOT / "data" / "stops.json").write_text(json.dumps({"stay_nm": STAY_NM, "min_minutes": MIN_MIN, "group_nm": GROUP_NM, "sites": out}, indent=0))
     print(len(out), "sites;", sum(1 for x in out if x["teams"] >= 3), "used by 3+ teams")
