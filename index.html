@@ -136,7 +136,7 @@ button.genout:hover { filter: brightness(1.08); }
 .mini { width: 200px; height: 240px; border-radius: 8px; overflow: hidden; border: 2px solid #f8fafc; box-shadow: 0 1px 6px rgba(0,0,0,.45); background: #0a2533; cursor: pointer; }
 .mini .leaflet-control-attribution { display: none; }
 .leaflet-popup-content ol.who { margin: 4px 0 0; padding-left: 30px; max-height: 240px; overflow-y: auto; }
-.tides { width: 200px; background: rgba(10,37,51,.92); color: #e2e8f0; border: 2px solid #f8fafc; border-radius: 8px; box-shadow: 0 1px 6px rgba(0,0,0,.45); font: 11px/1.3 system-ui, sans-serif; }
+.tides { width: 200px; overflow-y: auto; background: rgba(10,37,51,.92); color: #e2e8f0; border: 2px solid #f8fafc; border-radius: 8px; box-shadow: 0 1px 6px rgba(0,0,0,.45); font: 11px/1.3 system-ui, sans-serif; }
 .tides > button { all: unset; display: block; width: 100%; box-sizing: border-box; padding: 4px 8px; font-weight: 600; cursor: pointer; }
 .tides > button::after { content: " \25BE"; } .tides.shut > button::after { content: " \25B8"; } .tides.shut .tc { display: none; }
 .tc { padding: 2px 6px 4px; border-top: 1px solid rgba(248,250,252,.2); }
@@ -945,7 +945,7 @@ function initMap() {
   const navLights = new LightLayer().addTo(map);
   L.control.layers({ "Light gray": gray, "Satellite": imagery }, { "NOAA charts": charts, "Navigation lights (flashing)": navLights }, { position: "topleft", collapsed: true }).addTo(map);
   const Op = L.Control.extend({ onAdd() { const d = L.DomUtil.create("div", "opacity-ctl"); d.innerHTML = `<label>Charts <input type="range" min="0" max="1" step="0.05" value="0.9" aria-label="Chart opacity"></label>`; L.DomEvent.disableClickPropagation(d); d.querySelector("input").addEventListener("input", (e) => charts.setOpacity(+e.target.value)); return d; } });
-  new Op({ position: "bottomright" }).addTo(map);
+  new Op({ position: "topleft" }).addTo(map);
   const PlayBar = L.Control.extend({ onAdd() {
     const d = L.DomUtil.create("div", "playbar");
     d.innerHTML = `<div class="prog"><input id="progress" type="range" min="0" max="1" step="60000" value="0" aria-label="Progress through the plan"></div>
@@ -974,6 +974,10 @@ function initMap() {
     d.querySelector("button").addEventListener("click", (e) => { state.tidesOn = !state.tidesOn; d.classList.toggle("shut", !state.tidesOn); e.currentTarget.setAttribute("aria-expanded", String(state.tidesOn)); save(); drawTides(state.t); });
     L.DomEvent.disableClickPropagation(d); L.DomEvent.disableScrollPropagation(d); return d; } });
   new Tides({ position: "topright" }).addTo(map);
+  // keep the tide panel inside the map: it scrolls when the window is too short for all three charts
+  const fitTides = () => { const el = $("tides"); if (!el) return; const top = el.getBoundingClientRect().top - map.getContainer().getBoundingClientRect().top;
+    el.style.maxHeight = `${Math.max(80, map.getSize().y - top - 24)}px`; };
+  map.on("resize", fitTides); setTimeout(fitTides, 0);
   mini = L.map(mc.getContainer(), { zoomControl: false, attributionControl: false, dragging: false, scrollWheelZoom: false, doubleClickZoom: false, boxZoom: false, keyboard: false, touchZoom: false, zoomSnap: 0 });
   L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}", { maxZoom: 16 }).addTo(mini);
   mini.on("click", (e) => { $("follow").checked = false; map.panTo(e.latlng); });
