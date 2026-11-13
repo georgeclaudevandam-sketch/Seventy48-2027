@@ -1,0 +1,479 @@
+{
+ "window": [
+  "20270524",
+  "20270603"
+ ],
+ "reach_nm": 1.2,
+ "stations": [
+  {
+   "id": "PUG1524",
+   "name": "The Narrows, North end - midstream",
+   "lat": 47.306,
+   "lon": -122.55,
+   "type": "H",
+   "bin": 16,
+   "depth": 40.0,
+   "legs": {
+    "colvos": {
+     "along": 5.13,
+     "offset": 1.12
+    },
+    "east": {
+     "along": 5.78,
+     "offset": 0.96
+    }
+   },
+   "key": "PUG1524",
+   "kind": "current",
+   "flood_dir": 145.0,
+   "ebb_dir": 337.0
+  },
+  {
+   "id": "PUG1522",
+   "name": "Dalco Passage",
+   "lat": 47.3251,
+   "lon": -122.5247,
+   "type": "H",
+   "bin": 12,
+   "depth": 128.0,
+   "legs": {
+    "colvos": {
+     "along": 5.68,
+     "offset": 0.19
+    },
+    "east": {
+     "along": 6.17,
+     "offset": 0.34
+    }
+   },
+   "key": "PUG1522",
+   "kind": "current",
+   "flood_dir": 293.0,
+   "ebb_dir": 130.0
+  },
+  {
+   "id": "PUG1519",
+   "name": "Point Richmond, East of, Colvos Passage",
+   "lat": 47.3766,
+   "lon": -122.5287,
+   "type": "H",
+   "bin": 18,
+   "depth": 44.0,
+   "legs": {
+    "colvos": {
+     "along": 8.77,
+     "offset": 0.02
+    }
+   },
+   "key": "PUG1519",
+   "kind": "current",
+   "flood_dir": 143.0,
+   "ebb_dir": 356.0
+  },
+  {
+   "id": "PUG1521",
+   "name": "Browns Point, 1.6 miles North of",
+   "lat": 47.3287,
+   "lon": -122.454,
+   "type": "H",
+   "bin": 34,
+   "depth": 28.0,
+   "legs": {
+    "east": {
+     "along": 9.4,
+     "offset": 0.38
+    }
+   },
+   "key": "PUG1521",
+   "kind": "current",
+   "flood_dir": 234.0,
+   "ebb_dir": 42.0
+  },
+  {
+   "id": "PUG1518",
+   "name": "Anderson Point, East of, Colvos Passage",
+   "lat": 47.4394,
+   "lon": -122.5258,
+   "type": "H",
+   "bin": 19,
+   "depth": 35.0,
+   "legs": {
+    "colvos": {
+     "along": 12.53,
+     "offset": 0.36
+    }
+   },
+   "key": "PUG1518",
+   "kind": "current",
+   "flood_dir": 183.0,
+   "ebb_dir": 356.0
+  },
+  {
+   "id": "PUG1517",
+   "name": "Blake Island, S of",
+   "lat": 47.5203,
+   "lon": -122.4879,
+   "type": "H",
+   "bin": 21,
+   "depth": 44.0,
+   "legs": {
+    "colvos": {
+     "along": 17.59,
+     "offset": 0.05
+    }
+   },
+   "key": "PUG1517",
+   "kind": "current",
+   "flood_dir": 244.0,
+   "ebb_dir": 350.0
+  },
+  {
+   "id": "PUG1512",
+   "name": "Restoration Point",
+   "lat": 47.5788,
+   "lon": -122.4687,
+   "type": "H",
+   "bin": 19,
+   "depth": 22.0,
+   "legs": {
+    "colvos": {
+     "along": 21.17,
+     "offset": 0.44
+    },
+    "east": {
+     "along": 26.86,
+     "offset": 0.68
+    }
+   },
+   "key": "PUG1512",
+   "kind": "current",
+   "flood_dir": 0.0,
+   "ebb_dir": 52.0
+  },
+  {
+   "id": "PUG1502",
+   "name": "Alki Point, 1 mile West of",
+   "lat": 47.5837,
+   "lon": -122.4518,
+   "type": "H",
+   "bin": 44,
+   "depth": 76.0,
+   "legs": {
+    "colvos": {
+     "along": 21.44,
+     "offset": 1.11
+    },
+    "east": {
+     "along": 27.15,
+     "offset": 0.01
+    }
+   },
+   "key": "PUG1502",
+   "kind": "current",
+   "flood_dir": 201.0,
+   "ebb_dir": 31.0
+  },
+  {
+   "id": "PUG1520",
+   "name": "Dolphin Point, 1.3 miles East of",
+   "lat": 47.5015,
+   "lon": -122.4236,
+   "type": "H",
+   "bin": 35,
+   "depth": 48.0,
+   "legs": {
+    "east": {
+     "along": 21.96,
+     "offset": 0.11
+    }
+   },
+   "key": "PUG1520",
+   "kind": "current",
+   "flood_dir": 186.0,
+   "ebb_dir": 343.0
+  },
+  {
+   "id": "PUG1505",
+   "name": "Entrance to Eagle Harbor",
+   "lat": 47.6196,
+   "lon": -122.4953,
+   "type": "H",
+   "bin": 8,
+   "depth": 9.0,
+   "legs": {
+    "colvos": {
+     "along": 23.65,
+     "offset": 0.34
+    }
+   },
+   "key": "PUG1505",
+   "kind": "current",
+   "flood_dir": 337.0,
+   "ebb_dir": 137.0
+  },
+  {
+   "id": "PUG1516",
+   "name": "Alki Point, West of",
+   "lat": 47.5761,
+   "lon": -122.4278,
+   "type": "H",
+   "bin": 17,
+   "depth": 38.0,
+   "legs": {
+    "east": {
+     "along": 26.7,
+     "offset": 0.98
+    }
+   },
+   "key": "PUG1516",
+   "kind": "current",
+   "flood_dir": 215.0,
+   "ebb_dir": 4.0
+  },
+  {
+   "id": "PUG1509",
+   "name": "Point Jefferson, East of",
+   "lat": 47.7445,
+   "lon": -122.468,
+   "type": "H",
+   "bin": 9,
+   "depth": 19.0,
+   "legs": {
+    "colvos": {
+     "along": 31.43,
+     "offset": 0.26
+    },
+    "east": {
+     "along": 37.3,
+     "offset": 0.44
+    }
+   },
+   "key": "PUG1509",
+   "kind": "current",
+   "flood_dir": 217.0,
+   "ebb_dir": 31.0
+  },
+  {
+   "id": "PUG1515",
+   "name": "West Point, West of",
+   "lat": 47.6621,
+   "lon": -122.4417,
+   "type": "H",
+   "bin": 15,
+   "depth": 16.0,
+   "legs": {
+    "east": {
+     "along": 32.27,
+     "offset": 0.87
+    }
+   },
+   "key": "PUG1515",
+   "kind": "current",
+   "flood_dir": 234.0,
+   "ebb_dir": 341.0
+  },
+  {
+   "id": "PUG1511",
+   "name": "President Point, 1.5 miles east of",
+   "lat": 47.7671,
+   "lon": -122.4319,
+   "type": "H",
+   "bin": 38,
+   "depth": 71.0,
+   "legs": {
+    "east": {
+     "along": 38.66,
+     "offset": 1.02
+    }
+   },
+   "key": "PUG1511",
+   "kind": "current",
+   "flood_dir": 177.0,
+   "ebb_dir": 3.0
+  },
+  {
+   "id": "PUG1503",
+   "name": "Edmonds, 2.5 miles West of",
+   "lat": 47.8071,
+   "lon": -122.4441,
+   "type": "H",
+   "bin": 34,
+   "depth": 67.0,
+   "legs": {
+    "east": {
+     "along": 41.06,
+     "offset": 0.52
+    }
+   },
+   "key": "PUG1503",
+   "kind": "current",
+   "flood_dir": 161.0,
+   "ebb_dir": 358.0
+  },
+  {
+   "id": "PUG1606",
+   "name": "Point No Point, 1.2 mi. E of",
+   "lat": 47.9125,
+   "lon": -122.502,
+   "type": "H",
+   "bin": 39,
+   "depth": 69.0,
+   "legs": {
+    "colvos": {
+     "along": 41.59,
+     "offset": 0.89
+    },
+    "east": {
+     "along": 47.98,
+     "offset": 0.37
+    }
+   },
+   "key": "PUG1606",
+   "kind": "current",
+   "flood_dir": 164.0,
+   "ebb_dir": 336.0
+  },
+  {
+   "id": "PUG1610",
+   "name": "Foulweather Bluff, 1.9 mi. NE of",
+   "lat": 47.9543,
+   "lon": -122.5786,
+   "type": "H",
+   "bin": 33,
+   "depth": 20.0,
+   "legs": {
+    "colvos": {
+     "along": 44.98,
+     "offset": 1.05
+    },
+    "east": {
+     "along": 51.87,
+     "offset": 0.45
+    }
+   },
+   "key": "PUG1610",
+   "kind": "current",
+   "flood_dir": 125.0,
+   "ebb_dir": 302.0
+  },
+  {
+   "id": "PUG1607",
+   "name": "Point No Point, 2.1 mi. E of",
+   "lat": 47.9189,
+   "lon": -122.4841,
+   "type": "H",
+   "bin": 33,
+   "depth": 30.5,
+   "legs": {
+    "east": {
+     "along": 47.74,
+     "offset": 1.15
+    }
+   },
+   "key": "PUG1607",
+   "kind": "current",
+   "flood_dir": 129.0,
+   "ebb_dir": 331.0
+  },
+  {
+   "id": "PUG1611",
+   "name": "Olele Point, 1.8 mi. ENE of",
+   "lat": 47.9788,
+   "lon": -122.6455,
+   "type": "H",
+   "bin": 49,
+   "depth": 20.0,
+   "legs": {
+    "colvos": {
+     "along": 48.13,
+     "offset": 0.49
+    },
+    "east": {
+     "along": 55.63,
+     "offset": 0.43
+    }
+   },
+   "key": "PUG1611",
+   "kind": "current",
+   "flood_dir": 149.0,
+   "ebb_dir": 342.0
+  },
+  {
+   "id": "PUG1614",
+   "name": "Port Townsend Canal",
+   "lat": 48.0325,
+   "lon": -122.7326,
+   "type": "H",
+   "bin": 7,
+   "depth": 5.0,
+   "legs": {
+    "colvos": {
+     "along": 52.9,
+     "offset": 0.0
+    },
+    "east": {
+     "along": 60.82,
+     "offset": 0.12
+    }
+   },
+   "key": "PUG1614",
+   "kind": "current",
+   "flood_dir": 140.0,
+   "ebb_dir": 323.0
+  },
+  {
+   "key": "9446484",
+   "id": "9446484",
+   "name": "Tacoma",
+   "kind": "tide",
+   "lat": 47.2667,
+   "lon": -122.4133,
+   "legs": {
+    "colvos": {
+     "along": 0.09,
+     "offset": 1.06
+    },
+    "east": {
+     "along": 0.38,
+     "offset": 0.99
+    }
+   }
+  },
+  {
+   "key": "9447130",
+   "id": "9447130",
+   "name": "Seattle",
+   "kind": "tide",
+   "lat": 47.6026,
+   "lon": -122.3393,
+   "legs": {
+    "colvos": {
+     "along": 21.68,
+     "offset": 5.77
+    },
+    "east": {
+     "along": 27.41,
+     "offset": 4.64
+    }
+   }
+  },
+  {
+   "key": "9444900",
+   "id": "9444900",
+   "name": "Port Townsend",
+   "kind": "tide",
+   "lat": 48.1112,
+   "lon": -122.7597,
+   "legs": {
+    "colvos": {
+     "along": 57.77,
+     "offset": 0.3
+    },
+    "east": {
+     "along": 66.22,
+     "offset": 0.35
+    }
+   }
+  }
+ ]
+}

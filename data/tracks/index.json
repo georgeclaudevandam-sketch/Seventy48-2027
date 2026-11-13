@@ -1,0 +1,26 @@
+{
+ "source": "YB Tracking (yb.tl)",
+ "races": [
+  {
+   "key": "seventy48_2026",
+   "title": "SEVENTY48 2026",
+   "start": 1780105500,
+   "teams": 142,
+   "finished": 95
+  },
+  {
+   "key": "seventy48_2025",
+   "title": "SEVENTY48 2025",
+   "start": 1749261000,
+   "teams": 104,
+   "finished": 77
+  },
+  {
+   "key": "seventy48_2024",
+   "title": "SEVENTY48 2024",
+   "start": 1717206300,
+   "teams": 135,
+   "finished": 83
+  }
+ ]
+}

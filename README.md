@@ -1,3 +1,44 @@
 # Seventy48 2027
 
-Planning tools for a Seventy48 2027 entry: Tacoma to Port Townsend, 70 miles, human power only, 48 hours.
+Planning tools for a Seventy48 2027 entry: Tacoma to Port Townsend, 70 miles, human power only, 48 hours. The 2027 race starts Friday 28 May 2027 at 19:00 from the Foss Waterway Seaport in Tacoma (teams have 30 minutes to cross the line). The only required checkpoints are Owen Beach and the Port Townsend Ship Canal; the finish is the bell at Northwest Maritime in Port Townsend, by 19:00 Sunday.
+
+## Race planner
+
+`index.html` is an interactive map, built the same way as the R2AK 2028 planner:
+
+- NOAA ENC charts over a light gray or satellite base map, with an opacity slider.
+- Navigation lights within 3 nm of the course (142 from the NOAA charts), flashing on their charted characteristic and colour, showing the sector that faces the boat.
+- A tidal stream inset on the map: the NOAA current station nearest the boat (it changes as you go), and fixed charts at Point No Point and the Port Townsend Canal marking when the plan passes, each from 3 h before the map time to 9 h after.
+- Play controls: reset, speeds from 5 min/s, and a map width while following the boat (1 to 20 nm across, or the whole course).
+- The course line through Colvos Passage, which is mandatory: the median of the 255 finishers' YB tracks in 2024 to 2026 (`scripts/build_average_route.py`), smoothed along the course (a Gaussian over about a mile, then relaxed where it meets the shore) so it does not zigzag where the tracks spread wide across Admiralty Inlet: about 58 nm (67 statute miles). It is kept off the land and out of the Vessel Traffic Lanes: the race packet disqualifies any team that enters them. Every finisher's track can be shown on the map, coloured by year. `data/route.json` also keeps an older East Passage line, which the planner does not use.
+- The traffic separation scheme is drawn on the map (`data/lanes.json`, from OpenStreetMap seamarks by `scripts/fetch_lanes.py`, which also checks the course line against it).
+- Ferries move on the map to the Washington State Ferries schedule for the weekday of the map time (`data/ferries.json`, from the WSF GTFS feed by `scripts/fetch_ferries.py`; the spring 2027 schedule isn't out yet, so it uses the current one).
+- Plan by target finish (default 18 hours: it solves for the speed through the water that gets you there) or by speed (it shows the finish). Breaks every so many hours, drifting with the stream or not, a slower night pace, and fade over the race are all settings.
+- The tidal stream along the course comes from the 19 NOAA current stations within 1.2 nm of either line. Each station's predicted speed is resolved onto the course heading using its mean flood and ebb directions, so "with you" comes from the data. Between stations the stream is blended along the course; a station's stream holds 5 nm either side and then fades out (the Port Townsend Canal station only speaks for the canal).
+- Result tiles: the speed you need, finish time, average speed over the bottom, how much time the stream saves or costs against still water, time paddling in the dark, the other side of Vashon at the same speed, and the margin to the cutoff.
+- Checkpoints and waypoints with your arrival time and what the nearest NOAA station is doing then (and when it turns).
+- Stream along the course: a distance by time picture of the stream with your boat's line on it, next to the still-water line, with night shaded.
+- Finish time against speed for both sides of Vashon, with your break and pace settings.
+- Hour by hour: where you are, speed through the water, stream and speed over the bottom.
+- Map time and play bar: the boat moves along the course and every current station shows its arrow (flood, ebb, slack). Click a station for its curve over the race, with the time your plan passes it.
+- Planned stops: a full stop at Blake Island (a slider from 30 minutes); a stop at the Fay Bainbridge Park aid station (volunteers with food and coffee), where any break that falls due in the hour before is taken instead; and Fay Bainbridge and Point No Point where the crew goes ashore only if the tide over the next 4 nm is foul by more than a set strength, and leaves when it eases or after 6 hours.
+- Other stops: breaks every so many hours, on the water (drifting or holding) or ashore when long enough; another long rest after so many hours of paddling, counted from Blake; and an optional wait ashore while the stream against you is over a set strength. Short breaks ashore (bathroom breaks) go to a place past teams stopped, the most used one within 2.5 nm ahead; other stops pick the most used landing in reach, then a mapped beach, campsite, launch or marina (purple). Landings are only ever ahead of the boat: the track bends smoothly off the course to the landing and back on (red on the map), never paddling back the way it came. The boat paddles the bend, so its extra miles count in the distance, the speeds and the finish time. Each stop is on the map and in a table, with close-up maps of the landings used.
+- Boat and crew: paddlers, weight and how hard the boat is to push give power and calories per hour, and food to plan for the race. Hull length (waterline) sets the hull speed, 1.34 × √length in feet, as in the R2AK planner: the plan never asks for more speed through the water than that.
+- Overview inset of the whole course, and the map darkens through the night as you scrub the time.
+- Past races: official results 2018 to 2026 (no race in 2020) from the Seventy48 results pages, and every tracked boat in 2024 to 2026 from YB Tracking, with where your planned finish would have placed each year, the first finisher and the median finish. Filter by class; click a team to see its track.
+- Generate output: a printable plan (cover with the tiles, checkpoints, stops and hour by hour), one sheet per leg between marks, and NOAA chart strips every 6 nm with the plan's times on them. Print or save as PDF.
+- Storm contingency (`#storms`): a Monte Carlo of your plan against wind. In history mode each scenario takes a past year's hourly wind (ERA5, 1976 to 2025) on a day near the race date, blended between four stretches of the course and optionally scaled to the observed wind at NDBC stations, with the 2027 tides. Or set made-up blows of a given strength, length and direction. A headwind costs speed, a tailwind helps, wind against tide costs more, and over the shelter strength the crew goes ashore at the nearest landing until it drops. Results: finish distribution, chance of missing the cutoff, where crews sheltered, stretches with no landing in reach, and the worst weather days, with a CSV.
+
+Open it from GitHub with `https://raw.githack.com/georgeclaudevandam-sketch/Seventy48-2027/<branch>/index.html`, or serve the folder locally (`python3 -m http.server`) and open `http://localhost:8000`. It needs to be served over HTTP because it loads `data/*.json`.
+
+## Data
+
+- `data/route.json`: course lines and marks, from `scripts/build_route.py` (shortest water path on a ~55 m grid from the GSHHG full-resolution coastline, with the Thea Foss Waterway and Port Townsend Canal carved in by hand because they are narrower than the grid). For distance and ETA only.
+- `data/stations.json` and `data/predictions.json`: from `scripts/fetch_predictions.py`, which the **Fetch tide and current predictions** workflow runs on GitHub Actions whenever the script or the course changes (or on demand from the Actions tab). It finds NOAA current prediction stations near the course from NOAA's metadata API, keeps the shallowest bin of each, and fetches max/slack events for 24 May to 3 June 2027, plus high/low tides at Tacoma, Seattle and Port Townsend.
+- `data/tracks/`: past races from YB Tracking (`scripts/fetch_tracks.py`, the **Fetch past Seventy48 tracks** workflow). 2024, 2025 and 2026 are on YB under `seventy48_<year>`; earlier years were not found under the keys tried.
+- `data/results/`: official results 2018 to 2026 from the Seventy48 site (`scripts/fetch_results.py`, the **Fetch past results** workflow saves the CSVs; `fetch_results.py --parse` builds `index.json` with each team's class, place and elapsed time).
+- `data/stops.json`: places tracked boats stopped in 2024 to 2026 (15 minutes or more within 0.08 nm, grouped within 0.25 nm, within 1.5 nm of the course), from `scripts/build_stops.py`.
+- `data/landings.json`: beaches, campsites, launches and marinas within 1.5 nm of the course from OpenStreetMap (`scripts/fetch_landings.py`, the **Fetch landings** workflow).
+- `data/storm_history/`: hourly ERA5 wind 10 May to 20 June, 1976 to 2025, at four points on the course, with the NDBC scale factors (Tacoma, West Point, Port Townsend) and NWS advisory counts (`scripts/storm_history.py`, the **Storm history** workflow). ERA5 is a ~30 km grid, so the Vashon to Kingston and Kingston to Foulweather Bluff points fall in the same cell and share a series.
+
+Not for navigation. Use official NOAA tables and current charts aboard.

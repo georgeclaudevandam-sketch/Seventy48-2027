@@ -1,0 +1,6102 @@
+{
+"source": "seventy48.com race recaps (published Google Sheets)",
+"years": {
+"2018": {
+"file": "2018.csv",
+"sheet": "https://docs.google.com/spreadsheets/d/e/2PACX-1vSTPAgLIRmNvwF-rZj3x5aMnUzxXIfGDUk4SM-0DHEHPpsg_36kp4LSp3OpfJjHwzkYfeP5R8j9_jIG/pubhtml",
+"start": "2018-06-11T17:30",
+"teams": [
+{
+"team": "Epic",
+"class": "kayak",
+"place": "1",
+"finish": "2018-06-12T03:09",
+"elapsed_h": 9.65
+},
+{
+"team": "6 by 600",
+"class": "outrigger",
+"place": "2",
+"finish": "2018-06-12T03:28",
+"elapsed_h": 9.97
+},
+{
+"team": "Way Two Close",
+"class": "rowboat",
+"place": "3",
+"finish": "2018-06-12T04:20",
+"elapsed_h": 10.83
+},
+{
+"team": "Go Mamas GO!!!",
+"class": "kayak",
+"place": "4",
+"finish": "2018-06-12T04:37",
+"elapsed_h": 11.12
+},
+{
+"team": "Stick Boys",
+"class": "kayak",
+"place": "5",
+"finish": "2018-06-12T04:40",
+"elapsed_h": 11.17
+},
+{
+"team": "Wave Forager",
+"class": "rowboat",
+"place": "6",
+"finish": "2018-06-12T04:57",
+"elapsed_h": 11.45
+},
+{
+"team": "Sound Rowers",
+"class": "rowboat",
+"place": "7",
+"finish": "2018-06-12T05:11",
+"elapsed_h": 11.68
+},
+{
+"team": "Night Owl",
+"class": "kayak",
+"place": "8",
+"finish": "2018-06-12T06:50",
+"elapsed_h": 13.33
+},
+{
+"team": "Kikaha O Ke Kai-Mahina",
+"class": "outrigger",
+"place": "9",
+"finish": "2018-06-12T07:11",
+"elapsed_h": 13.68
+},
+{
+"team": "Oaracle",
+"class": "rowboat",
+"place": "10",
+"finish": "2018-06-12T07:28",
+"elapsed_h": 13.97
+},
+{
+"team": "No Dream",
+"class": "rowboat",
+"place": "11",
+"finish": "2018-06-12T07:39",
+"elapsed_h": 14.15
+},
+{
+"team": "Minke on Port",
+"class": "kayak",
+"place": "12",
+"finish": "2018-06-12T07:45",
+"elapsed_h": 14.25
+},
+{
+"team": "Rabbit",
+"class": "rowboat",
+"place": "13",
+"finish": "2018-06-12T07:59",
+"elapsed_h": 14.48
+},
+{
+"team": "Old Enough to Know Better",
+"class": "kayak",
+"place": "14",
+"finish": "2018-06-12T08:02",
+"elapsed_h": 14.53
+},
+{
+"team": "Bearded Boat Bros",
+"class": "kayak",
+"place": "15",
+"finish": "2018-06-12T08:07",
+"elapsed_h": 14.62
+},
+{
+"team": "Heart of Gold",
+"class": "sup",
+"place": "16",
+"finish": "2018-06-12T08:15",
+"elapsed_h": 14.75
+},
+{
+"team": "KayakPhD",
+"class": "kayak",
+"place": "17",
+"finish": "2018-06-12T08:34",
+"elapsed_h": 15.07
+},
+{
+"team": "Ahti-stache",
+"class": "outrigger",
+"place": "18",
+"finish": "2018-06-12T08:39",
+"elapsed_h": 15.15
+},
+{
+"team": "SEVENTYFOUR38",
+"class": "kayak",
+"place": "19",
+"finish": "2018-06-12T08:45",
+"elapsed_h": 15.25
+},
+{
+"team": "Performance Anxiety",
+"class": "rowboat",
+"place": "20",
+"finish": "2018-06-12T09:27",
+"elapsed_h": 15.95
+},
+{
+"team": "Old Anacortes Winning and Celebrating Society",
+"class": "rowboat",
+"place": "21",
+"finish": "2018-06-12T09:37",
+"elapsed_h": 16.12
+},
+{
+"team": "Sea Arms",
+"class": "kayak",
+"place": "22",
+"finish": "2018-06-12T09:40",
+"elapsed_h": 16.17
+},
+{
+"team": "Daring Adventure",
+"class": "rowboat",
+"place": "23",
+"finish": "2018-06-12T09:57",
+"elapsed_h": 16.45
+},
+{
+"team": "Half Way to Cina",
+"class": "sup",
+"place": "23",
+"finish": "2018-06-12T09:57",
+"elapsed_h": 16.45
+},
+{
+"team": "Stroker Ace",
+"class": "rowboat",
+"place": "25",
+"finish": "2018-06-12T10:14",
+"elapsed_h": 16.73
+},
+{
+"team": "Whitehall",
+"class": "rowboat",
+"place": "26",
+"finish": "2018-06-12T10:19",
+"elapsed_h": 16.82
+},
+{
+"team": "Sup N Irish",
+"class": "sup",
+"place": "27",
+"finish": "2018-06-12T10:28",
+"elapsed_h": 16.97
+},
+{
+"team": "Old Man and the C",
+"class": "rowboat",
+"place": "28",
+"finish": "2018-06-12T10:32",
+"elapsed_h": 17.03
+},
+{
+"team": "General Jet Stream",
+"class": "sup",
+"place": "29",
+"finish": "2018-06-12T11:30",
+"elapsed_h": 18.0
+},
+{
+"team": "Stella By Starlight",
+"class": "outrigger",
+"place": "30",
+"finish": "2018-06-12T11:59",
+"elapsed_h": 18.48
+},
+{
+"team": "Zissou",
+"class": "outrigger",
+"place": "30",
+"finish": "2018-06-12T11:59",
+"elapsed_h": 18.48
+},
+{
+"team": "Sea Runners",
+"class": "rowboat",
+"place": "32",
+"finish": "2018-06-12T12:10",
+"elapsed_h": 18.67
+},
+{
+"team": "Kitigan",
+"class": "sup",
+"place": "33",
+"finish": "2018-06-12T12:21",
+"elapsed_h": 18.85
+},
+{
+"team": "Splinter SUP",
+"class": "sup",
+"place": "34",
+"finish": "2018-06-12T12:35",
+"elapsed_h": 19.08
+},
+{
+"team": "Solo Kraig",
+"class": "rowboat",
+"place": "35",
+"finish": "2018-06-12T12:52",
+"elapsed_h": 19.37
+},
+{
+"team": "SWIB",
+"class": "kayak",
+"place": "36",
+"finish": "2018-06-12T12:57",
+"elapsed_h": 19.45
+},
+{
+"team": "Livin' n' Thrivin'",
+"class": "sup",
+"place": "37",
+"finish": "2018-06-12T12:58",
+"elapsed_h": 19.47
+},
+{
+"team": "Comradery",
+"class": "outrigger",
+"place": "38",
+"finish": "2018-06-12T13:04",
+"elapsed_h": 19.57
+},
+{
+"team": "Sea Monkeys",
+"class": "sup",
+"place": "39",
+"finish": "2018-06-12T13:13",
+"elapsed_h": 19.72
+},
+{
+"team": "Good Story",
+"class": "sup",
+"place": "40",
+"finish": "2018-06-12T13:17",
+"elapsed_h": 19.78
+},
+{
+"team": "Valhalla",
+"class": "rowboat",
+"place": "41",
+"finish": "2018-06-12T13:29",
+"elapsed_h": 19.98
+},
+{
+"team": "Schutzler",
+"class": "sup",
+"place": "42",
+"finish": "2018-06-12T13:37",
+"elapsed_h": 20.12
+},
+{
+"team": "Excellent Adventure",
+"class": "outrigger",
+"place": "43",
+"finish": "2018-06-12T14:35",
+"elapsed_h": 21.08
+},
+{
+"team": "Arm & Leg",
+"class": "kayak",
+"place": "44",
+"finish": "2018-06-12T14:39",
+"elapsed_h": 21.15
+},
+{
+"team": "Tinman",
+"class": "rowboat",
+"place": "45",
+"finish": "2018-06-12T14:59",
+"elapsed_h": 21.48
+},
+{
+"team": "KOLEA",
+"class": "outrigger",
+"place": "46",
+"finish": "2018-06-12T15:13",
+"elapsed_h": 21.72
+},
+{
+"team": "Salish Stars",
+"class": "rowboat",
+"place": "47",
+"finish": "2018-06-12T15:16",
+"elapsed_h": 21.77
+},
+{
+"team": "Donovan at Dumas Bay",
+"class": "kayak",
+"place": "48",
+"finish": "2018-06-12T16:24",
+"elapsed_h": 22.9
+},
+{
+"team": "Riff Raft",
+"class": "rowboat",
+"place": "49",
+"finish": "2018-06-12T05:03",
+"elapsed_h": 11.55
+},
+{
+"team": "GlobeRiders Paddlers",
+"class": "kayak",
+"place": "50",
+"finish": "2018-06-12T05:32",
+"elapsed_h": 12.03
+},
+{
+"team": "Mama Said",
+"class": "sup",
+"place": "51",
+"finish": "2018-06-12T17:58",
+"elapsed_h": 24.47
+},
+{
+"team": "Dreads Away",
+"class": "sup",
+"place": "51",
+"finish": "2018-06-12T17:58",
+"elapsed_h": 24.47
+},
+{
+"team": "Mobilis In Mobili",
+"class": "kayak",
+"place": "53",
+"finish": "2018-06-12T18:22",
+"elapsed_h": 24.87
+},
+{
+"team": "Furious George",
+"class": "rowboat",
+"place": "54",
+"finish": "2018-06-12T18:57",
+"elapsed_h": 25.45
+},
+{
+"team": "Saul T. Scrapper",
+"class": "kayak",
+"place": "55",
+"finish": "2018-06-12T19:17",
+"elapsed_h": 25.78
+},
+{
+"team": "Honu",
+"class": "rowboat",
+"place": "56",
+"finish": "2018-06-12T20:04",
+"elapsed_h": 26.57
+},
+{
+"team": "Flipper",
+"class": "rowboat",
+"place": "57",
+"finish": "2018-06-12T20:05",
+"elapsed_h": 26.58
+},
+{
+"team": "Like a G6",
+"class": "kayak",
+"place": "58",
+"finish": "2018-06-12T20:20",
+"elapsed_h": 26.83
+},
+{
+"team": "SBP2",
+"class": "sup",
+"place": "59",
+"finish": "2018-06-12T20:28",
+"elapsed_h": 26.97
+},
+{
+"team": "Berger. No Fries.",
+"class": "rowboat",
+"place": "60",
+"finish": "2018-06-12T20:36",
+"elapsed_h": 27.1
+},
+{
+"team": "Gorgonian Girl",
+"class": "kayak",
+"place": "61",
+"finish": "2018-06-12T20:38",
+"elapsed_h": 27.13
+},
+{
+"team": "Madam Mollusk",
+"class": "kayak",
+"place": "61",
+"finish": "2018-06-12T20:38",
+"elapsed_h": 27.13
+},
+{
+"team": "PNW Saga",
+"class": "sup",
+"place": "63",
+"finish": "2018-06-12T20:41",
+"elapsed_h": 27.18
+},
+{
+"team": "8OARS",
+"class": "rowboat",
+"place": "64",
+"finish": "2018-06-12T20:46",
+"elapsed_h": 27.27
+},
+{
+"team": "Fat Chance",
+"class": "kayak",
+"place": "65",
+"finish": "2018-06-12T20:49",
+"elapsed_h": 27.32
+},
+{
+"team": "1 of 8",
+"class": "rowboat",
+"place": "66",
+"finish": "2018-06-12T20:54",
+"elapsed_h": 27.4
+},
+{
+"team": "Water Dragon",
+"class": "sup",
+"place": "66",
+"finish": "2018-06-12T20:54",
+"elapsed_h": 27.4
+},
+{
+"team": "Aisle of Cornell",
+"class": "sup",
+"place": "68",
+"finish": "2018-06-12T20:55",
+"elapsed_h": 27.42
+},
+{
+"team": "Sundrop",
+"class": "rowboat",
+"place": "69",
+"finish": "2018-06-12T21:00",
+"elapsed_h": 27.5
+},
+{
+"team": "Gold Boolean",
+"class": "kayak",
+"place": "70",
+"finish": "2018-06-12T21:10",
+"elapsed_h": 27.67
+},
+{
+"team": "Bellingham Mama",
+"class": "kayak",
+"place": "71",
+"finish": "2018-06-12T21:12",
+"elapsed_h": 27.7
+},
+{
+"team": "Muskrat",
+"class": "rowboat",
+"place": "72",
+"finish": "2018-06-12T21:20",
+"elapsed_h": 27.83
+},
+{
+"team": "Super Dave",
+"class": "sup",
+"place": "73",
+"finish": "2018-06-12T21:30",
+"elapsed_h": 28.0
+},
+{
+"team": "Jellyfish Flow",
+"class": "outrigger",
+"place": "74",
+"finish": "2018-06-12T21:36",
+"elapsed_h": 28.1
+},
+{
+"team": "Adventure Girl",
+"class": "outrigger",
+"place": "74",
+"finish": "2018-06-12T21:36",
+"elapsed_h": 28.1
+},
+{
+"team": "Lub Me Tender",
+"class": "rowboat",
+"place": "76",
+"finish": "2018-06-12T21:46",
+"elapsed_h": 28.27
+},
+{
+"team": "South Wind",
+"class": "outrigger",
+"place": "77",
+"finish": "2018-06-12T21:49",
+"elapsed_h": 28.32
+},
+{
+"team": "Sea It Rise",
+"class": "kayak",
+"place": "78",
+"finish": "2018-06-12T22:00",
+"elapsed_h": 28.5
+},
+{
+"team": "Wylie C",
+"class": "sup",
+"place": "79",
+"finish": "2018-06-12T22:39",
+"elapsed_h": 29.15
+},
+{
+"team": "Oosik",
+"class": "rowboat",
+"place": "80",
+"finish": "2018-06-12T22:43",
+"elapsed_h": 29.22
+},
+{
+"team": "Overboard",
+"class": "kayak",
+"place": "81",
+"finish": "2018-06-12T22:48",
+"elapsed_h": 29.3
+},
+{
+"team": "Hello Waterface",
+"class": "sup",
+"place": "82",
+"finish": "2018-06-12T22:50",
+"elapsed_h": 29.33
+},
+{
+"team": "Mutually Exclusive",
+"class": "kayak",
+"place": "83",
+"finish": "2018-06-12T22:51",
+"elapsed_h": 29.35
+},
+{
+"team": "Tay Cray",
+"class": "sup",
+"place": "84",
+"finish": "2018-06-12T23:04",
+"elapsed_h": 29.57
+},
+{
+"team": "Hongvi-Smutny",
+"class": "rowboat",
+"place": "85",
+"finish": "2018-06-12T23:18",
+"elapsed_h": 29.8
+},
+{
+"team": "Nord-on-Board",
+"class": "sup",
+"place": "86",
+"finish": "2018-06-13T04:00",
+"elapsed_h": 34.5
+},
+{
+"team": "Last American Man",
+"class": "rowboat",
+"place": "87",
+"finish": "2018-06-13T08:01",
+"elapsed_h": 38.52
+},
+{
+"team": "Cape Decision Lighthouse",
+"class": "rowboat",
+"place": "88",
+"finish": "2018-06-13T08:21",
+"elapsed_h": 38.85
+},
+{
+"team": "Mike's Kayak",
+"class": "kayak",
+"place": "89",
+"finish": "2018-06-13T08:23",
+"elapsed_h": 38.88
+},
+{
+"team": "Hot Diggity",
+"class": "kayak",
+"place": "90",
+"finish": "2018-06-13T08:24",
+"elapsed_h": 38.9
+},
+{
+"team": "47:59:00",
+"class": "kayak",
+"place": "91",
+"finish": "2018-06-13T08:44",
+"elapsed_h": 39.23
+},
+{
+"team": "Type Two Fun",
+"class": "kayak",
+"place": "92",
+"finish": "2018-06-13T08:45",
+"elapsed_h": 39.25
+},
+{
+"team": "Artful Sailor",
+"class": "rowboat",
+"place": "93",
+"finish": "2018-06-13T09:15",
+"elapsed_h": 39.75
+},
+{
+"team": "Tired Dad",
+"class": "sup",
+"place": "94",
+"finish": "2018-06-13T10:12",
+"elapsed_h": 40.7
+},
+{
+"team": "Skelty",
+"class": "sup",
+"place": "94",
+"finish": "2018-06-13T10:12",
+"elapsed_h": 40.7
+},
+{
+"team": "No Regrets",
+"class": "rowboat",
+"place": "96",
+"finish": "2018-06-13T10:40",
+"elapsed_h": 41.17
+},
+{
+"team": "AquaVan",
+"class": "rowboat",
+"place": "96",
+"finish": "2018-06-13T11:17",
+"elapsed_h": 41.78
+},
+{
+"team": "HMGS NorthWater",
+"class": "kayak",
+"place": "98",
+"finish": "2018-06-13T13:56",
+"elapsed_h": 44.43
+},
+{
+"team": "Good News: I Saw a Seal!",
+"class": "kayak",
+"place": "99",
+"finish": "2018-06-13T14:41",
+"elapsed_h": 45.18
+},
+{
+"team": "Paddle On... Paddle On",
+"class": "kayak",
+"place": "99",
+"finish": "2018-06-13T14:41",
+"elapsed_h": 45.18
+},
+{
+"team": "Rogue Kayaker",
+"class": "kayak",
+"place": "99",
+"finish": "2018-06-13T14:41",
+"elapsed_h": 45.18
+}
+]
+},
+"2019": {
+"file": "2019.csv",
+"sheet": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQIkZQq_COj_M1F1TKxJUR9WB7sVyfC3aDXqkovUZcikeR46eEHknp8Wtcnx8i4R3R6F2SfFCW4LAeb/pubhtml",
+"start": "2019-05-31T19:00",
+"teams": [
+{
+"team": "Imua",
+"class": "rowboat",
+"place": "1",
+"finish": "2019-06-01T05:49",
+"elapsed_h": 10.82
+},
+{
+"team": "Blister in the Moon",
+"class": "rowboat",
+"place": "2",
+"finish": "2019-06-01T05:56",
+"elapsed_h": 10.93
+},
+{
+"team": "Wave Forager",
+"class": "rowboat",
+"place": "3",
+"finish": "2019-06-01T05:58",
+"elapsed_h": 10.97
+},
+{
+"team": "MAAS Aventura",
+"class": "rowboat",
+"place": "4",
+"finish": "2019-06-01T07:49",
+"elapsed_h": 12.82
+},
+{
+"team": "Take me to the Volcano",
+"class": "outrigger",
+"place": "5",
+"finish": "2019-06-01T07:53",
+"elapsed_h": 12.88
+},
+{
+"team": "Idea",
+"class": "outrigger",
+"place": "6",
+"finish": "2019-06-01T07:59",
+"elapsed_h": 12.98
+},
+{
+"team": "Arm & Leg",
+"class": "kayak",
+"place": "7",
+"finish": "2019-06-01T08:02",
+"elapsed_h": 13.03
+},
+{
+"team": "Kikaha O Ke Kai - Team Tamatoa",
+"class": "kayak",
+"place": "8",
+"finish": "2019-06-01T09:02",
+"elapsed_h": 14.03
+},
+{
+"team": "Rodster",
+"class": "rowboat",
+"place": "9",
+"finish": "2019-06-01T09:08",
+"elapsed_h": 14.13
+},
+{
+"team": "Night Owl",
+"class": "kayak",
+"place": "10",
+"finish": "2019-06-01T09:15",
+"elapsed_h": 14.25
+},
+{
+"team": "No Dream",
+"class": "rowboat",
+"place": "11",
+"finish": "2019-06-01T09:39",
+"elapsed_h": 14.65
+},
+{
+"team": "Stones Throw Brewery Yacht Club",
+"class": "kayak",
+"place": "12",
+"finish": "2019-06-01T10:01",
+"elapsed_h": 15.02
+},
+{
+"team": "Northwest School of Wooden Boatbuilding",
+"class": "rowboat",
+"place": "13",
+"finish": "2019-06-01T10:04",
+"elapsed_h": 15.07
+},
+{
+"team": "VIRC (Vashon Island Rowing Club - \"Morser\".  Just in case there's another member of this small rowing club thinking of entering later)",
+"class": "rowboat",
+"place": "14",
+"finish": "2019-06-01T10:10",
+"elapsed_h": 15.17
+},
+{
+"team": "Lootas",
+"class": "kayak",
+"place": "15",
+"finish": "2019-06-01T10:13",
+"elapsed_h": 15.22
+},
+{
+"team": "Heart of Gold",
+"class": "sup",
+"place": "16",
+"finish": "2019-06-01T10:56",
+"elapsed_h": 15.93
+},
+{
+"team": "Pacific Northwest Kayaks",
+"class": "kayak",
+"place": "17",
+"finish": "2019-06-01T11:08",
+"elapsed_h": 16.13
+},
+{
+"team": "Fat Tug",
+"class": "kayak",
+"place": "18",
+"finish": "2019-06-01T11:08",
+"elapsed_h": 16.13
+},
+{
+"team": "Aftermath",
+"class": "kayak",
+"place": "19",
+"finish": "2019-06-01T11:16",
+"elapsed_h": 16.27
+},
+{
+"team": "Commodores",
+"class": "kayak",
+"place": "20",
+"finish": "2019-06-01T11:22",
+"elapsed_h": 16.37
+},
+{
+"team": "Where's My Hat?",
+"class": "rowboat",
+"place": "21",
+"finish": "2019-06-01T12:34",
+"elapsed_h": 17.57
+},
+{
+"team": "TNT  (Time and Tide)",
+"class": "rowboat",
+"place": "22",
+"finish": "2019-06-01T12:35",
+"elapsed_h": 17.58
+},
+{
+"team": "PCHS Yacht Club",
+"class": "outrigger",
+"place": "23",
+"finish": "2019-06-01T12:41",
+"elapsed_h": 17.68
+},
+{
+"team": "Wanderlost",
+"class": "rowboat",
+"place": "24",
+"finish": "2019-06-01T12:51",
+"elapsed_h": 17.85
+},
+{
+"team": "Squid",
+"class": "sup",
+"place": "25",
+"finish": "2019-06-01T12:57",
+"elapsed_h": 17.95
+},
+{
+"team": "Mostly Ballast",
+"class": "kayak",
+"place": "26",
+"finish": "2019-06-01T13:21",
+"elapsed_h": 18.35
+},
+{
+"team": "Badger",
+"class": "rowboat",
+"place": "27",
+"finish": "2019-06-01T13:26",
+"elapsed_h": 18.43
+},
+{
+"team": "Furious George",
+"class": "rowboat",
+"place": "28",
+"finish": "2019-06-01T13:34",
+"elapsed_h": 18.57
+},
+{
+"team": "Hudson to Point Hudson",
+"class": "rowboat",
+"place": "29",
+"finish": "2019-06-01T13:48",
+"elapsed_h": 18.8
+},
+{
+"team": "Valhalla",
+"class": "rowboat",
+"place": "30",
+"finish": "2019-06-01T14:13",
+"elapsed_h": 19.22
+},
+{
+"team": "Terrapin",
+"class": "rowboat",
+"place": "31",
+"finish": "2019-06-01T14:21",
+"elapsed_h": 19.35
+},
+{
+"team": "Molokai Wannabe",
+"class": "prone board",
+"place": "32",
+"finish": "2019-06-01T14:32",
+"elapsed_h": 19.53
+},
+{
+"team": "Stir it up",
+"class": "sup",
+"place": "33",
+"finish": "2019-06-01T14:40",
+"elapsed_h": 19.67
+},
+{
+"team": "Like a G6",
+"class": "kayak",
+"place": "34",
+"finish": "2019-06-01T14:45",
+"elapsed_h": 19.75
+},
+{
+"team": "Pancho and Lefty",
+"class": "kayak",
+"place": "35",
+"finish": "2019-06-01T14:52",
+"elapsed_h": 19.87
+},
+{
+"team": "Clear Passage",
+"class": "sup",
+"place": "36",
+"finish": "2019-06-01T15:05",
+"elapsed_h": 20.08
+},
+{
+"team": "Keeping up with the Kids",
+"class": "kayak",
+"place": "37",
+"finish": "2019-06-01T15:25",
+"elapsed_h": 20.42
+},
+{
+"team": "Riff Raft",
+"class": "rowboat",
+"place": "38",
+"finish": "2019-06-01T15:51",
+"elapsed_h": 20.85
+},
+{
+"team": "Seas the Day",
+"class": "kayak",
+"place": "39",
+"finish": "2019-06-01T15:56",
+"elapsed_h": 20.93
+},
+{
+"team": "Nord-on-Board",
+"class": "sup",
+"place": "40",
+"finish": "2019-06-01T16:13",
+"elapsed_h": 21.22
+},
+{
+"team": "Tired Dad",
+"class": "sup",
+"place": "41",
+"finish": "2019-06-01T16:40",
+"elapsed_h": 21.67
+},
+{
+"team": "Profound Dominator",
+"class": "kayak",
+"place": "42",
+"finish": "2019-06-01T16:56",
+"elapsed_h": 21.93
+},
+{
+"team": "If at First",
+"class": "kayak",
+"place": "43",
+"finish": "2019-06-01T16:56",
+"elapsed_h": 21.93
+},
+{
+"team": "8OARS",
+"class": "rowboat",
+"place": "44",
+"finish": "2019-06-01T17:15",
+"elapsed_h": 22.25
+},
+{
+"team": "Group W Racing",
+"class": "rowboat",
+"place": "45",
+"finish": "2019-06-01T17:41",
+"elapsed_h": 22.68
+},
+{
+"team": "Excellent Adventure",
+"class": "rowboat",
+"place": "46",
+"finish": "2019-06-01T17:52",
+"elapsed_h": 22.87
+},
+{
+"team": "Sundrop",
+"class": "rowboat",
+"place": "47",
+"finish": "2019-06-01T17:54",
+"elapsed_h": 22.9
+},
+{
+"team": "Captain Wetsocks",
+"class": "kayak",
+"place": "48",
+"finish": "2019-06-01T18:12",
+"elapsed_h": 23.2
+},
+{
+"team": "Either Oar",
+"class": "rowboat",
+"place": "49",
+"finish": "2019-06-01T18:45",
+"elapsed_h": 23.75
+},
+{
+"team": "Skelty 2.0",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Rowan Topetey",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Tenacious",
+"class": "kayak",
+"place": "50",
+"finish": "2019-06-01T19:13",
+"elapsed_h": 24.22
+},
+{
+"team": "Solo Selkie",
+"class": "kayak",
+"place": "51",
+"finish": "2019-06-01T19:16",
+"elapsed_h": 24.27
+},
+{
+"team": "Tiguidou",
+"class": "rowboat",
+"place": "52",
+"finish": "2019-06-01T19:23",
+"elapsed_h": 24.38
+},
+{
+"team": "Educate-Oars",
+"class": "rowboat",
+"place": "53",
+"finish": "2019-06-01T19:38",
+"elapsed_h": 24.63
+},
+{
+"team": "Cape Decision Lighthouse",
+"class": "rowboat",
+"place": "54",
+"finish": "2019-06-01T19:44",
+"elapsed_h": 24.73
+},
+{
+"team": "Sunday's Best",
+"class": "rowboat",
+"place": "55",
+"finish": "2019-06-01T19:45",
+"elapsed_h": 24.75
+},
+{
+"team": "Aroma from Tacoma",
+"class": "kayak",
+"place": "56",
+"finish": "2019-06-01T20:12",
+"elapsed_h": 25.2
+},
+{
+"team": "Froglegs",
+"class": "rowboat",
+"place": "57",
+"finish": "2019-06-01T20:14",
+"elapsed_h": 25.23
+},
+{
+"team": "Spineless Sipunculas",
+"class": "rowboat",
+"place": "58",
+"finish": "2019-06-01T20:25",
+"elapsed_h": 25.42
+},
+{
+"team": "Ms. Fitz",
+"class": "kayak",
+"place": "59",
+"finish": "2019-06-01T20:31",
+"elapsed_h": 25.52
+},
+{
+"team": "Loony",
+"class": "kayak",
+"place": "60",
+"finish": "2019-06-01T21:10",
+"elapsed_h": 26.17
+},
+{
+"team": "Donovan at Dumas Bay",
+"class": "kayak",
+"place": "61",
+"finish": "2019-06-01T21:17",
+"elapsed_h": 26.28
+},
+{
+"team": "Big Lampowski",
+"class": "sup",
+"place": "62",
+"finish": "2019-06-01T21:28",
+"elapsed_h": 26.47
+},
+{
+"team": "No Regrets",
+"class": "rowboat",
+"place": "63",
+"finish": "2019-06-01T21:31",
+"elapsed_h": 26.52
+},
+{
+"team": "Jenn",
+"class": "sup",
+"place": "64",
+"finish": "2019-06-01T21:42",
+"elapsed_h": 26.7
+},
+{
+"team": "Pitter Patter",
+"class": "kayak",
+"place": "65",
+"finish": "2019-06-01T21:58",
+"elapsed_h": 26.97
+},
+{
+"team": "Don't Tell My Dad",
+"class": "rowboat",
+"place": "66",
+"finish": "2019-06-01T22:03",
+"elapsed_h": 27.05
+},
+{
+"team": "Prairie Pulling League",
+"class": "rowboat",
+"place": "67",
+"finish": "2019-06-01T22:19",
+"elapsed_h": 27.32
+},
+{
+"team": "It Sounded Good After Two Beers",
+"class": "rowboat",
+"place": "68",
+"finish": "2019-06-01T22:28",
+"elapsed_h": 27.47
+},
+{
+"team": "Last American Man",
+"class": "kayak",
+"place": "69",
+"finish": "2019-06-01T22:28",
+"elapsed_h": 27.47
+},
+{
+"team": "Rampage",
+"class": "rowboat",
+"place": "70",
+"finish": "2019-06-01T22:28",
+"elapsed_h": 27.47
+},
+{
+"team": "Hot Diggity",
+"class": "kayak",
+"place": "71",
+"finish": "2019-06-01T22:42",
+"elapsed_h": 27.7
+},
+{
+"team": "Fun While Lost",
+"class": "outrigger",
+"place": "72",
+"finish": "2019-06-01T22:42",
+"elapsed_h": 27.7
+},
+{
+"team": "Mike's Kayak",
+"class": "kayak",
+"place": "73",
+"finish": "2019-06-01T22:49",
+"elapsed_h": 27.82
+},
+{
+"team": "Rowbots",
+"class": "rowboat",
+"place": "74",
+"finish": "2019-06-01T22:51",
+"elapsed_h": 27.85
+},
+{
+"team": "HMS Swiftsure",
+"class": "outrigger",
+"place": "75",
+"finish": "2019-06-01T22:55",
+"elapsed_h": 27.92
+},
+{
+"team": "Lemmikkielainten Porot",
+"class": "kayak",
+"place": "76",
+"finish": "2019-06-01T23:29",
+"elapsed_h": 28.48
+},
+{
+"team": "Don't Duet",
+"class": "rowboat",
+"place": "77",
+"finish": "2019-06-01T23:37",
+"elapsed_h": 28.62
+},
+{
+"team": "Ninian's Grace",
+"class": "rowboat",
+"place": "78",
+"finish": "2019-06-01T23:38",
+"elapsed_h": 28.63
+},
+{
+"team": "Type 2 Fun",
+"class": "kayak",
+"place": "79",
+"finish": "2019-06-01T23:45",
+"elapsed_h": 28.75
+},
+{
+"team": "Damn Quixote",
+"class": "kayak",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Skelty 2.0",
+"class": "sup",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Midlife Crisis",
+"class": "kayak",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Artful Sailor",
+"class": "rowboat",
+"place": "80",
+"finish": "2019-06-01T23:56",
+"elapsed_h": 28.93
+},
+{
+"team": "Saul T. Scrapper",
+"class": "rowboat",
+"place": "81",
+"finish": "2019-06-02T00:36",
+"elapsed_h": 29.6
+},
+{
+"team": "Clumsy Turtles",
+"class": "rowboat",
+"place": "82",
+"finish": "2019-06-02T00:44",
+"elapsed_h": 29.73
+},
+{
+"team": "Sea Nymphs Kidnapped a Dude (SNKD)",
+"class": "rowboat",
+"place": "83",
+"finish": "2019-06-02T01:37",
+"elapsed_h": 30.62
+},
+{
+"team": "HMGS Northwater",
+"class": "kayak",
+"place": "84",
+"finish": "2019-06-02T01:43",
+"elapsed_h": 30.72
+},
+{
+"team": "Jack Whisner",
+"class": "rowboat",
+"place": "85",
+"finish": "2019-06-02T03:00",
+"elapsed_h": 32.0
+},
+{
+"team": "Kidney Donor",
+"class": "sup",
+"place": "86",
+"finish": "2019-06-02T06:26",
+"elapsed_h": 35.43
+},
+{
+"team": "Why Knot",
+"class": "rowboat",
+"place": "87",
+"finish": "2019-06-02T06:41",
+"elapsed_h": 35.68
+},
+{
+"team": "Legacy",
+"class": "kayak",
+"place": "88",
+"finish": "2019-06-02T07:17",
+"elapsed_h": 36.28
+},
+{
+"team": "What, me wherry?",
+"class": "rowboat",
+"place": "89",
+"finish": "2019-06-02T07:42",
+"elapsed_h": 36.7
+},
+{
+"team": "Sound skimmer",
+"class": "rowboat",
+"place": "90",
+"finish": "2019-06-02T09:16",
+"elapsed_h": 38.27
+},
+{
+"team": "Orange Duckie",
+"class": "kayak",
+"place": "91",
+"finish": "2019-06-02T09:45",
+"elapsed_h": 38.75
+},
+{
+"team": "Basura",
+"class": "kayak",
+"place": "92",
+"finish": "2019-06-02T10:14",
+"elapsed_h": 39.23
+},
+{
+"team": "Exactly48",
+"class": "kayak",
+"place": "93",
+"finish": "2019-06-02T11:30",
+"elapsed_h": 40.5
+},
+{
+"team": "Paddle On... Paddle On",
+"class": "kayak",
+"place": "94",
+"finish": "2019-06-02T11:46",
+"elapsed_h": 40.77
+},
+{
+"team": "Good News: I Saw a Seal!",
+"class": "kayak",
+"place": "95",
+"finish": "2019-06-02T11:46",
+"elapsed_h": 40.77
+},
+{
+"team": "Rogue Kayaker",
+"class": "kayak",
+"place": "96",
+"finish": "2019-06-02T11:46",
+"elapsed_h": 40.77
+},
+{
+"team": "Bearded Boat Bros",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Splinter SUP",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Overboard",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "KayakPhD",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Maverick",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Bellingham Mama",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Salmon Bay Paddle",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+}
+]
+},
+"2021": {
+"file": "2021.csv",
+"sheet": "https://docs.google.com/spreadsheets/d/e/2PACX-1vT9TK3UpYELZzoxL_QXDhdPCqcRpEZY-vnwHPcLuCFzVLu4tCRj5kgxq5B5CH9KALCSiZap1uMt8BAL/pubhtml",
+"start": "2021-06-04T19:00",
+"teams": [
+{
+"team": "Gorge Downwind Champs - Vortex",
+"class": "kayak",
+"place": "1",
+"finish": "2021-06-05T04:54",
+"elapsed_h": 9.9
+},
+{
+"team": "Wave Forager",
+"class": "rowboat",
+"place": "2",
+"finish": "2021-06-05T05:20",
+"elapsed_h": 10.33
+},
+{
+"team": "Dad",
+"class": "kayak",
+"place": "3",
+"finish": "2021-06-05T06:19",
+"elapsed_h": 11.32
+},
+{
+"team": "Ono Grinds",
+"class": "outrigger",
+"place": "4",
+"finish": "2021-06-05T06:47",
+"elapsed_h": 11.78
+},
+{
+"team": "Pedal People",
+"class": "outrigger",
+"place": "5",
+"finish": "2021-06-05T07:51",
+"elapsed_h": 12.85
+},
+{
+"team": "Paddle Zoo",
+"class": "outrigger",
+"place": "6",
+"finish": "2021-06-05T08:13",
+"elapsed_h": 13.22
+},
+{
+"team": "KayakPhD",
+"class": "kayak",
+"place": "7",
+"finish": "2021-06-05T08:30",
+"elapsed_h": 13.5
+},
+{
+"team": "Tamatoa NW",
+"class": "outrigger",
+"place": "8",
+"finish": "2021-06-05T08:40",
+"elapsed_h": 13.67
+},
+{
+"team": "Fifteen53",
+"class": "kayak",
+"place": "9",
+"finish": "2021-06-05T09:16",
+"elapsed_h": 14.27
+},
+{
+"team": "Rodster",
+"class": "rowboat",
+"place": "10",
+"finish": "2021-06-05T09:18",
+"elapsed_h": 14.3
+},
+{
+"team": "Hapalong",
+"class": "outrigger",
+"place": "11",
+"finish": "2021-06-05T09:18",
+"elapsed_h": 14.3
+},
+{
+"team": "Stray Cat",
+"class": "kayak",
+"place": "12",
+"finish": "2021-06-05T09:32",
+"elapsed_h": 14.53
+},
+{
+"team": "PCHS Yacht Club",
+"class": "outrigger",
+"place": "13",
+"finish": "2021-06-05T10:02",
+"elapsed_h": 15.03
+},
+{
+"team": "Mustang Survival's Team Ocean Watch",
+"class": "sup",
+"place": "14",
+"finish": "2021-06-05T10:26",
+"elapsed_h": 15.43
+},
+{
+"team": "Jules Gismondi",
+"class": "kayak",
+"place": "15",
+"finish": "2021-06-05T10:34",
+"elapsed_h": 15.57
+},
+{
+"team": "Just Ernie",
+"class": "outrigger",
+"place": "16",
+"finish": "2021-06-05T11:11",
+"elapsed_h": 16.18
+},
+{
+"team": "Working Title",
+"class": "outrigger",
+"place": "17",
+"finish": "2021-06-05T11:12",
+"elapsed_h": 16.2
+},
+{
+"team": "Swanson",
+"class": "outrigger",
+"place": "18",
+"finish": "2021-06-05T11:33",
+"elapsed_h": 16.55
+},
+{
+"team": "Solo Selkie",
+"class": "kayak",
+"place": "19",
+"finish": "2021-06-05T15:45",
+"elapsed_h": 20.75
+},
+{
+"team": "Gallagher Big Canoe",
+"class": "outrigger",
+"place": "20",
+"finish": "2021-06-05T16:43",
+"elapsed_h": 21.72
+},
+{
+"team": "Valhalla",
+"class": "rowboat",
+"place": "21",
+"finish": "2021-06-05T17:12",
+"elapsed_h": 22.2
+},
+{
+"team": "SF Sea Lion",
+"class": "sup",
+"place": "22",
+"finish": "2021-06-05T17:23",
+"elapsed_h": 22.38
+},
+{
+"team": "Dumas Bay Brethren",
+"class": "kayak",
+"place": "23",
+"finish": "2021-06-05T17:27",
+"elapsed_h": 22.45
+},
+{
+"team": "Clear Passage",
+"class": "sup",
+"place": "24",
+"finish": "2021-06-05T17:52",
+"elapsed_h": 22.87
+},
+{
+"team": "Good Life",
+"class": "kayak",
+"place": "25",
+"finish": "2021-06-05T18:58",
+"elapsed_h": 23.97
+},
+{
+"team": "Return of the Tiger Belly",
+"class": "kayak",
+"place": "26",
+"finish": "2021-06-05T19:53",
+"elapsed_h": 24.88
+},
+{
+"team": "500 Paddles",
+"class": "kayak",
+"place": "27",
+"finish": "2021-06-05T21:02",
+"elapsed_h": 26.03
+},
+{
+"team": "Forty-seven48",
+"class": "rowboat",
+"place": "28",
+"finish": "2021-06-05T21:40",
+"elapsed_h": 26.67
+},
+{
+"team": "Yellow Cap",
+"class": "rowboat",
+"place": "29",
+"finish": "2021-06-05T21:41",
+"elapsed_h": 26.68
+},
+{
+"team": "Tardigrade",
+"class": "rowboat",
+"place": "30",
+"finish": "2021-06-06T00:33",
+"elapsed_h": 29.55
+},
+{
+"team": "Phyllopteryx",
+"class": "rowboat",
+"place": "31",
+"finish": "2021-06-06T00:34",
+"elapsed_h": 29.57
+},
+{
+"team": "Bogus Journey",
+"class": "kayak",
+"place": "32",
+"finish": "2021-06-06T00:34",
+"elapsed_h": 29.57
+},
+{
+"team": "PWS Sea Otter",
+"class": "kayak",
+"place": "33",
+"finish": "2021-06-06T00:36",
+"elapsed_h": 29.6
+},
+{
+"team": "Dude",
+"class": "rowboat",
+"place": "34",
+"finish": "2021-06-06T00:36",
+"elapsed_h": 29.6
+},
+{
+"team": "JADEA",
+"class": "outrigger",
+"place": "35",
+"finish": "2021-06-06T00:44",
+"elapsed_h": 29.73
+},
+{
+"team": "AKA - Old Solo Mio",
+"class": "rowboat",
+"place": "36",
+"finish": "2021-06-06T02:21",
+"elapsed_h": 31.35
+},
+{
+"team": "Yellow Kayak",
+"class": "kayak",
+"place": "37",
+"finish": "2021-06-06T05:16",
+"elapsed_h": 34.27
+},
+{
+"team": "Kayak Orange",
+"class": "kayak",
+"place": "37",
+"finish": "2021-06-06T05:16",
+"elapsed_h": 34.27
+},
+{
+"team": "Thank you Blake Hansen",
+"class": "kayak",
+"place": "39",
+"finish": "2021-06-06T07:41",
+"elapsed_h": 36.68
+},
+{
+"team": "Mom Knows Everything",
+"class": "rowboat",
+"place": "40",
+"finish": "2021-06-06T11:30",
+"elapsed_h": 40.5
+},
+{
+"team": "SEASTR",
+"class": "sup",
+"place": "41",
+"finish": "2021-06-06T14:37",
+"elapsed_h": 43.62
+},
+{
+"team": "Haggis Head",
+"class": "kayak",
+"place": "42",
+"finish": "2021-06-06T14:39",
+"elapsed_h": 43.65
+},
+{
+"team": "S E A S T R",
+"class": "sup",
+"place": "43",
+"finish": "2021-06-06T14:46",
+"elapsed_h": 43.77
+},
+{
+"team": "Aqua Vitae",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Arm and Leg",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Double Trouble",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Grateful",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Sea Squatch",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Static Fire",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Swedish American Yacht Club",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Old Gull",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Starlight",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Adkins Brothers",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Gypsea",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Where's My Hat?",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Tim and Tide....",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Gyrafalcon",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Why Knot",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Chicken Dinner",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Cape Decision Lighthouse",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Ted",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "So-Low 2",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "She and ah",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Wild Card Part Duex",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Wooden It Be Nice",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "SUPergirl",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Water Always Wins",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Jersey Strong",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Perfect From Now On",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Friendship",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "USDB Yatch Club",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Illusive Ginger Bear",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Ptak Attack",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "6 Grandkids",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Bobette",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Dundee",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Type 2 Fun",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Get Kraken",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "AquaVan",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Covid Project",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Cherry Ghost",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Solo 2 the Ground",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Rogue Kayaker",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Good News: I Saw a Seal!",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Paddle On... Paddle On",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Back 2 R Alaska",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Group W Racing",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Aqua Oarotic",
+"class": "",
+"place": "DNS",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Bad Rabbit",
+"class": "",
+"place": "DNS",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Berger No Fries",
+"class": "",
+"place": "DNS",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Fly by Night",
+"class": "",
+"place": "DNS",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Leatherneck",
+"class": "",
+"place": "DNS",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "MPYC",
+"class": "",
+"place": "DNS",
+"finish": null,
+"elapsed_h": null
+}
+]
+},
+"2022": {
+"file": "2022.csv",
+"sheet": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ4a6GyW-nNBWXwSSz7PTZ0lfmfOZEAdoQ5QOEktTqkyaU9btC8-NwPVWgNwG32zyn8aqHJtN7LMsP_/pubhtml",
+"start": "2022-06-10T19:00",
+"teams": [
+{
+"team": "Imua",
+"class": "rowboat",
+"place": "1",
+"finish": "2022-06-11T04:35",
+"elapsed_h": 9.58
+},
+{
+"team": "Wave Forager",
+"class": "rowboat",
+"place": "2",
+"finish": "2022-06-11T04:39",
+"elapsed_h": 9.65
+},
+{
+"team": "Boat",
+"class": "surfski",
+"place": "3",
+"finish": "2022-06-11T06:06",
+"elapsed_h": 11.1
+},
+{
+"team": "Boogie Barge",
+"class": "multihull",
+"place": "4",
+"finish": "2022-06-11T06:26",
+"elapsed_h": 11.43
+},
+{
+"team": "Pineapple Express",
+"class": "outrigger",
+"place": "5",
+"finish": "2022-06-11T06:38",
+"elapsed_h": 11.63
+},
+{
+"team": "Kikaha Tamatoa NW",
+"class": "outrigger",
+"place": "6",
+"finish": "2022-06-11T06:40",
+"elapsed_h": 11.67
+},
+{
+"team": "Paddle Like A Girl",
+"class": "kayak",
+"place": "7",
+"finish": "2022-06-11T07:31",
+"elapsed_h": 12.52
+},
+{
+"team": "It s a Boat Damn Time",
+"class": "rowboat",
+"place": "8",
+"finish": "2022-06-11T07:59",
+"elapsed_h": 12.98
+},
+{
+"team": "The Gits",
+"class": "rowboat",
+"place": "9",
+"finish": "2022-06-11T08:04",
+"elapsed_h": 13.07
+},
+{
+"team": "Pathological",
+"class": "surfski",
+"place": "10",
+"finish": "2022-06-11T08:05",
+"elapsed_h": 13.08
+},
+{
+"team": "Mark Paddles",
+"class": "surfski",
+"place": "11",
+"finish": "2022-06-11T08:13",
+"elapsed_h": 13.22
+},
+{
+"team": "Working Tidal",
+"class": "surfski",
+"place": "12",
+"finish": "2022-06-11T08:13",
+"elapsed_h": 13.22
+},
+{
+"team": "Rower Buoys",
+"class": "rowboat",
+"place": "13",
+"finish": "2022-06-11T08:17",
+"elapsed_h": 13.28
+},
+{
+"team": "Malolo",
+"class": "outrigger",
+"place": "14",
+"finish": "2022-06-11T08:30",
+"elapsed_h": 13.5
+},
+{
+"team": "500 Paddles",
+"class": "surfski",
+"place": "15",
+"finish": "2022-06-11T08:31",
+"elapsed_h": 13.52
+},
+{
+"team": "Hope It Floats",
+"class": "rowboat",
+"place": "16",
+"finish": "2022-06-11T08:55",
+"elapsed_h": 13.92
+},
+{
+"team": "Schutzler",
+"class": "outrigger",
+"place": "17",
+"finish": "2022-06-11T09:02",
+"elapsed_h": 14.03
+},
+{
+"team": "Trash Tramp",
+"class": "outrigger",
+"place": "18",
+"finish": "2022-06-11T09:10",
+"elapsed_h": 14.17
+},
+{
+"team": "KrugerSEA",
+"class": "sup",
+"place": "19",
+"finish": "2022-06-11T09:12",
+"elapsed_h": 14.2
+},
+{
+"team": "Splinter Boardworks Triple Entendre",
+"class": "sup",
+"place": "20",
+"finish": "2022-06-11T09:39",
+"elapsed_h": 14.65
+},
+{
+"team": "Arm and Leg",
+"class": "rowboat",
+"place": "21",
+"finish": "2022-06-11T09:43",
+"elapsed_h": 14.72
+},
+{
+"team": "Gallagher Big Canoe",
+"class": "rowboat",
+"place": "22",
+"finish": "2022-06-11T09:51",
+"elapsed_h": 14.85
+},
+{
+"team": "Furious George",
+"class": "rowboat",
+"place": "23",
+"finish": "2022-06-11T10:08",
+"elapsed_h": 15.13
+},
+{
+"team": "Float Complex",
+"class": "outrigger",
+"place": "24",
+"finish": "2022-06-11T10:21",
+"elapsed_h": 15.35
+},
+{
+"team": "Simple Choice",
+"class": "kayak",
+"place": "25",
+"finish": "2022-06-11T10:29",
+"elapsed_h": 15.48
+},
+{
+"team": "Drowned Chipmunk",
+"class": "kayak",
+"place": "26",
+"finish": "2022-06-11T10:33",
+"elapsed_h": 15.55
+},
+{
+"team": "All the Ponyos",
+"class": "rowboat",
+"place": "27",
+"finish": "2022-06-11T10:49",
+"elapsed_h": 15.82
+},
+{
+"team": "I have an idea",
+"class": "rowboat",
+"place": "28",
+"finish": "2022-06-11T11:12",
+"elapsed_h": 16.2
+},
+{
+"team": "Forgetting Forward",
+"class": "kayak",
+"place": "29",
+"finish": "2022-06-11T11:24",
+"elapsed_h": 16.4
+},
+{
+"team": "Thresher",
+"class": "rowboat",
+"place": "30",
+"finish": "2022-06-11T11:31",
+"elapsed_h": 16.52
+},
+{
+"team": "Dumas Bay Brethren",
+"class": "kayak",
+"place": "31",
+"finish": "2022-06-11T12:48",
+"elapsed_h": 17.8
+},
+{
+"team": "Bogus Journey",
+"class": "rowboat",
+"place": "32",
+"finish": "2022-06-11T13:04",
+"elapsed_h": 18.07
+},
+{
+"team": "Yellow Cap",
+"class": "rowboat",
+"place": "33",
+"finish": "2022-06-11T13:08",
+"elapsed_h": 18.13
+},
+{
+"team": "BASK-1",
+"class": "kayak",
+"place": "34",
+"finish": "2022-06-11T13:17",
+"elapsed_h": 18.28
+},
+{
+"team": "Aegir",
+"class": "kayak",
+"place": "35",
+"finish": "2022-06-11T13:21",
+"elapsed_h": 18.35
+},
+{
+"team": "Bart Oar Bart",
+"class": "rowboat",
+"place": "36",
+"finish": "2022-06-11T13:29",
+"elapsed_h": 18.48
+},
+{
+"team": "Kostie",
+"class": "kayak",
+"place": "37",
+"finish": "2022-06-11T14:09",
+"elapsed_h": 19.15
+},
+{
+"team": "Ted",
+"class": "sup",
+"place": "38",
+"finish": "2022-06-11T14:18",
+"elapsed_h": 19.3
+},
+{
+"team": "Big Mouth Strikes Again",
+"class": "sup",
+"place": "38",
+"finish": "2022-06-11T14:18",
+"elapsed_h": 19.3
+},
+{
+"team": "Swedish American Yacht Club",
+"class": "rowboat",
+"place": "40",
+"finish": "2022-06-11T14:26",
+"elapsed_h": 19.43
+},
+{
+"team": "VanRobertsHam Racing",
+"class": "rowboat",
+"place": "41",
+"finish": "2022-06-11T14:49",
+"elapsed_h": 19.82
+},
+{
+"team": "Tay Cray",
+"class": "sup",
+"place": "42",
+"finish": "2022-06-11T14:55",
+"elapsed_h": 19.92
+},
+{
+"team": "KDB",
+"class": "sup",
+"place": "43",
+"finish": "2022-06-11T15:15",
+"elapsed_h": 20.25
+},
+{
+"team": "SEASTR",
+"class": "sup",
+"place": "44",
+"finish": "2022-06-11T15:38",
+"elapsed_h": 20.63
+},
+{
+"team": "splinter ambassador",
+"class": "sup",
+"place": "45",
+"finish": "2022-06-11T15:49",
+"elapsed_h": 20.82
+},
+{
+"team": "Row Row Row Your Ark",
+"class": "rowboat",
+"place": "46",
+"finish": "2022-06-11T15:50",
+"elapsed_h": 20.83
+},
+{
+"team": "Desk Rehab",
+"class": "rowboat",
+"place": "47",
+"finish": "2022-06-11T16:47",
+"elapsed_h": 21.78
+},
+{
+"team": "COVID PROJECT",
+"class": "rowboat",
+"place": "48",
+"finish": "2022-06-11T16:50",
+"elapsed_h": 21.83
+},
+{
+"team": "Dont Panic",
+"class": "kayak",
+"place": "49",
+"finish": "2022-06-11T17:15",
+"elapsed_h": 22.25
+},
+{
+"team": "GNARwhal",
+"class": "kayak",
+"place": "50",
+"finish": "2022-06-11T17:48",
+"elapsed_h": 22.8
+},
+{
+"team": "Splinter Board works Deuce Deuce",
+"class": "sup",
+"place": "51",
+"finish": "2022-06-11T18:42",
+"elapsed_h": 23.7
+},
+{
+"team": "Hansville Beach Club",
+"class": "rowboat",
+"place": "52",
+"finish": "2022-06-11T18:53",
+"elapsed_h": 23.88
+},
+{
+"team": "Thats Bananas",
+"class": "rowboat",
+"place": "53",
+"finish": "2022-06-11T18:55",
+"elapsed_h": 23.92
+},
+{
+"team": "Captain of the Nile",
+"class": "sup",
+"place": "53",
+"finish": "2022-06-11T18:55",
+"elapsed_h": 23.92
+},
+{
+"team": "PWS Sea Otter",
+"class": "kayak",
+"place": "54",
+"finish": "2022-06-11T19:17",
+"elapsed_h": 24.28
+},
+{
+"team": "Merma-kin Good Time",
+"class": "kayak",
+"place": "55",
+"finish": "2022-06-11T19:23",
+"elapsed_h": 24.38
+},
+{
+"team": "GET KRAKEN",
+"class": "rowboat",
+"place": "56",
+"finish": "2022-06-11T20:46",
+"elapsed_h": 25.77
+},
+{
+"team": "TAMO",
+"class": "rowboat",
+"place": "56",
+"finish": "2022-06-11T21:48",
+"elapsed_h": 26.8
+},
+{
+"team": "It Sounded Good After Two Beers",
+"class": "rowboat",
+"place": "57",
+"finish": "2022-06-11T21:53",
+"elapsed_h": 26.88
+},
+{
+"team": "She and Ah",
+"class": "rowboat",
+"place": "58",
+"finish": "2022-06-11T23:14",
+"elapsed_h": 28.23
+},
+{
+"team": "Uno Mass Tiempo",
+"class": "rowboat",
+"place": "59",
+"finish": "2022-06-11T23:45",
+"elapsed_h": 28.75
+},
+{
+"team": "Couples Therapy",
+"class": "sup",
+"place": "60",
+"finish": "2022-06-12T00:12",
+"elapsed_h": 29.2
+},
+{
+"team": "Flow State",
+"class": "sup",
+"place": "60",
+"finish": "2022-06-12T00:12",
+"elapsed_h": 29.2
+},
+{
+"team": "Whats SUP",
+"class": "sup",
+"place": "60",
+"finish": "2022-06-12T00:12",
+"elapsed_h": 29.2
+},
+{
+"team": "Beatrice",
+"class": "rowboat",
+"place": "63",
+"finish": "2022-06-12T04:57",
+"elapsed_h": 33.95
+},
+{
+"team": "EMD",
+"class": "rowboat",
+"place": "64",
+"finish": "2022-06-12T05:12",
+"elapsed_h": 34.2
+},
+{
+"team": "2 of 2",
+"class": "kayak",
+"place": "65",
+"finish": "2022-06-12T05:47",
+"elapsed_h": 34.78
+},
+{
+"team": "Apple Bottom Boy",
+"class": "sup",
+"place": "66",
+"finish": "2022-06-12T06:25",
+"elapsed_h": 35.42
+},
+{
+"team": "T.A.F. 16",
+"class": "kayak",
+"place": "66",
+"finish": "2022-06-12T06:25",
+"elapsed_h": 35.42
+},
+{
+"team": "Bad Rabbit",
+"class": "rowboat",
+"place": "68",
+"finish": "2022-06-12T06:33",
+"elapsed_h": 35.55
+},
+{
+"team": "Blake Island Beach Party",
+"class": "kayak",
+"place": "69",
+"finish": "2022-06-12T06:45",
+"elapsed_h": 35.75
+},
+{
+"team": "Salty Bay Bay",
+"class": "kayak",
+"place": "69",
+"finish": "2022-06-12T06:45",
+"elapsed_h": 35.75
+},
+{
+"team": "USDB",
+"class": "multihull",
+"place": "70",
+"finish": "2022-06-12T07:09",
+"elapsed_h": 36.15
+},
+{
+"team": "ACI Boats",
+"class": "sup",
+"place": "72",
+"finish": "2022-06-12T07:28",
+"elapsed_h": 36.47
+},
+{
+"team": "Round Two",
+"class": "kayak",
+"place": "73",
+"finish": "2022-06-12T08:09",
+"elapsed_h": 37.15
+},
+{
+"team": "Type 2 Fun",
+"class": "kayak",
+"place": "74",
+"finish": "2022-06-12T08:09",
+"elapsed_h": 37.15
+},
+{
+"team": "Nardi Party",
+"class": "kayak",
+"place": "75",
+"finish": "2022-06-12T08:11",
+"elapsed_h": 37.18
+},
+{
+"team": "Knot My First Rowdeo",
+"class": "rowboat",
+"place": "76",
+"finish": "2022-06-12T08:44",
+"elapsed_h": 37.73
+},
+{
+"team": "ROW BEAR",
+"class": "rowboat",
+"place": "77",
+"finish": "2022-06-12T09:16",
+"elapsed_h": 38.27
+},
+{
+"team": "High Speed Low Drag",
+"class": "kayak",
+"place": "78",
+"finish": "2022-06-12T09:20",
+"elapsed_h": 38.33
+},
+{
+"team": "Mzee",
+"class": "kayak",
+"place": "79",
+"finish": "2022-06-12T09:33",
+"elapsed_h": 38.55
+},
+{
+"team": "Haggis Head",
+"class": "kayak",
+"place": "80",
+"finish": "2022-06-12T10:05",
+"elapsed_h": 39.08
+},
+{
+"team": "Pacific Nomad",
+"class": "kayak",
+"place": "81",
+"finish": "2022-06-12T12:01",
+"elapsed_h": 41.02
+},
+{
+"team": "SeaSUP",
+"class": "sup",
+"place": "82",
+"finish": "2022-06-12T12:10",
+"elapsed_h": 41.17
+},
+{
+"team": "2 Artful Rower- Wen",
+"class": "rowboat",
+"place": "83",
+"finish": "2022-06-12T12:49",
+"elapsed_h": 41.82
+},
+{
+"team": "1 Artful Rower",
+"class": "rowboat",
+"place": "84",
+"finish": "2022-06-12T12:50",
+"elapsed_h": 41.83
+},
+{
+"team": "1 of 2",
+"class": "rowboat",
+"place": "85",
+"finish": "2022-06-12T13:52",
+"elapsed_h": 42.87
+},
+{
+"team": "Bark at the Loon",
+"class": "outrigger",
+"place": "86",
+"finish": "2022-06-12T14:14",
+"elapsed_h": 43.23
+},
+{
+"team": "Tiktaalik",
+"class": "kayak",
+"place": "87",
+"finish": "2022-06-12T17:42",
+"elapsed_h": 46.7
+},
+{
+"team": "Old Man Raven",
+"class": "kayak",
+"place": "87",
+"finish": "2022-06-12T17:42",
+"elapsed_h": 46.7
+},
+{
+"team": "Grateful",
+"class": "sup",
+"place": "89",
+"finish": "2022-06-12T18:16",
+"elapsed_h": 47.27
+},
+{
+"team": "who let the dogs out",
+"class": "rowboat",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Stones Throw Brewery Yacht Club",
+"class": "surfski",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Looking for a Porpoise",
+"class": "rowboat",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Kats from Kansas",
+"class": "rowboat",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Bravo",
+"class": "kayak",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Charlie Whisky",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Zen",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Paddle On... Paddle On",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Pretty Gull",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Lil Stormy Sunshine",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Like a G6",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Rodster",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Good News I Saw a Seal",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Rogue Kayaker",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Slow State",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Wheres my hat",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Starlight",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "NautiNurse1",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Cirrusly Crazy",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Ominous Penguin Flotilla",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "70 at 70",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Ptak Attack 2",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Misty Rows",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Since Ever Since - KaiWaaStrong",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Convergence Zone",
+"class": "surfski",
+"place": "DSQ",
+"finish": null,
+"elapsed_h": null
+}
+]
+},
+"2023": {
+"file": "2023.csv",
+"sheet": "https://docs.google.com/spreadsheets/d/e/2PACX-1vSJhoJ9B7lP6GouAhm_tqBbKRkg8m0WHis5oa3diJxaV6zTW0PszypXfHm5b8HHmdqXPhQq3zeAP92d/pubhtml",
+"start": "2023-06-02T19:00",
+"teams": [
+{
+"team": "Beasts from the East",
+"class": "surfski",
+"place": "1",
+"finish": "2023-06-03T05:27",
+"elapsed_h": 10.45
+},
+{
+"team": "Gorge Downwind Champs - Paddlepaluza",
+"class": "surfski",
+"place": "2",
+"finish": "2023-06-03T05:48",
+"elapsed_h": 10.8
+},
+{
+"team": "Dad",
+"class": "surfski",
+"place": "3",
+"finish": "2023-06-03T05:51",
+"elapsed_h": 10.85
+},
+{
+"team": "Lake Union Rowing Club",
+"class": "outrigger",
+"place": "4",
+"finish": "2023-06-03T06:32",
+"elapsed_h": 11.53
+},
+{
+"team": "2 Bro Row",
+"class": "rowboat",
+"place": "5",
+"finish": "2023-06-03T06:54",
+"elapsed_h": 11.9
+},
+{
+"team": "Boogie Barge",
+"class": "multihull",
+"place": "6",
+"finish": "2023-06-03T07:02",
+"elapsed_h": 12.03
+},
+{
+"team": "Best of Both Coasts",
+"class": "outrigger",
+"place": "7",
+"finish": "2023-06-03T07:12",
+"elapsed_h": 12.2
+},
+{
+"team": "Girls' Night Out",
+"class": "outrigger",
+"place": "8",
+"finish": "2023-06-03T07:15",
+"elapsed_h": 12.25
+},
+{
+"team": "Pathological",
+"class": "surfski",
+"place": "9",
+"finish": "2023-06-03T08:10",
+"elapsed_h": 13.17
+},
+{
+"team": "Furious George",
+"class": "rowboat",
+"place": "10",
+"finish": "2023-06-03T08:35",
+"elapsed_h": 13.58
+},
+{
+"team": "Working Tidal",
+"class": "surfski",
+"place": "11",
+"finish": "2023-06-03T08:38",
+"elapsed_h": 13.63
+},
+{
+"team": "Hard on Port",
+"class": "rowboat",
+"place": "12",
+"finish": "2023-06-03T08:50",
+"elapsed_h": 13.83
+},
+{
+"team": "Return of the Tiger Belly",
+"class": "kayak",
+"place": "13",
+"finish": "2023-06-03T08:54",
+"elapsed_h": 13.9
+},
+{
+"team": "Rodster",
+"class": "rowboat",
+"place": "14",
+"finish": "2023-06-03T08:57",
+"elapsed_h": 13.95
+},
+{
+"team": "We Know Better",
+"class": "kayak",
+"place": "15",
+"finish": "2023-06-03T09:43",
+"elapsed_h": 14.72
+},
+{
+"team": "Hope It Floats",
+"class": "rowboat",
+"place": "16",
+"finish": "2023-06-03T10:11",
+"elapsed_h": 15.18
+},
+{
+"team": "Dutchess of Desire",
+"class": "rowboat",
+"place": "17",
+"finish": "2023-06-03T10:14",
+"elapsed_h": 15.23
+},
+{
+"team": "Solveig",
+"class": "rowboat",
+"place": "18",
+"finish": "2023-06-03T10:21",
+"elapsed_h": 15.35
+},
+{
+"team": "Swifty",
+"class": "surfski",
+"place": "19",
+"finish": "2023-06-03T10:22",
+"elapsed_h": 15.37
+},
+{
+"team": "Drowned Chipmunk",
+"class": "kayak",
+"place": "20",
+"finish": "2023-06-03T10:23",
+"elapsed_h": 15.38
+},
+{
+"team": "PCHS Yacht Club",
+"class": "multihull",
+"place": "21",
+"finish": "2023-06-03T10:27",
+"elapsed_h": 15.45
+},
+{
+"team": "Seychelle",
+"class": "sup",
+"place": "22",
+"finish": "2023-06-03T10:28",
+"elapsed_h": 15.47
+},
+{
+"team": "Float Complex",
+"class": "outrigger",
+"place": "23",
+"finish": "2023-06-03T10:30",
+"elapsed_h": 15.5
+},
+{
+"team": "BASK-1",
+"class": "kayak",
+"place": "24",
+"finish": "2023-06-03T10:36",
+"elapsed_h": 15.6
+},
+{
+"team": "Colorado Outlaw Canadian Kook",
+"class": "outrigger",
+"place": "25",
+"finish": "2023-06-03T10:43",
+"elapsed_h": 15.72
+},
+{
+"team": "Bogus Journey",
+"class": "rowboat",
+"place": "26",
+"finish": "2023-06-03T10:46",
+"elapsed_h": 15.77
+},
+{
+"team": "Clear Passage by Splinter",
+"class": "sup",
+"place": "27",
+"finish": "2023-06-03T10:59",
+"elapsed_h": 15.98
+},
+{
+"team": "GemAries125",
+"class": "outrigger",
+"place": "28",
+"finish": "2023-06-03T11:11",
+"elapsed_h": 16.18
+},
+{
+"team": "Washed Up",
+"class": "kayak",
+"place": "29",
+"finish": "2023-06-03T11:17",
+"elapsed_h": 16.28
+},
+{
+"team": "AA",
+"class": "outrigger",
+"place": "30",
+"finish": "2023-06-03T11:22",
+"elapsed_h": 16.37
+},
+{
+"team": "SeaTownSupperClub",
+"class": "sup",
+"place": "31",
+"finish": "2023-06-03T11:38",
+"elapsed_h": 16.63
+},
+{
+"team": "Swedish American Yacht Club",
+"class": "rowboat",
+"place": "32",
+"finish": "2023-06-03T12:04",
+"elapsed_h": 17.07
+},
+{
+"team": "Uncomfortably Numb",
+"class": "rowboat",
+"place": "33",
+"finish": "2023-06-03T12:28",
+"elapsed_h": 17.47
+},
+{
+"team": "Splinter Ambassador",
+"class": "sup",
+"place": "34",
+"finish": "2023-06-03T12:29",
+"elapsed_h": 17.48
+},
+{
+"team": "Man Speed",
+"class": "kayak",
+"place": "35",
+"finish": "2023-06-03T12:31",
+"elapsed_h": 17.52
+},
+{
+"team": "SEASTR",
+"class": "sup",
+"place": "36",
+"finish": "2023-06-03T12:41",
+"elapsed_h": 17.68
+},
+{
+"team": "Outside",
+"class": "sup",
+"place": "37",
+"finish": "2023-06-03T12:47",
+"elapsed_h": 17.78
+},
+{
+"team": "Good Grief",
+"class": "surfski",
+"place": "38",
+"finish": "2023-06-03T12:48",
+"elapsed_h": 17.8
+},
+{
+"team": "Otterly ridiculous",
+"class": "rowboat",
+"place": "39",
+"finish": "2023-06-03T12:58",
+"elapsed_h": 17.97
+},
+{
+"team": "Travail",
+"class": "rowboat",
+"place": "40",
+"finish": "2023-06-03T13:12",
+"elapsed_h": 18.2
+},
+{
+"team": "Scott Scheff",
+"class": "kayak",
+"place": "41",
+"finish": "2023-06-03T13:19",
+"elapsed_h": 18.32
+},
+{
+"team": "Dumas Bay Brethren",
+"class": "kayak",
+"place": "42",
+"finish": "2023-06-03T13:31",
+"elapsed_h": 18.52
+},
+{
+"team": "Valhalla",
+"class": "rowboat",
+"place": "43",
+"finish": "2023-06-03T13:40",
+"elapsed_h": 18.67
+},
+{
+"team": "Where's my hat?",
+"class": "rowboat",
+"place": "44",
+"finish": "2023-06-03T13:51",
+"elapsed_h": 18.85
+},
+{
+"team": "Kuaka",
+"class": "outrigger",
+"place": "45",
+"finish": "2023-06-03T14:29",
+"elapsed_h": 19.48
+},
+{
+"team": "Kats from Kansas",
+"class": "rowboat",
+"place": "46",
+"finish": "2023-06-03T14:58",
+"elapsed_h": 19.97
+},
+{
+"team": "Eumicrotremis Orbis",
+"class": "rowboat",
+"place": "47",
+"finish": "2023-06-03T17:39",
+"elapsed_h": 22.65
+},
+{
+"team": "Kostie",
+"class": "kayak",
+"place": "48",
+"finish": "2023-06-03T18:42",
+"elapsed_h": 23.7
+},
+{
+"team": "Suciasaurus Wrecks",
+"class": "rowboat",
+"place": "49",
+"finish": "2023-06-03T19:19",
+"elapsed_h": 24.32
+},
+{
+"team": "COVID PROJECT",
+"class": "rowboat",
+"place": "50",
+"finish": "2023-06-03T19:32",
+"elapsed_h": 24.53
+},
+{
+"team": "Hopelessly Lolo",
+"class": "rowboat",
+"place": "51",
+"finish": "2023-06-03T19:37",
+"elapsed_h": 24.62
+},
+{
+"team": "Stones Throw Brewery Yacht Club",
+"class": "surfski",
+"place": "52",
+"finish": "2023-06-03T20:09",
+"elapsed_h": 25.15
+},
+{
+"team": "Tally Row",
+"class": "rowboat",
+"place": "53",
+"finish": "2023-06-03T20:41",
+"elapsed_h": 25.68
+},
+{
+"team": "Gastropod",
+"class": "kayak",
+"place": "54",
+"finish": "2023-06-03T20:42",
+"elapsed_h": 25.7
+},
+{
+"team": "Rampaging Turtles",
+"class": "rowboat",
+"place": "55",
+"finish": "2023-06-04T06:07",
+"elapsed_h": 35.12
+},
+{
+"team": "HMS Swiftsure",
+"class": "outrigger",
+"place": "56",
+"finish": "2023-06-04T07:28",
+"elapsed_h": 36.47
+},
+{
+"team": "Old Man Raven",
+"class": "kayak",
+"place": "57",
+"finish": "2023-06-04T07:34",
+"elapsed_h": 36.57
+},
+{
+"team": "Maximum Effort",
+"class": "rowboat",
+"place": "58",
+"finish": "2023-06-04T07:46",
+"elapsed_h": 36.77
+},
+{
+"team": "More Cowbell 2",
+"class": "kayak",
+"place": "59",
+"finish": "2023-06-04T09:08",
+"elapsed_h": 38.13
+},
+{
+"team": "Slowly but Shelby",
+"class": "sup",
+"place": "60",
+"finish": "2023-06-04T09:49",
+"elapsed_h": 38.82
+},
+{
+"team": "Blaze",
+"class": "kayak",
+"place": "61",
+"finish": "2023-06-04T10:35",
+"elapsed_h": 39.58
+},
+{
+"team": "Kookaburra",
+"class": "kayak",
+"place": "62",
+"finish": "2023-06-04T10:35",
+"elapsed_h": 39.58
+},
+{
+"team": "pandatrax",
+"class": "kayak",
+"place": "63",
+"finish": "2023-06-04T10:57",
+"elapsed_h": 39.95
+},
+{
+"team": "Greg Kroleski",
+"class": "sup",
+"place": "64",
+"finish": "2023-06-04T11:19",
+"elapsed_h": 40.32
+},
+{
+"team": "Kayak OARnge",
+"class": "kayak",
+"place": "65",
+"finish": "2023-06-04T11:36",
+"elapsed_h": 40.6
+},
+{
+"team": "AquaVans",
+"class": "kayak",
+"place": "66",
+"finish": "2023-06-04T11:36",
+"elapsed_h": 40.6
+},
+{
+"team": "Banana Slug",
+"class": "sup",
+"place": "67",
+"finish": "2023-06-04T11:38",
+"elapsed_h": 40.63
+},
+{
+"team": "Mzee",
+"class": "kayak",
+"place": "68",
+"finish": "2023-06-04T12:25",
+"elapsed_h": 41.42
+},
+{
+"team": "Drunken Viking",
+"class": "sup",
+"place": "69",
+"finish": "2023-06-04T12:29",
+"elapsed_h": 41.48
+},
+{
+"team": "Orca-stra",
+"class": "kayak",
+"place": "70",
+"finish": "2023-06-04T16:46",
+"elapsed_h": 45.77
+}
+]
+},
+"2024": {
+"file": "2024.csv",
+"sheet": "https://docs.google.com/spreadsheets/d/e/2PACX-1vRDbhGotXx7_SVndT0E1EjN_ADdQB3F2cMPl8FwMqODQbjBOm4kkPgeIyNN3qWoWvE5IHlsg7FW9uEh/pubhtml",
+"start": "2024-05-31T19:00",
+"teams": [
+{
+"team": "Beasts from the East",
+"class": "surfski",
+"place": "1",
+"finish": "2024-06-01T05:42",
+"elapsed_h": 10.7
+},
+{
+"team": "A Working Tidal Effort",
+"class": "surfski",
+"place": "2",
+"finish": "2024-06-01T07:54",
+"elapsed_h": 12.9
+},
+{
+"team": "Lokahi",
+"class": "outrigger",
+"place": "3",
+"finish": "2024-06-01T08:15",
+"elapsed_h": 13.25
+},
+{
+"team": "Salty Beavers Rowing Club",
+"class": "rowboat",
+"place": "4",
+"finish": "2024-06-01T09:04",
+"elapsed_h": 14.07
+},
+{
+"team": "Patty Party",
+"class": "rowboat",
+"place": "5",
+"finish": "2024-06-01T09:23",
+"elapsed_h": 14.38
+},
+{
+"team": "Year of the Draggin\"",
+"class": "rowboat",
+"place": "6",
+"finish": "2024-06-01T09:46",
+"elapsed_h": 14.77
+},
+{
+"team": "Boogie Barge",
+"class": "multihull",
+"place": "7",
+"finish": "2024-06-01T09:58",
+"elapsed_h": 14.97
+},
+{
+"team": "Swifty",
+"class": "kayak",
+"place": "8",
+"finish": "2024-06-01T10:10",
+"elapsed_h": 15.17
+},
+{
+"team": "Gallagher Big Canoe",
+"class": "kayak",
+"place": "9",
+"finish": "2024-06-01T11:03",
+"elapsed_h": 16.05
+},
+{
+"team": "Are we laughing yet",
+"class": "rowboat",
+"place": "10",
+"finish": "2024-06-01T11:09",
+"elapsed_h": 16.15
+},
+{
+"team": "Muskrat II",
+"class": "rowboat",
+"place": "11",
+"finish": "2024-06-01T11:10",
+"elapsed_h": 16.17
+},
+{
+"team": "Jungle Rules",
+"class": "rowboat",
+"place": "12",
+"finish": "2024-06-01T11:32",
+"elapsed_h": 16.53
+},
+{
+"team": "Sporting Chance",
+"class": "kayak",
+"place": "13",
+"finish": "2024-06-01T12:07",
+"elapsed_h": 17.12
+},
+{
+"team": "Sea Town Supper Club",
+"class": "sup",
+"place": "14",
+"finish": "2024-06-01T12:11",
+"elapsed_h": 17.18
+},
+{
+"team": "Ted",
+"class": "sup",
+"place": "15",
+"finish": "2024-06-01T12:19",
+"elapsed_h": 17.32
+},
+{
+"team": "Red Rower Buoys",
+"class": "rowboat",
+"place": "16",
+"finish": "2024-06-01T12:40",
+"elapsed_h": 17.67
+},
+{
+"team": "Sinnatagen",
+"class": "kayak",
+"place": "17",
+"finish": "2024-06-01T13:01",
+"elapsed_h": 18.02
+},
+{
+"team": "We Get'em by night",
+"class": "rowboat",
+"place": "18",
+"finish": "2024-06-01T13:15",
+"elapsed_h": 18.25
+},
+{
+"team": "Epicgirl",
+"class": "surfski",
+"place": "19",
+"finish": "2024-06-01T13:39",
+"elapsed_h": 18.65
+},
+{
+"team": "Bogus Journey",
+"class": "rowboat",
+"place": "20",
+"finish": "2024-06-01T13:54",
+"elapsed_h": 18.9
+},
+{
+"team": "Chucklewave",
+"class": "kayak",
+"place": "21",
+"finish": "2024-06-01T14:13",
+"elapsed_h": 19.22
+},
+{
+"team": "Afternoon Delight",
+"class": "rowboat",
+"place": "22",
+"finish": "2024-06-01T14:20",
+"elapsed_h": 19.33
+},
+{
+"team": "Don't Panic",
+"class": "kayak",
+"place": "23",
+"finish": "2024-06-01T14:45",
+"elapsed_h": 19.75
+},
+{
+"team": "General Jetstream",
+"class": "sup",
+"place": "24",
+"finish": "2024-06-01T14:55",
+"elapsed_h": 19.92
+},
+{
+"team": "Irish Goodbye",
+"class": "kayak",
+"place": "25",
+"finish": "2024-06-01T15:05",
+"elapsed_h": 20.08
+},
+{
+"team": "In Search of a Siren",
+"class": "sup",
+"place": "26",
+"finish": "2024-06-01T15:29",
+"elapsed_h": 20.48
+},
+{
+"team": "Pale Valley Rowers",
+"class": "rowboat",
+"place": "27",
+"finish": "2024-06-01T15:53",
+"elapsed_h": 20.88
+},
+{
+"team": "Golden Buoy",
+"class": "rowboat",
+"place": "27",
+"finish": "2024-06-01T15:53",
+"elapsed_h": 20.88
+},
+{
+"team": "Zoomiak",
+"class": "rowboat",
+"place": "29",
+"finish": "2024-06-01T15:57",
+"elapsed_h": 20.95
+},
+{
+"team": "Hopelessly Lolo",
+"class": "kayak",
+"place": "30",
+"finish": "2024-06-01T16:31",
+"elapsed_h": 21.52
+},
+{
+"team": "Where's My Hat?",
+"class": "rowboat",
+"place": "31",
+"finish": "2024-06-01T16:33",
+"elapsed_h": 21.55
+},
+{
+"team": "Bucketlist",
+"class": "kayak",
+"place": "32",
+"finish": "2024-06-01T16:43",
+"elapsed_h": 21.72
+},
+{
+"team": "Aquaholic",
+"class": "kayak",
+"place": "33",
+"finish": "2024-06-01T16:49",
+"elapsed_h": 21.82
+},
+{
+"team": "Wayland-Seamans",
+"class": "rowboat",
+"place": "34",
+"finish": "2024-06-01T17:13",
+"elapsed_h": 22.22
+},
+{
+"team": "Pineapple Express",
+"class": "rowboat",
+"place": "35",
+"finish": "2024-06-01T17:26",
+"elapsed_h": 22.43
+},
+{
+"team": "Poor Decision",
+"class": "kayak",
+"place": "36",
+"finish": "2024-06-01T17:34",
+"elapsed_h": 22.57
+},
+{
+"team": "California Kook",
+"class": "kayak",
+"place": "37",
+"finish": "2024-06-01T18:09",
+"elapsed_h": 23.15
+},
+{
+"team": "Gastropod",
+"class": "kayak",
+"place": "38",
+"finish": "2024-06-01T18:11",
+"elapsed_h": 23.18
+},
+{
+"team": "Buttercup",
+"class": "rowboat",
+"place": "39",
+"finish": "2024-06-01T18:25",
+"elapsed_h": 23.42
+},
+{
+"team": "Paddle Goat",
+"class": "sup",
+"place": "40",
+"finish": "2024-06-01T18:48",
+"elapsed_h": 23.8
+},
+{
+"team": "Big Deck Energy",
+"class": "sup",
+"place": "40",
+"finish": "2024-06-01T18:48",
+"elapsed_h": 23.8
+},
+{
+"team": "Shearwater Revival",
+"class": "kayak",
+"place": "42",
+"finish": "2024-06-01T18:57",
+"elapsed_h": 23.95
+},
+{
+"team": "Fallstkur",
+"class": "kayak",
+"place": "43",
+"finish": "2024-06-01T19:00",
+"elapsed_h": 24.0
+},
+{
+"team": "Callous Crazy",
+"class": "kayak",
+"place": "44",
+"finish": "2024-06-01T20:03",
+"elapsed_h": 25.05
+},
+{
+"team": "Chippy Love",
+"class": "kayak",
+"place": "45",
+"finish": "2024-06-01T20:37",
+"elapsed_h": 25.62
+},
+{
+"team": "Water-Lou",
+"class": "kayak",
+"place": "46",
+"finish": "2024-06-01T20:40",
+"elapsed_h": 25.67
+},
+{
+"team": "Happy Pace",
+"class": "sup",
+"place": "47",
+"finish": "2024-06-01T20:51",
+"elapsed_h": 25.85
+},
+{
+"team": "Henderson Inlet",
+"class": "rowboat",
+"place": "48",
+"finish": "2024-06-01T20:56",
+"elapsed_h": 25.93
+},
+{
+"team": "Half Tame",
+"class": "rowboat",
+"place": "48",
+"finish": "2024-06-01T20:56",
+"elapsed_h": 25.93
+},
+{
+"team": "Mzee",
+"class": "kayak",
+"place": "50",
+"finish": "2024-06-01T20:58",
+"elapsed_h": 25.97
+},
+{
+"team": "Meandering Wherryman",
+"class": "rowboat",
+"place": "51",
+"finish": "2024-06-01T21:07",
+"elapsed_h": 26.12
+},
+{
+"team": "Octacosta",
+"class": "kayak",
+"place": "52",
+"finish": "2024-06-01T21:17",
+"elapsed_h": 26.28
+},
+{
+"team": "Red",
+"class": "kayak",
+"place": "53",
+"finish": "2024-06-01T21:17",
+"elapsed_h": 26.28
+},
+{
+"team": "Not Gonna Fold",
+"class": "kayak",
+"place": "54",
+"finish": "2024-06-01T21:27",
+"elapsed_h": 26.45
+},
+{
+"team": "Field Mice",
+"class": "kayak",
+"place": "55",
+"finish": "2024-06-01T21:59",
+"elapsed_h": 26.98
+},
+{
+"team": "Hargrove Performance",
+"class": "kayak",
+"place": "56",
+"finish": "2024-06-01T21:54",
+"elapsed_h": 26.9
+},
+{
+"team": "Tiktaalik",
+"class": "kayak",
+"place": "58",
+"finish": "2024-06-01T22:52",
+"elapsed_h": 27.87
+},
+{
+"team": "Old Man Raven",
+"class": "kayak",
+"place": "59",
+"finish": "2024-06-01T22:53",
+"elapsed_h": 27.88
+},
+{
+"team": "Mustache for Directions",
+"class": "kayak",
+"place": "60",
+"finish": "2024-06-01T23:01",
+"elapsed_h": 28.02
+},
+{
+"team": "Let The Good Times Row",
+"class": "rowboat",
+"place": "61",
+"finish": "2024-06-01T23:27",
+"elapsed_h": 28.45
+},
+{
+"team": "Kayac Orca Yak",
+"class": "kayak",
+"place": "62",
+"finish": "2024-06-02T00:41",
+"elapsed_h": 29.68
+},
+{
+"team": "Red Lodge Yacht Club",
+"class": "rowboat",
+"place": "63",
+"finish": "2024-06-02T00:48",
+"elapsed_h": 29.8
+},
+{
+"team": "We Found Our Porpoise",
+"class": "rowboat",
+"place": "64",
+"finish": "2024-06-02T01:27",
+"elapsed_h": 30.45
+},
+{
+"team": "Snoose Junction",
+"class": "rowboat",
+"place": "65",
+"finish": "2024-06-02T01:41",
+"elapsed_h": 30.68
+},
+{
+"team": "Wilson and I",
+"class": "rowboat",
+"place": "66",
+"finish": "2024-06-02T01:46",
+"elapsed_h": 30.77
+},
+{
+"team": "Apple Bottom Boy and The Boots With The Fleece",
+"class": "sup",
+"place": "67",
+"finish": "2024-06-02T01:57",
+"elapsed_h": 30.95
+},
+{
+"team": "Lillian's Boyfriend",
+"class": "rowboat",
+"place": "68",
+"finish": "2024-06-02T02:39",
+"elapsed_h": 31.65
+},
+{
+"team": "Let's Go Girls!",
+"class": "kayak",
+"place": "69",
+"finish": "2024-06-02T05:20",
+"elapsed_h": 34.33
+},
+{
+"team": "Mor Row",
+"class": "rowboat",
+"place": "70",
+"finish": "2024-06-02T05:43",
+"elapsed_h": 34.72
+},
+{
+"team": "Kensdottirs",
+"class": "kayak",
+"place": "71",
+"finish": "2024-06-02T06:05",
+"elapsed_h": 35.08
+},
+{
+"team": "Daddleboard",
+"class": "sup",
+"place": "72",
+"finish": "2024-06-02T06:21",
+"elapsed_h": 35.35
+},
+{
+"team": "Tidely Idely",
+"class": "rowboat",
+"place": "73",
+"finish": "2024-06-02T06:40",
+"elapsed_h": 35.67
+},
+{
+"team": "Trishkabob",
+"class": "kayak",
+"place": "74",
+"finish": "2024-06-02T06:51",
+"elapsed_h": 35.85
+},
+{
+"team": "Utah School",
+"class": "outrigger",
+"place": "75",
+"finish": "2024-06-02T07:15",
+"elapsed_h": 36.25
+},
+{
+"team": "Finnegan's Wake",
+"class": "kayak",
+"place": "76",
+"finish": "2024-06-02T07:16",
+"elapsed_h": 36.27
+},
+{
+"team": "Moving Forward",
+"class": "kayak",
+"place": "77",
+"finish": "2024-06-02T07:17",
+"elapsed_h": 36.28
+},
+{
+"team": "Usually Upright",
+"class": "kayak",
+"place": "77",
+"finish": "2024-06-02T07:17",
+"elapsed_h": 36.28
+},
+{
+"team": "Snowy Plover",
+"class": "rowboat",
+"place": "78",
+"finish": "2024-06-02T07:41",
+"elapsed_h": 36.68
+},
+{
+"team": "Bark at the Loon",
+"class": "outrigger",
+"place": "79",
+"finish": "2024-06-02T08:48",
+"elapsed_h": 37.8
+},
+{
+"team": "Eric Tries Again",
+"class": "kayak",
+"place": "80",
+"finish": "2024-06-02T08:49",
+"elapsed_h": 37.82
+},
+{
+"team": "Late to Work",
+"class": "kayak",
+"place": "81",
+"finish": "2024-06-02T11:08",
+"elapsed_h": 40.13
+},
+{
+"team": "2 Lost Mountaineers",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "3 Breauxs",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Abiding Dude",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Bearded Fool",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Dude",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Dumas Bay Associate",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Dumas Bay Brethren",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Extreme Sobriety",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Flow State",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Gemaries",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Get The Knak",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Go Faster Benny",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Good Fortune",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Good News I Saw A Seal",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Hard Knots",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Harp Dogs",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "How Soon Is Now",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Insomnia",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Jettysome",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Just Around The Corner",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Like a G6",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Martin Musson",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Mechtige Og Sterke Kvinner Fra Sentralt",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Mechtige Og Sterke Kvinner Fra Ost",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Misty Rows... Again?",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Nardi Party",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Nautinurse",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Odyssey",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Old Man Raven's Slightly Younger Brother (and Friend)",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Paddle",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Paddle On... Paddle On",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Pandatrax 2",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Pretty Boys",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "PWS Sea Otter",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Rob Free",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Rogue Kayaker",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Salmon Bay Beach Rowing Club",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Salty Current",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Sculling Chinooks",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Second Breakfast Club",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Serendipity",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "She and Ah",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Silly Salmon",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Splinter Ambassador",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Starlight",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Tpac Capital",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Two Spoons",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Wherryarewe",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Why Knot?",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Wood Warriors",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Woodhall",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+}
+]
+},
+"2025": {
+"file": "2025.csv",
+"sheet": "https://docs.google.com/spreadsheets/d/e/2PACX-1vSNAjaJHeHMDa4xbsYl2bX1hoah6doQLCb_NfLMYQXcv-vdSPFNHwxVR1_xiGibpp4L5NXY1I1NKUBN/pubhtml",
+"start": "2025-06-06T19:00",
+"teams": [
+{
+"team": "Tritons",
+"class": "surfski",
+"place": "1",
+"finish": "2025-06-07T05:09",
+"elapsed_h": 10.15
+},
+{
+"team": "Beasts from the East",
+"class": "surfski",
+"place": "2",
+"finish": "2025-06-07T05:43",
+"elapsed_h": 10.72
+},
+{
+"team": "Boogie Barge",
+"class": "other",
+"place": "3",
+"finish": "2025-06-07T05:46",
+"elapsed_h": 10.77
+},
+{
+"team": "Meatball Jack",
+"class": "other",
+"place": "4",
+"finish": "2025-06-07T05:47",
+"elapsed_h": 10.78
+},
+{
+"team": "Wave Forager",
+"class": "rowboat",
+"place": "5",
+"finish": "2025-06-07T06:12",
+"elapsed_h": 11.2
+},
+{
+"team": "That\u2019s a paddlin\u201d",
+"class": "surfski",
+"place": "6",
+"finish": "2025-06-07T07:48",
+"elapsed_h": 12.8
+},
+{
+"team": "A Working Tidal Effort",
+"class": "surfski",
+"place": "7",
+"finish": "2025-06-07T08:40",
+"elapsed_h": 13.67
+},
+{
+"team": "OceanFlight",
+"class": "surfski",
+"place": "8",
+"finish": "2025-06-07T09:07",
+"elapsed_h": 14.12
+},
+{
+"team": "We Are A Laughing Roomba",
+"class": "rowboat",
+"place": "9",
+"finish": "2025-06-07T09:41",
+"elapsed_h": 14.68
+},
+{
+"team": "Float Complex",
+"class": "outrigger canoe",
+"place": "10",
+"finish": "2025-06-07T09:46",
+"elapsed_h": 14.77
+},
+{
+"team": "Smoking Daisies In Paris",
+"class": "rowboat",
+"place": "11",
+"finish": "2025-06-07T10:06",
+"elapsed_h": 15.1
+},
+{
+"team": "Gallagher Big Canoe",
+"class": "canoe",
+"place": "12",
+"finish": "2025-06-07T10:46",
+"elapsed_h": 15.77
+},
+{
+"team": "Gorge Girl",
+"class": "outrigger canoe",
+"place": "13",
+"finish": "2025-06-07T10:53",
+"elapsed_h": 15.88
+},
+{
+"team": "Jules",
+"class": "sup",
+"place": "14",
+"finish": "2025-06-07T11:15",
+"elapsed_h": 16.25
+},
+{
+"team": "Rhythm & Resilience",
+"class": "rowboat",
+"place": "15",
+"finish": "2025-06-07T11:17",
+"elapsed_h": 16.28
+},
+{
+"team": "HerbertSons",
+"class": "rowboat",
+"place": "16",
+"finish": "2025-06-07T11:30",
+"elapsed_h": 16.5
+},
+{
+"team": "Miss Frizz",
+"class": "canoe",
+"place": "17",
+"finish": "2025-06-07T12:38",
+"elapsed_h": 17.63
+},
+{
+"team": "Row Daddy, Row!",
+"class": "rowboat",
+"place": "18",
+"finish": "2025-06-07T13:02",
+"elapsed_h": 18.03
+},
+{
+"team": "Worst Case Scenario",
+"class": "rowboat",
+"place": "19",
+"finish": "2025-06-07T13:09",
+"elapsed_h": 18.15
+},
+{
+"team": "Narrower minded",
+"class": "rowboat",
+"place": "20",
+"finish": "2025-06-07T13:22",
+"elapsed_h": 18.37
+},
+{
+"team": "Chafed and Confused",
+"class": "rowboat",
+"place": "21",
+"finish": "2025-06-07T14:52",
+"elapsed_h": 19.87
+},
+{
+"team": "Two Rowers One Coachswain",
+"class": "rowboat",
+"place": "22",
+"finish": "2025-06-07T15:06",
+"elapsed_h": 20.1
+},
+{
+"team": "Captain Ross and The Stowaway",
+"class": "rowboat",
+"place": "23",
+"finish": "2025-06-07T15:07",
+"elapsed_h": 20.12
+},
+{
+"team": "Mako",
+"class": "rowboat",
+"place": "24",
+"finish": "2025-06-07T15:08",
+"elapsed_h": 20.13
+},
+{
+"team": "Hopelessly Lolo",
+"class": "kayak",
+"place": "25",
+"finish": "2025-06-07T15:30",
+"elapsed_h": 20.5
+},
+{
+"team": "Grit & Giggles",
+"class": "rowboat",
+"place": "26",
+"finish": "2025-06-07T16:41",
+"elapsed_h": 21.68
+},
+{
+"team": "AMA (Another Miss-Adventure)",
+"class": "outrigger canoe",
+"place": "27",
+"finish": "2025-06-07T16:48",
+"elapsed_h": 21.8
+},
+{
+"team": "Bogus Journey",
+"class": "rowboat",
+"place": "28",
+"finish": "2025-06-07T17:16",
+"elapsed_h": 22.27
+},
+{
+"team": "Pandatrax",
+"class": "kayak",
+"place": "29",
+"finish": "2025-06-07T17:26",
+"elapsed_h": 22.43
+},
+{
+"team": "Wind and Waves and Water",
+"class": "kayak",
+"place": "30",
+"finish": "2025-06-07T17:58",
+"elapsed_h": 22.97
+},
+{
+"team": "Purple Martin",
+"class": "sup",
+"place": "31",
+"finish": "2025-06-07T18:15",
+"elapsed_h": 23.25
+},
+{
+"team": "Silverdale Outrigger",
+"class": "outrigger canoe",
+"place": "32",
+"finish": "2025-06-07T18:37",
+"elapsed_h": 23.62
+},
+{
+"team": "Zeus's Resplendent Dinghy",
+"class": "rowboat",
+"place": "33",
+"finish": "2025-06-07T18:41",
+"elapsed_h": 23.68
+},
+{
+"team": "High Sparkle Standards",
+"class": "sup",
+"place": "34",
+"finish": "2025-06-07T18:49",
+"elapsed_h": 23.82
+},
+{
+"team": "Still Searching",
+"class": "sup",
+"place": "35",
+"finish": "2025-06-07T18:59",
+"elapsed_h": 23.98
+},
+{
+"team": "Motoboat",
+"class": "kayak",
+"place": "36",
+"finish": "2025-06-07T19:40",
+"elapsed_h": 24.67
+},
+{
+"team": "OctoCosta",
+"class": "kayak",
+"place": "37",
+"finish": "2025-06-07T20:29",
+"elapsed_h": 25.48
+},
+{
+"team": "Friendship",
+"class": "rowboat",
+"place": "38",
+"finish": "2025-06-07T20:41",
+"elapsed_h": 25.68
+},
+{
+"team": "Red",
+"class": "kayak",
+"place": "39",
+"finish": "2025-06-07T20:52",
+"elapsed_h": 25.87
+},
+{
+"team": "Water We Doing?",
+"class": "rowboat",
+"place": "40",
+"finish": "2025-06-07T21:28",
+"elapsed_h": 26.47
+},
+{
+"team": "Apple bottom boy",
+"class": "kayak",
+"place": "41",
+"finish": "2025-06-07T21:31",
+"elapsed_h": 26.52
+},
+{
+"team": "Ayla's Dad",
+"class": "kayak",
+"place": "41",
+"finish": "2025-06-07T21:31",
+"elapsed_h": 26.52
+},
+{
+"team": "Snoose Junction",
+"class": "rowboat",
+"place": "43",
+"finish": "2025-06-07T21:41",
+"elapsed_h": 26.68
+},
+{
+"team": "Paddle",
+"class": "kayak",
+"place": "44",
+"finish": "2025-06-07T21:47",
+"elapsed_h": 26.78
+},
+{
+"team": "Betwixt",
+"class": "kayak",
+"place": "45",
+"finish": "2025-06-07T22:04",
+"elapsed_h": 27.07
+},
+{
+"team": "Chamberlain",
+"class": "rowboat",
+"place": "46",
+"finish": "2025-06-07T22:28",
+"elapsed_h": 27.47
+},
+{
+"team": "Obstinate Rowing Club",
+"class": "rowboat",
+"place": "47",
+"finish": "2025-06-07T22:33",
+"elapsed_h": 27.55
+},
+{
+"team": "You Canoe It",
+"class": "kayak",
+"place": "48",
+"finish": "2025-06-07T22:59",
+"elapsed_h": 27.98
+},
+{
+"team": "LFG",
+"class": "kayak",
+"place": "49",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Laughing Academy",
+"class": "rowboat",
+"place": "50",
+"finish": "2025-06-07T23:24",
+"elapsed_h": 28.4
+},
+{
+"team": "Mayerly Mayerly Life is But a Dream",
+"class": "rowboat",
+"place": "51",
+"finish": "2025-06-08T00:11",
+"elapsed_h": 29.18
+},
+{
+"team": "Miss Minneaux",
+"class": "rowboat",
+"place": "52",
+"finish": "2025-06-08T00:32",
+"elapsed_h": 29.53
+},
+{
+"team": "Chapped Sterns",
+"class": "rowboat",
+"place": "53",
+"finish": "2025-06-08T01:34",
+"elapsed_h": 30.57
+},
+{
+"team": "Banana Boat",
+"class": "rowboat",
+"place": "54",
+"finish": "2025-06-08T02:35",
+"elapsed_h": 31.58
+},
+{
+"team": "Ballard Bullies",
+"class": "sup",
+"place": "55",
+"finish": "2025-06-08T02:52",
+"elapsed_h": 31.87
+},
+{
+"team": "Steak Knives to a Gun Fight",
+"class": "other",
+"place": "56",
+"finish": "2025-06-08T03:52",
+"elapsed_h": 32.87
+},
+{
+"team": "SALISH5371",
+"class": "kayak",
+"place": "57",
+"finish": "2025-06-08T05:49",
+"elapsed_h": 34.82
+},
+{
+"team": "Search and Res-canoe",
+"class": "canoe",
+"place": "58",
+"finish": "2025-06-08T06:01",
+"elapsed_h": 35.02
+},
+{
+"team": "25/68",
+"class": "rowboat",
+"place": "59",
+"finish": "2025-06-08T07:23",
+"elapsed_h": 36.38
+},
+{
+"team": "Francis Strikes Back",
+"class": "rowboat",
+"place": "60",
+"finish": "2025-06-08T07:40",
+"elapsed_h": 36.67
+},
+{
+"team": "Kayak Orca Yak!",
+"class": "kayak",
+"place": "61",
+"finish": "2025-06-08T08:05",
+"elapsed_h": 37.08
+},
+{
+"team": "Like a G6",
+"class": "kayak",
+"place": "62",
+"finish": "2025-06-08T08:35",
+"elapsed_h": 37.58
+},
+{
+"team": "Nardi Party",
+"class": "canoe",
+"place": "63",
+"finish": "2025-06-08T09:39",
+"elapsed_h": 38.65
+},
+{
+"team": "GoVicGo!",
+"class": "kayak",
+"place": "64",
+"finish": "2025-06-08T09:46",
+"elapsed_h": 38.77
+},
+{
+"team": "GoRobGo",
+"class": "kayak",
+"place": "64",
+"finish": "2025-06-08T09:46",
+"elapsed_h": 38.77
+},
+{
+"team": "Water Striders",
+"class": "rowboat",
+"place": "65",
+"finish": "2025-06-08T10:14",
+"elapsed_h": 39.23
+},
+{
+"team": "Sculling Chinooks",
+"class": "rowboat",
+"place": "66",
+"finish": "2025-06-08T11:50",
+"elapsed_h": 40.83
+},
+{
+"team": "Inertial Mass",
+"class": "kayak",
+"place": "67",
+"finish": "2025-06-08T12:25",
+"elapsed_h": 41.42
+},
+{
+"team": "Rogue Kayaker",
+"class": "kayak",
+"place": "68",
+"finish": "2025-06-08T12:36",
+"elapsed_h": 41.6
+},
+{
+"team": "Good News: I Saw a Seal!",
+"class": "kayak",
+"place": "68",
+"finish": "2025-06-08T12:36",
+"elapsed_h": 41.6
+},
+{
+"team": "Paddle On... Paddle On",
+"class": "kayak",
+"place": "68",
+"finish": "2025-06-08T12:36",
+"elapsed_h": 41.6
+},
+{
+"team": "Haggis Head",
+"class": "kayak",
+"place": "69",
+"finish": "2025-06-08T13:02",
+"elapsed_h": 42.03
+},
+{
+"team": "Caffeinated Coho",
+"class": "kayak",
+"place": "69",
+"finish": "2025-06-08T13:02",
+"elapsed_h": 42.03
+},
+{
+"team": "Good 'Nuff",
+"class": "rowboat",
+"place": "70",
+"finish": "2025-06-08T13:15",
+"elapsed_h": 42.25
+},
+{
+"team": "Slightly Senile With A Side Of Chips",
+"class": "sup",
+"place": "71",
+"finish": "2025-06-08T03:10",
+"elapsed_h": 32.17
+},
+{
+"team": "Salty Current",
+"class": "sup",
+"place": "71",
+"finish": "2025-06-08T03:10",
+"elapsed_h": 32.17
+},
+{
+"team": "Harp Dog",
+"class": "rowboat",
+"place": "72",
+"finish": "2025-06-08T15:33",
+"elapsed_h": 44.55
+},
+{
+"team": "2 Seventies for 70",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Abominable Rowman",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Dame Corky's Crew",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Doing this on Porpoise",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Free Quilcene",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Fun While Lost",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Green Boat Go",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "in theory ...",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Let the Good Times Row",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Loony",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Lost But Don't Care",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "May The Tides Be With You",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "One Way Ticket",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "OneFiveOhOh",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "PITA (Pain In The Ass)",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Ripple in Still Water",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Rob Free Not Sleep Free",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Salty Senior",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Skookum Joe",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Sloth Bear",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Splinter Ambassador",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Stella Maris",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Swedish American Yacht Club",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "The Captain the Engineer the Biker and Bilbo",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "We Might Just Cruise",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Where's my hat?",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "YNPA: You'll Never Paddle Alone",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+}
+]
+},
+"2026": {
+"file": "2026-2.csv",
+"sheet": "https://docs.google.com/spreadsheets/d/e/2PACX-1vTR0CeiyVCQ5gxWZDiwLHGUH7ATd2Ftg-iQe-6m6co5IxiPrzDaoksZsHmNgcHNVZw9LRQYiVas73md/pubhtml",
+"start": "2026-05-29T19:00",
+"teams": [
+{
+"team": "Tritons",
+"class": "surfski",
+"place": "1",
+"finish": "2026-05-30T04:50",
+"elapsed_h": 9.83
+},
+{
+"team": "Boogie Barge",
+"class": "pedal craft",
+"place": "2",
+"finish": "2026-05-30T05:52",
+"elapsed_h": 10.87
+},
+{
+"team": "Beasts from the East",
+"class": "surfski",
+"place": "3",
+"finish": "2026-05-30T06:44",
+"elapsed_h": 11.73
+},
+{
+"team": "Lokahi 2.0",
+"class": "oc-6",
+"place": "4",
+"finish": "2026-05-30T06:57",
+"elapsed_h": 11.95
+},
+{
+"team": "One Bad Idea After Another",
+"class": "rowboat",
+"place": "5",
+"finish": "2026-05-30T07:27",
+"elapsed_h": 12.45
+},
+{
+"team": "Inti",
+"class": "surfski",
+"place": "6",
+"finish": "2026-05-30T07:56",
+"elapsed_h": 12.93
+},
+{
+"team": "Kikaha",
+"class": "oc-6",
+"place": "7",
+"finish": "2026-05-30T08:42",
+"elapsed_h": 13.7
+},
+{
+"team": "Gorge Girl",
+"class": "oc-1",
+"place": "8",
+"finish": "2026-05-30T08:43",
+"elapsed_h": 13.72
+},
+{
+"team": "RACE BOSS",
+"class": "rowboat",
+"place": "9",
+"finish": "2026-05-30T09:17",
+"elapsed_h": 14.28
+},
+{
+"team": "Tubby Patrol",
+"class": "rowboat",
+"place": "10",
+"finish": "2026-05-30T09:24",
+"elapsed_h": 14.4
+},
+{
+"team": "Czech Mate",
+"class": "sup",
+"place": "11",
+"finish": "2026-05-30T09:26",
+"elapsed_h": 14.43
+},
+{
+"team": "Seattle Sake Paddle Club",
+"class": "canoe",
+"place": "12",
+"finish": "2026-05-30T09:36",
+"elapsed_h": 14.6
+},
+{
+"team": "Wait...what?!\u2026",
+"class": "kayak",
+"place": "13",
+"finish": "2026-05-30T09:42",
+"elapsed_h": 14.7
+},
+{
+"team": "Stardust",
+"class": "kayak",
+"place": "14",
+"finish": "2026-05-30T09:45",
+"elapsed_h": 14.75
+},
+{
+"team": "PATTY PARTY",
+"class": "rowboat",
+"place": "15",
+"finish": "2026-05-30T09:57",
+"elapsed_h": 14.95
+},
+{
+"team": "Fleeced Lightning",
+"class": "rowboat",
+"place": "16",
+"finish": "2026-05-30T10:00",
+"elapsed_h": 15.0
+},
+{
+"team": "Row Daddy Row!",
+"class": "rowboat",
+"place": "17",
+"finish": "2026-05-30T10:02",
+"elapsed_h": 15.03
+},
+{
+"team": "Ataka Chicho",
+"class": "rowboat",
+"place": "18",
+"finish": "2026-05-30T10:19",
+"elapsed_h": 15.32
+},
+{
+"team": "Tainted Love",
+"class": "outrigger canoe",
+"place": "19",
+"finish": "2026-05-30T10:24",
+"elapsed_h": 15.4
+},
+{
+"team": "genxsup",
+"class": "sup",
+"place": "20",
+"finish": "2026-05-30T10:35",
+"elapsed_h": 15.58
+},
+{
+"team": "Pandatrax",
+"class": "kayak",
+"place": "21",
+"finish": "2026-05-30T10:38",
+"elapsed_h": 15.63
+},
+{
+"team": "Gallagher Big Canoe",
+"class": "canoe",
+"place": "22",
+"finish": "2026-05-30T10:41",
+"elapsed_h": 15.68
+},
+{
+"team": "Michigan Stripper",
+"class": "kayak",
+"place": "23",
+"finish": "2026-05-30T10:41",
+"elapsed_h": 15.69
+},
+{
+"team": "Bogus Journey",
+"class": "rowboat",
+"place": "24",
+"finish": "2026-05-30T10:58",
+"elapsed_h": 15.97
+},
+{
+"team": "Anderson Island Inmates",
+"class": "rowboat",
+"place": "25",
+"finish": "2026-05-30T11:07",
+"elapsed_h": 16.12
+},
+{
+"team": "Some Light R & R",
+"class": "pedal craft",
+"place": "26",
+"finish": "2026-05-30T11:12",
+"elapsed_h": 16.2
+},
+{
+"team": "Don't Panic",
+"class": "kayak",
+"place": "27",
+"finish": "2026-05-30T11:23",
+"elapsed_h": 16.38
+},
+{
+"team": "Wet Leg Warm Up",
+"class": "surfski",
+"place": "28",
+"finish": "2026-05-30T11:38",
+"elapsed_h": 16.63
+},
+{
+"team": "Go Go Paddle Rangers",
+"class": "outrigger canoe",
+"place": "29",
+"finish": "2026-05-30T11:45",
+"elapsed_h": 16.75
+},
+{
+"team": "Sea Slug",
+"class": "surfski",
+"place": "30",
+"finish": "2026-05-30T11:55",
+"elapsed_h": 16.92
+},
+{
+"team": "Motoboat",
+"class": "kayak",
+"place": "31",
+"finish": "2026-05-30T12:14",
+"elapsed_h": 17.23
+},
+{
+"team": "BlackDog",
+"class": "rowboat",
+"place": "32",
+"finish": "2026-05-30T12:20",
+"elapsed_h": 17.33
+},
+{
+"team": "Tell My Wife I\u2019m OK",
+"class": "rowboat",
+"place": "33",
+"finish": "2026-05-30T12:27",
+"elapsed_h": 17.45
+},
+{
+"team": "REN Slice",
+"class": "kayak",
+"place": "34",
+"finish": "2026-05-30T12:38",
+"elapsed_h": 17.63
+},
+{
+"team": "notes",
+"class": "kayak",
+"place": "35",
+"finish": "2026-05-30T12:40",
+"elapsed_h": 17.67
+},
+{
+"team": "Keewaydin Loons",
+"class": "canoe",
+"place": "36",
+"finish": "2026-05-30T13:25",
+"elapsed_h": 18.42
+},
+{
+"team": "Red Scare",
+"class": "kayak",
+"place": "37",
+"finish": "2026-05-30T13:26",
+"elapsed_h": 18.43
+},
+{
+"team": "Unstoppable and Unsupervised",
+"class": "rowboat",
+"place": "38",
+"finish": "2026-05-30T13:35",
+"elapsed_h": 18.58
+},
+{
+"team": "Unsupervised & Unstoppable",
+"class": "rowboat",
+"place": "38",
+"finish": "2026-05-30T13:35",
+"elapsed_h": 18.58
+},
+{
+"team": "Chafed and Confused",
+"class": "rowboat",
+"place": "39",
+"finish": "2026-05-30T13:38",
+"elapsed_h": 18.63
+},
+{
+"team": "Otter Limits",
+"class": "rowboat",
+"place": "40",
+"finish": "2026-05-30T14:17",
+"elapsed_h": 19.28
+},
+{
+"team": "Salish Cruiser",
+"class": "rowboat",
+"place": "41",
+"finish": "2026-05-30T14:20",
+"elapsed_h": 19.33
+},
+{
+"team": "Apple Bottom boy",
+"class": "sup",
+"place": "42",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Johnson bananas",
+"class": "kayak",
+"place": "43",
+"finish": "2026-05-30T15:28",
+"elapsed_h": 20.47
+},
+{
+"team": "OctoCosta",
+"class": "kayak",
+"place": "44",
+"finish": "2026-05-30T15:30",
+"elapsed_h": 20.5
+},
+{
+"team": "Kahekili",
+"class": "kayak",
+"place": "45",
+"finish": "2026-05-30T15:32",
+"elapsed_h": 20.53
+},
+{
+"team": "USDB Makapo Wave Warriors",
+"class": "canoe",
+"place": "46",
+"finish": "2026-05-30T15:52",
+"elapsed_h": 20.87
+},
+{
+"team": "Pocket Gopher",
+"class": "kayak",
+"place": "47",
+"finish": "2026-05-30T15:56",
+"elapsed_h": 20.93
+},
+{
+"team": "Lost But Don't Care",
+"class": "other",
+"place": "48",
+"finish": "2026-05-30T16:05",
+"elapsed_h": 21.08
+},
+{
+"team": "We Know What We're Doing This Time?",
+"class": "rowboat",
+"place": "49",
+"finish": "2026-05-30T16:10",
+"elapsed_h": 21.17
+},
+{
+"team": "Paddlegoat",
+"class": "sup",
+"place": "50",
+"finish": "2026-05-30T16:16",
+"elapsed_h": 21.27
+},
+{
+"team": "Dragonfly",
+"class": "kayak",
+"place": "51",
+"finish": "2026-05-30T16:34",
+"elapsed_h": 21.57
+},
+{
+"team": "Adventure Boomer",
+"class": "kayak",
+"place": "52",
+"finish": "2026-05-30T16:35",
+"elapsed_h": 21.58
+},
+{
+"team": "TayCray",
+"class": "sup",
+"place": "53",
+"finish": "2026-05-30T16:45",
+"elapsed_h": 21.75
+},
+{
+"team": "Paddle",
+"class": "kayak",
+"place": "54",
+"finish": "2026-05-30T18:36",
+"elapsed_h": 23.6
+},
+{
+"team": "Follow the Pink Line",
+"class": "rowboat",
+"place": "55",
+"finish": "2026-05-30T18:48",
+"elapsed_h": 23.8
+},
+{
+"team": "0 for 3",
+"class": "rowboat",
+"place": "56",
+"finish": "2026-05-30T18:52",
+"elapsed_h": 23.87
+},
+{
+"team": "Bishman on Trak",
+"class": "kayak",
+"place": "57",
+"finish": "2026-05-30T20:14",
+"elapsed_h": 25.23
+},
+{
+"team": "Just Finnish",
+"class": "kayak",
+"place": "58",
+"finish": "2026-05-30T20:36",
+"elapsed_h": 25.6
+},
+{
+"team": "Eliza Dream",
+"class": "kayak",
+"place": "59",
+"finish": "2026-05-30T21:41",
+"elapsed_h": 26.68
+},
+{
+"team": "Country Bumpkin",
+"class": "kayak",
+"place": "59",
+"finish": "2026-05-30T21:41",
+"elapsed_h": 26.68
+},
+{
+"team": "Garden Weasel",
+"class": "rowboat",
+"place": "60",
+"finish": "2026-05-30T22:00",
+"elapsed_h": 27.0
+},
+{
+"team": "Swim, Muffin, Swim",
+"class": "prone paddleboard",
+"place": "61",
+"finish": "2026-05-30T22:20",
+"elapsed_h": 27.33
+},
+{
+"team": "Nicky-No-Paddle",
+"class": "canoe",
+"place": "62",
+"finish": "2026-05-30T10:25",
+"elapsed_h": 15.42
+},
+{
+"team": "Kayak Orca Yak",
+"class": "kayak",
+"place": "63",
+"finish": "2026-05-30T23:31",
+"elapsed_h": 28.52
+},
+{
+"team": "Second Attempt",
+"class": "pedal craft",
+"place": "64",
+"finish": "2026-05-30T23:53",
+"elapsed_h": 28.88
+},
+{
+"team": "Stinging Nettels",
+"class": "kayak",
+"place": "65",
+"finish": "2026-05-31T04:51",
+"elapsed_h": 33.85
+},
+{
+"team": "WOW Factor",
+"class": "rowboat",
+"place": "66",
+"finish": "2026-05-31T05:24",
+"elapsed_h": 34.4
+},
+{
+"team": "Ope, Still Paddling",
+"class": "canoe",
+"place": "67",
+"finish": "2026-05-31T06:22",
+"elapsed_h": 35.37
+},
+{
+"team": "Search & Res-canoe",
+"class": "canoe",
+"place": "68",
+"finish": "2026-05-31T06:25",
+"elapsed_h": 35.42
+},
+{
+"team": "Maury Dory",
+"class": "rowboat",
+"place": "69",
+"finish": "2026-05-31T06:48",
+"elapsed_h": 35.8
+},
+{
+"team": "Salty Current",
+"class": "sup",
+"place": "70",
+"finish": "2026-05-31T07:05",
+"elapsed_h": 36.08
+},
+{
+"team": "The Boondogglers",
+"class": "rowboat",
+"place": "71",
+"finish": "2026-05-31T07:07",
+"elapsed_h": 36.12
+},
+{
+"team": "The Saltwater Syndicate - Torrent",
+"class": "kayak",
+"place": "72",
+"finish": "2026-05-31T08:44",
+"elapsed_h": 37.73
+},
+{
+"team": "The Saltwater Syndicate - Riptide",
+"class": "kayak",
+"place": "72",
+"finish": "2026-05-31T08:44",
+"elapsed_h": 37.73
+},
+{
+"team": "Like a G6",
+"class": "kayak",
+"place": "73",
+"finish": "2026-05-31T09:30",
+"elapsed_h": 38.5
+},
+{
+"team": "Old Man Raven",
+"class": "kayak",
+"place": "74",
+"finish": "2026-05-31T10:13",
+"elapsed_h": 39.22
+},
+{
+"team": "Late to Work",
+"class": "kayak",
+"place": "75",
+"finish": "2026-05-31T10:16",
+"elapsed_h": 39.27
+},
+{
+"team": "Float On",
+"class": "canoe",
+"place": "76",
+"finish": "2026-05-31T10:26",
+"elapsed_h": 39.43
+},
+{
+"team": "Fast Freddy",
+"class": "rowboat",
+"place": "77",
+"finish": "2026-05-31T10:41",
+"elapsed_h": 39.68
+},
+{
+"team": "Laughing Roomba",
+"class": "rowboat",
+"place": "78",
+"finish": "2026-05-31T10:44",
+"elapsed_h": 39.73
+},
+{
+"team": "Spam Musubi",
+"class": "kayak",
+"place": "79",
+"finish": "2026-05-31T10:44",
+"elapsed_h": 39.73
+},
+{
+"team": "Grin and Bair it",
+"class": "kayak",
+"place": "80",
+"finish": "2026-05-31T10:46",
+"elapsed_h": 39.77
+},
+{
+"team": "Nardi Party + 1",
+"class": "rowboat",
+"place": "81",
+"finish": "2026-05-31T10:49",
+"elapsed_h": 39.82
+},
+{
+"team": "Looking Back",
+"class": "rowboat",
+"place": "82",
+"finish": "2026-05-31T11:24",
+"elapsed_h": 40.4
+},
+{
+"team": "DAG after a frothie",
+"class": "kayak",
+"place": "82",
+"finish": "2026-05-31T11:24",
+"elapsed_h": 40.4
+},
+{
+"team": "Rickety Jim",
+"class": "kayak",
+"place": "82",
+"finish": "2026-05-31T11:24",
+"elapsed_h": 40.4
+},
+{
+"team": "Press Gang",
+"class": "rowboat",
+"place": "83",
+"finish": "2026-05-31T12:03",
+"elapsed_h": 41.05
+},
+{
+"team": "Multi-Player",
+"class": "kayak",
+"place": "84",
+"finish": "2026-05-31T12:28",
+"elapsed_h": 41.47
+},
+{
+"team": "Pushing 40",
+"class": "sup",
+"place": "85",
+"finish": "2026-05-31T12:30",
+"elapsed_h": 41.5
+},
+{
+"team": "ShanSteKIr",
+"class": "rowboat",
+"place": "86",
+"finish": "2026-05-31T14:16",
+"elapsed_h": 43.27
+},
+{
+"team": "Team Sanguine",
+"class": "rowboat",
+"place": "86",
+"finish": "2026-05-31T14:16",
+"elapsed_h": 43.27
+},
+{
+"team": "Puddle Jumper",
+"class": "rowboat",
+"place": "87",
+"finish": "2026-05-31T14:22",
+"elapsed_h": 43.37
+},
+{
+"team": "47 59",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "8OARS",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "ATEAM Marine Cowboy",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Baby Shark!",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Bainbridge OARganics",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Baldy Bear",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Buttercup",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Camp Seymour",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Cap'n Hunch",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Chum",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Cold Molded",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Counterpoint",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Do Hard Things",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Freccia",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Fullsterkur",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Goldenbuoy",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Good News: I Saw a Seal!",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "I Found a Siren",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "If you can't tone it tan it",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "In Search of the Golden Fleece",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Inertial Mass",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Just me",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Kureiji",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Melonheads",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Mzee",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Noey\u2019s Ark",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "OAR NORTHWEST",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Paddle On... Paddle On",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Paddling Sounds Fun",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Prone to Dumb Ideas",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Red",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Rogue Kayaker",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "RowBear the SlowBear",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Salish Mist",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Salmon Run",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Starlight",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Swedish American Yacht Club",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Tenderfoots",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "That's a Paddlin'",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "The Long and Short Of It",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Thorny",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Timber Wrangling Splash Bandits",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Viva la Mujer",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Will row for bacon",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "Wind and Waves and Water",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+},
+{
+"team": "opagoagain",
+"class": "",
+"place": "DNF",
+"finish": null,
+"elapsed_h": null
+}
+]
+}
+}
+}
